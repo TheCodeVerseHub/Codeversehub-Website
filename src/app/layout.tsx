@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "The Codeverse Hub",
   description: "The Codeverse Hub's Website",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

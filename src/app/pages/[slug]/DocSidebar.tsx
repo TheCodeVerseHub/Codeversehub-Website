@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { List } from "lucide-react";
 
 interface TocItem {
@@ -12,6 +13,21 @@ interface TocItem {
 interface DocSidebarProps {
     toc: TocItem[];
 }
+
+const pagesNav = [
+    { href: "/pages/rules", label: "Rules" },
+    { href: "/pages/faq", label: "FAQ" },
+    { href: "/pages/server-info", label: "Server Info" },
+    { href: "/pages/how-to-ask", label: "How to Ask" },
+    { href: "/pages/join", label: "Join Guide" },
+    { href: "/pages/contributing", label: "Contributing" },
+    { href: "/pages/moderation-guide", label: "Moderation Guide" },
+    { href: "/pages/code-of-conduct", label: "Code of Conduct" },
+    { href: "/pages/privacy-policy", label: "Privacy Policy" },
+    { href: "/pages/security-notice", label: "Security Notice" },
+    { href: "/pages/tags", label: "Tags Reference" },
+    { href: "/pages/acknowledgements", label: "Acknowledgements" },
+];
 
 export default function DocSidebar({ toc }: DocSidebarProps) {
     const [activeId, setActiveId] = useState<string>("");
@@ -70,22 +86,48 @@ export default function DocSidebar({ toc }: DocSidebarProps) {
                     <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
                         <List className="w-4 h-4 text-violet-400" />
                         <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">
-                            On this page
+                            Docs navigation
                         </span>
                     </div>
-                    <nav>
-                        <ul className="space-y-1">
-                            {toc.map((item) => (
-                                <li key={item.id}>
-                                    <button
-                                        onClick={() => handleClick(item.id)}
-                                        className={`doc-toc-item ${item.level === 3 ? "doc-toc-sub" : ""} ${activeId === item.id ? "doc-toc-active" : ""}`}
-                                    >
-                                        {item.text}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                    <nav className="space-y-6 text-sm">
+                        <div>
+                            <p className="text-[11px] font-semibold text-white/40 uppercase tracking-widest mb-2">
+                                All pages
+                            </p>
+                            <ul className="space-y-1">
+                                {pagesNav.map((page) => (
+                                    <li key={page.href}>
+                                        <Link
+                                            href={page.href}
+                                            className="block w-full text-left text-white/70 hover:text-white hover:bg-white/5 rounded-md px-2 py-1.5 transition-colors"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            {page.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {toc.length > 0 && (
+                            <div>
+                                <p className="text-[11px] font-semibold text-white/40 uppercase tracking-widest mb-2">
+                                    On this page
+                                </p>
+                                <ul className="space-y-1">
+                                    {toc.map((item) => (
+                                        <li key={item.id}>
+                                            <button
+                                                onClick={() => handleClick(item.id)}
+                                                className={`doc-toc-item ${item.level === 3 ? "doc-toc-sub" : ""} ${activeId === item.id ? "doc-toc-active" : ""}`}
+                                            >
+                                                {item.text}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </nav>
                 </div>
             </aside>
