@@ -203,7 +203,7 @@ export default function TerminalWindow() {
                 <div className="px-5 py-2 border-t border-white/10 flex items-center gap-3 bg-white/3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-white/40 text-xs font-mono">cvh ~ dev session</span>
-                    <span className="ml-auto text-white/20 text-xs font-mono">1000+ members online</span>
+                    <span className="ml-auto text-white/20 text-xs font-mono">1100+ members online</span>
                 </div>
             </div>
         </div>

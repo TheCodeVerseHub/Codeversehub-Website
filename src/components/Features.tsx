@@ -40,7 +40,7 @@ const features = [
     icon: Rocket,
     title: "Project Showcase",
     description:
-      "Share what you're building. Get feedback, testers, and maybe even collaborators from 1000+ engaged developers.",
+      "Share what you're building. Get feedback, testers, and maybe even collaborators from 1100+ engaged developers.",
     color: "#F59E0B",
     tag: "#project-showcase",
   },

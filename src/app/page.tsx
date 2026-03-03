@@ -54,7 +54,7 @@ export default function Home() {
               <div className="flex items-center gap-2 w-fit">
                 <span className="flex items-center gap-1.5 text-xs font-mono text-violet-300 bg-violet-500/10 border border-violet-500/25 px-3 py-1.5 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-                  1000+ coders already inside
+                  1100+ coders already inside
                 </span>
               </div>
 
