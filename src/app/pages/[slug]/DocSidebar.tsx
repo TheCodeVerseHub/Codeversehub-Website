@@ -19,6 +19,7 @@ const pagesNav = [
     { href: "/pages/faq", label: "FAQ" },
     { href: "/pages/server-info", label: "Server Info" },
     { href: "/pages/how-to-ask", label: "How to Ask" },
+    { href: "/pages/how-to-help", label: "How to Help" },
     { href: "/pages/join", label: "Join Guide" },
     { href: "/pages/contributing", label: "Contributing" },
     { href: "/pages/moderation-guide", label: "Moderation Guide" },
