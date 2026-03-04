@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/Footer";
 import DocSidebar from "./DocSidebar";
 
 const contentDirectory = path.join(process.cwd(), "content", "pages");
@@ -156,9 +157,9 @@ export default async function ContentPage({ params }: PageProps) {
 
     if (!page) {
         return (
-            <div className="min-h-screen bg-black">
+            <div className="min-h-screen bg-black flex flex-col">
                 <Navbar />
-                <div className="flex items-center justify-center px-4 py-16">
+                <div className="flex-1 flex items-center justify-center px-4 py-16">
                     <div className="text-center">
                         <h1 className="text-4xl font-bold text-white mb-4">Page Not Found</h1>
                         <Link href="/" className="text-violet-400 hover:text-violet-300">
@@ -166,6 +167,7 @@ export default async function ContentPage({ params }: PageProps) {
                         </Link>
                     </div>
                 </div>
+                <Footer />
             </div>
         );
     }
@@ -173,9 +175,9 @@ export default async function ContentPage({ params }: PageProps) {
     const IconComponent = page.icon ? iconMap[page.icon] : null;
 
     return (
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-black flex flex-col">
             <Navbar />
-            <div className="max-w-7xl mx-auto px-4 py-16">
+            <div className="flex-1 max-w-7xl mx-auto px-4 py-16">
                 <div className="flex items-center justify-between gap-4 mb-6">
                     <Link
                         href="/"
@@ -242,6 +244,7 @@ export default async function ContentPage({ params }: PageProps) {
                     </article>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
