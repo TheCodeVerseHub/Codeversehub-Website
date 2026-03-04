@@ -176,13 +176,31 @@ export default async function ContentPage({ params }: PageProps) {
         <div className="min-h-screen bg-black">
             <Navbar />
             <div className="max-w-7xl mx-auto px-4 py-16">
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 mb-8 transition-colors"
-                >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Home
-                </Link>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 transition-colors"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        Back to Home
+                    </Link>
+
+                    <nav
+                        aria-label="Breadcrumb"
+                        className="hidden sm:flex items-center gap-2 text-xs md:text-sm text-white/40"
+                    >
+                        <Link
+                            href="/pages"
+                            className="text-violet-300 hover:text-violet-200 font-medium transition-colors"
+                        >
+                            Pages
+                        </Link>
+                        <span className="text-white/30">/</span>
+                        <span className="text-white/70 truncate">
+                            {page.title}
+                        </span>
+                    </nav>
+                </div>
 
                 <div className="doc-layout">
                     {page.toc.length > 0 && (

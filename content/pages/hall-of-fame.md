@@ -57,6 +57,6 @@ Thanks to everyone who has:
 
 ## Everyone Who Helps
 
-If you answer questions, review code, mentor beginners, or even just welcome new members in the intro channel  **you're part of why this community works**.
+If you answer questions, review code, mentor beginners, or even just welcome new members in the intro channel - **you're part of why this community works**.
 
 Thank you for being here and making CodeVerse Hub better every day.
