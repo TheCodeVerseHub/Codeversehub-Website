@@ -27,7 +27,7 @@ import type { LucideIcon } from "lucide-react";
 import Navbar from "../../../components/Navbar";
 import DocSidebar from "./DocSidebar";
 
-const contentDirectory = path.join(process.cwd(), "content/pages");
+const contentDirectory = path.join(process.cwd(), "content", "pages");
 
 const iconMap: Record<string, LucideIcon> = {
     shield: Shield,
@@ -81,37 +81,43 @@ function extractToc(htmlContent: string): { toc: TocItem[]; processedHtml: strin
     return { toc, processedHtml };
 }
 
-async function getPageContent(slug: string) {
-    const fullPath = path.join(contentDirectory, `${slug}.md`);
-
-    if (!fs.existsSync(fullPath)) {
+async function getPageContent(slug: string | undefined) {
+    if (!slug) {
         return null;
     }
 
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
+    const fullPath = path.join(contentDirectory, `${slug}.md`);
 
-    const processedContent = await remark().use(html).process(content);
-    const rawHtml = processedContent.toString();
-    const { toc, processedHtml } = extractToc(rawHtml);
+    try {
+        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const { data, content } = matter(fileContents);
 
-    return {
-        slug,
-        title: data.title || slug.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()),
-        description: data.description || "",
-        icon: data.icon || "",
-        lastUpdated: data.lastUpdated || "",
-        contentHtml: processedHtml,
-        toc,
-    };
+        const processedContent = await remark().use(html).process(content);
+        const rawHtml = processedContent.toString();
+        const { toc, processedHtml } = extractToc(rawHtml);
+
+        return {
+            slug,
+            title: data.title || slug.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()),
+            description: data.description || "",
+            icon: data.icon || "",
+            lastUpdated: data.lastUpdated || "",
+            contentHtml: processedHtml,
+            toc,
+        };
+    } catch (error) {
+        console.error(`Error loading content page for slug "${slug}":`, error);
+        return null;
+    }
 }
 
 interface PageProps {
-    params: { slug: string };
+    params: Promise<{ slug?: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const page = await getPageContent(params.slug);
+    const { slug } = await params;
+    const page = await getPageContent(slug);
 
     if (!page) {
         return {
@@ -145,7 +151,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ContentPage({ params }: PageProps) {
-    const { slug } = params;
+    const { slug } = await params;
     const page = await getPageContent(slug);
 
     if (!page) {

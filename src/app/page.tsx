@@ -102,7 +102,7 @@ export default function Home() {
               </div>
 
               {/* Social proof strip */}
-              <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-white/40">
+              <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-white/80">
                 <div className="flex items-center gap-1.5">
                   <Zap className="w-4 h-4 text-yellow-400" />
                   <span>Active daily</span>
@@ -112,8 +112,8 @@ export default function Home() {
                   <Star className="w-4 h-4 text-violet-400" />
                   <span>10+ OSS projects</span>
                 </div>
-                <div className="w-1 h-1 rounded-full bg-white/20" />
-                <span className="text-white/40">Free forever</span>
+                <div className="w-1 h-1 rounded-full bg-white/40" />
+                <span className="text-white/80">Free forever</span>
               </div>
             </div>
 
