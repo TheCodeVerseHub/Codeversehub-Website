@@ -35,20 +35,11 @@ export const metadata: Metadata = {
     siteName,
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "The Codeverse Hub",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: siteName,
     description: siteDescription,
-    images: ["/og-image.png"],
     creator: "@TheCodeverseHub",
   },
   icons: {
