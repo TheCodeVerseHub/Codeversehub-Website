@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thecodeversehub.tech";
 const siteName = "The Codeverse Hub";
 const siteDescription =
   "CodeVerse Hub is a Discord community built for programmers — code reviews, open source projects, 24/7 help, resources, and people who get it.";
