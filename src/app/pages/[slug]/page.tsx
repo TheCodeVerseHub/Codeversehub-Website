@@ -128,6 +128,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         };
     }
 
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thecodesversehub.tech";
     const title = `${page.title} | The Codeverse Hub`;
     const description =
         page.description || "Guides and documentation from The Codeverse Hub community.";
@@ -152,13 +153,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
 
     if (page.image) {
+        const imageUrl = page.image.startsWith('http') ? page.image : `${siteUrl}${page.image}`;
         metadata.openGraph = {
             ...metadata.openGraph,
-            images: [{ url: page.image }],
+            images: [{ url: imageUrl, width: 1200, height: 630 }],
         };
         metadata.twitter = {
             ...metadata.twitter,
-            images: [page.image],
+            images: [imageUrl],
         };
     }
 
