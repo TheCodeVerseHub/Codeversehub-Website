@@ -1,0 +1,50 @@
+name: "Feature request"
+description: "Suggest an idea or improvement"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement!
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Pre-flight checks"
+      options:
+        - label: "I searched existing issues to avoid duplicates"
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem"
+      description: "What problem are you trying to solve?"
+      placeholder: "I’m frustrated when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Proposed solution"
+      description: "What would you like to happen?"
+      placeholder: "Add/change..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives considered"
+      placeholder: "Other ways to solve this..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: "Additional context"
+      placeholder: "Mockups, links, screenshots, etc."
+    validations:
+      required: false
