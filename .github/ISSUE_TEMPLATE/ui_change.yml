@@ -1,0 +1,57 @@
+name: "UI change"
+description: "Report or propose a UI/UX change"
+labels: ["ui"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for layout, styling, copy, or UX improvements.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: "Pre-flight checks"
+      options:
+        - label: "I searched existing issues to avoid duplicates"
+          required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: "Page / section"
+      description: "Where is the UI issue/change?"
+      placeholder: "/resources, /pages/faq, Navbar, Footer, etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: "Current behavior / UI"
+      placeholder: "What does it look like today?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired
+    attributes:
+      label: "Desired change"
+      placeholder: "What should change?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots / mockups"
+      description: "Attach images or links if helpful."
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: "Notes"
+      description: "Any constraints (mobile/desktop), accessibility concerns, or edge cases."
+    validations:
+      required: false

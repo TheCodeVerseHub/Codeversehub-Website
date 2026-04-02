@@ -1,1 +1,6 @@
 blank_issues_enabled: true
+
+contact_links:
+	- name: "CodeVerse Hub Discord"
+		url: "https://discord.gg/3xKFvKhuGR"
+		about: "Ask questions, get help, or discuss ideas with the community."

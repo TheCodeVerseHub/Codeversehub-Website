@@ -1,0 +1,53 @@
+name: "Good first issue (maintainers)"
+description: "Create a beginner-friendly task with clear guidance"
+labels: ["good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Maintainers: use this to write a well-scoped, beginner-friendly issue.
+
+  - type: input
+    id: summary
+    attributes:
+      label: "Summary"
+      placeholder: "Short title of the task"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "Context"
+      description: "Why is this needed?"
+      placeholder: "Background, user impact, links to related issues/PRs..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Acceptance criteria"
+      description: "What must be true for this to be considered done?"
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: "Suggested approach"
+      description: "Helpful hints for first-time contributors (optional)."
+      placeholder: "Files to look at, commands to run, expected behavior..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: "Out of scope"
+      placeholder: "What should NOT be changed as part of this issue?"
+    validations:
+      required: false
