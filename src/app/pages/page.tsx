@@ -87,7 +87,7 @@ export default function PagesIndex() {
   return (
     <div className="min-h-screen bg-black flex flex-col">
       <Navbar />
-      <main className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-16">
+      <main id="main-content" tabIndex={-1} className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-16">
         <header className="mb-10">
           <p className="text-xs font-mono uppercase tracking-[0.2em] text-violet-300/70 mb-2">
             Docs

@@ -16,7 +16,7 @@ export default function NotFound() {
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-violet-600/5 blur-[120px] pointer-events-none" />
 
-            <div className="relative z-10 flex flex-col items-center text-center">
+            <main id="main-content" tabIndex={-1} className="relative z-10 flex flex-col items-center text-center">
                 <div className="mb-4">
                     <FuzzyText
                         fontSize="clamp(5rem, 15vw, 12rem)"
@@ -35,7 +35,7 @@ export default function NotFound() {
                 </div>
 
                 <p className="text-white/50 text-lg mb-2 font-medium">
-                    bro typed a whole URL and it doesn't even exist 💀
+                    bro typed a whole URL and it doesn&apos;t even exist 💀
                 </p>
 
                 <p className="text-white/25 text-sm mb-10">
@@ -49,7 +49,7 @@ export default function NotFound() {
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
                     <span className="font-medium">go back before it gets worse</span>
                 </Link>
-            </div>
+            </main>
             <p className="text-white/15 text-xs mt-12 font-mono">
                 exit code: 1 — segfault in page_loader.c at 0xDUMMY
             </p>

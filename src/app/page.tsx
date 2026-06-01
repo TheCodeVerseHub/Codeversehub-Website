@@ -19,8 +19,9 @@ export default function Home() {
     <div className="bg-black">
       <Navbar />
 
-      {/* ─── HERO ────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen w-full overflow-hidden flex items-center">
+      <main id="main-content" tabIndex={-1}>
+        {/* ─── HERO ────────────────────────────────────────────────── */}
+        <section className="relative min-h-screen w-full overflow-hidden flex items-center">
         {/* Background gradient */}
         <div className="absolute inset-0 z-0">
           <GradientBlinds
@@ -191,7 +192,8 @@ export default function Home() {
       <ContactSection />
 
       {/* ─── JOIN CTA ────────────────────────────────────────────── */}
-      <JoinCTA />
+        <JoinCTA />
+      </main>
 
       <Footer />
     </div>

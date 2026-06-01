@@ -66,7 +66,7 @@ export default function BanAppealPage() {
     <div className="bg-black min-h-screen flex flex-col">
       <Navbar />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-6 py-16 md:py-20">
+      <main id="main-content" tabIndex={-1} className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-6 py-16 md:py-20">
         <header className="text-center mb-10">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white">
             Ban{" "}

@@ -897,7 +897,7 @@ export default function ResourcesPage() {
                         </div>
                     </nav>
 
-                    <main className="flex-1 min-w-0">
+                    <main id="main-content" tabIndex={-1} className="flex-1 min-w-0">
                         <div className="mb-8 p-6 rounded-2xl border border-white/10 bg-white/5">
                             <div className="flex items-center gap-3 mb-2">
                                 <span
