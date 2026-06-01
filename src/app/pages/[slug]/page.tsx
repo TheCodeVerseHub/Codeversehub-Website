@@ -159,14 +159,14 @@ export default async function ContentPage({ params }: PageProps) {
         return (
             <div className="min-h-screen bg-black flex flex-col">
                 <Navbar />
-                <div className="flex-1 flex items-center justify-center px-4 py-16">
+                <main id="main-content" tabIndex={-1} className="flex-1 flex items-center justify-center px-4 py-16">
                     <div className="text-center">
                         <h1 className="text-4xl font-bold text-white mb-4">Page Not Found</h1>
                         <Link href="/" className="text-violet-400 hover:text-violet-300">
                             Return Home
                         </Link>
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -177,7 +177,7 @@ export default async function ContentPage({ params }: PageProps) {
     return (
         <div className="min-h-screen bg-black flex flex-col">
             <Navbar />
-            <div className="flex-1 max-w-7xl mx-auto px-4 py-16">
+            <main id="main-content" tabIndex={-1} className="flex-1 max-w-7xl mx-auto px-4 py-16">
                 <div className="flex items-center justify-between gap-4 mb-6">
                     <Link
                         href="/"
@@ -243,7 +243,7 @@ export default async function ContentPage({ params }: PageProps) {
                         />
                     </article>
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );
