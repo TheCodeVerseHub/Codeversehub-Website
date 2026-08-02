@@ -15,6 +15,7 @@ const navLinks = [
 ];
 
 const moreLinks = [
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/team", label: "Team" },
   { href: "/contributing", label: "Contributing" },
   { href: "/pages/faq", label: "FAQ" },

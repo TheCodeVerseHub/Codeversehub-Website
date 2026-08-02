@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { MetadataRoute } from "next";
+import { getCaseStudies } from "@/lib/case-studies";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thecodeversehub.tech";
 
@@ -9,11 +10,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/`, lastModified: new Date() },
     { url: `${siteUrl}/about`, lastModified: new Date() },
     { url: `${siteUrl}/projects`, lastModified: new Date() },
+    { url: `${siteUrl}/case-studies`, lastModified: new Date() },
     { url: `${siteUrl}/team`, lastModified: new Date() },
     { url: `${siteUrl}/contributing`, lastModified: new Date() },
     { url: `${siteUrl}/resources`, lastModified: new Date() },
     { url: `${siteUrl}/pages`, lastModified: new Date() },
     { url: `${siteUrl}/ban-appeal`, lastModified: new Date() },
+    ...getCaseStudies().map((cs) => ({
+      url: `${siteUrl}/case-studies/${cs.slug}`,
+      lastModified: new Date(),
+    })),
   ];
 
   const contentDirectory = path.join(process.cwd(), "content", "pages");

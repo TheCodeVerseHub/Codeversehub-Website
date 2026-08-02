@@ -5,25 +5,34 @@ import {
   type GitHubRepo,
   type GitHubContributor,
 } from "@/lib/github";
+import {
+  getCaseStudies,
+  getCaseStudyForRepo,
+  type CaseStudy,
+} from "@/lib/case-studies";
 import Link from "next/link";
 import {
   ArrowLeft,
+  ArrowRight,
   Star,
   GitFork,
   AlertCircle,
   ExternalLink,
   Calendar,
+  FileText,
+  Github,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CaseStudyCard from "@/components/CaseStudyCard";
 import type { Metadata } from "next";
 
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "Open Source Projects | The Codeverse Hub",
+  title: "Our Projects | The CodeVerse Hub",
   description:
-    "Explore all open-source projects from The Codeverse Hub Discord bots, Linux distros, developer tools, and more.",
+    "Explore all open-source projects from The CodeVerse Hub — Discord bots, Linux distros, developer tools, and more — with deep-dive case studies for our flagship builds.",
   alternates: { canonical: "/projects" },
 };
 
@@ -60,27 +69,30 @@ function timeAgo(date: string): string {
 function RepoCard({
   repo,
   contributors,
+  study,
 }: {
   repo: GitHubRepo;
   contributors: GitHubContributor[];
+  study?: CaseStudy;
 }) {
   return (
-    <a
-      href={repo.html_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="cvh-card p-5 group"
-    >
+    <div className="cvh-card p-5 group flex flex-col">
+      {/* Title row */}
       <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2.5 min-w-0">
+        <a
+          href={repo.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2.5 min-w-0 group/title"
+        >
           <div
             className="w-2.5 h-2.5 rounded-full shrink-0 mt-0.5"
             style={{ backgroundColor: langColor(repo.language) }}
           />
-          <h3 className="font-semibold text-white text-sm truncate group-hover:text-[#ffffff] transition-colors duration-150">
+          <h3 className="font-semibold text-white text-sm truncate group-hover/title:text-[#afafaf] transition-colors duration-150">
             {repo.name}
           </h3>
-        </div>
+        </a>
         <ExternalLink className="w-3.5 h-3.5 text-white/20 group-hover:text-[#ffffff] shrink-0 transition-colors duration-150" />
       </div>
 
@@ -88,6 +100,7 @@ function RepoCard({
         {repo.description || "No description provided."}
       </p>
 
+      {/* Stats */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/40">
         {repo.language && (
           <span className="flex items-center gap-1.5">
@@ -117,6 +130,7 @@ function RepoCard({
         </span>
       </div>
 
+      {/* Contributors */}
       {contributors.length > 0 && (
         <div className="mt-4 pt-3 border-t border-white/[0.05] flex items-center gap-2">
           <div className="flex -space-x-2">
@@ -137,7 +151,35 @@ function RepoCard({
           </span>
         </div>
       )}
-    </a>
+
+      {/* Actions */}
+      <div className="mt-4 pt-3 border-t border-white/[0.05] flex items-center gap-3">
+        {study ? (
+          <Link
+            href={`/case-studies/${study.slug}`}
+            className="inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-[#22d3ee] hover:text-white transition-colors duration-150"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            Case Study
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        ) : (
+          <span className="inline-flex items-center gap-1.5 text-[0.8125rem] text-white/25">
+            <FileText className="w-3.5 h-3.5" />
+            Case study coming soon
+          </span>
+        )}
+        <a
+          href={repo.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-[0.8125rem] text-white/40 hover:text-white transition-colors duration-150 ml-auto"
+        >
+          <Github className="w-3.5 h-3.5" />
+          Repository
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -162,31 +204,84 @@ export default async function ProjectsPage() {
   }
 
   const categories = error ? {} : categorizeRepos(repos);
+  const studies = getCaseStudies();
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className="min-h-screen bg-[#050505] flex flex-col">
       <Navbar />
-      <main className="flex-1 max-w-7xl mx-auto px-4 py-16 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-16 w-full">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-[#ffffff] hover:text-[#ffffff] mb-8 transition-colors duration-150 text-sm"
+          className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors duration-150 text-sm mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Link>
 
+        {/* ── Header ─────────────────────────────────────── */}
         <header className="mb-12">
           <p className="cvh-label mb-4">Open Source</p>
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-            Projects
+          <h1 className="heading-xl text-4xl md:text-5xl text-white mb-4 tracking-tight">
+            Our Projects
           </h1>
-          <p className="text-white/50 text-base md:text-lg max-w-2xl">
+          <p className="text-white/50 text-base md:text-lg max-w-2xl leading-relaxed">
             We build and maintain open-source software across multiple domains
-            from Discord bots and developer tools to Linux distributions. Every
-            project is open for contributions.
+            from Discord bots and developer tools to Linux distributions and a
+            Wayland compositor. Every project is open for contributions — and
+            our flagship builds come with full engineering case studies.
           </p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <Link
+              href="/case-studies"
+              className="btn-primary h-10 px-6 text-[0.8125rem]"
+            >
+              <span className="relative z-10">Read the case studies</span>
+              <ArrowRight className="w-4 h-4 relative z-10" />
+            </Link>
+            <a
+              href="https://github.com/TheCodeVerseHub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary h-10 px-6 text-[0.8125rem]"
+            >
+              <Github className="w-4 h-4" />
+              GitHub Organization
+            </a>
+          </div>
         </header>
 
+        {/* ── Featured case studies ──────────────────────── */}
+        {!error && studies.length > 0 && (
+          <section className="mb-16" aria-labelledby="case-studies-heading">
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <div className="flex items-center gap-3">
+                <h2
+                  id="case-studies-heading"
+                  className="text-xl md:text-2xl font-bold text-white tracking-tight"
+                >
+                  Case Studies
+                </h2>
+                <span className="text-xs text-white/30 font-mono bg-white/[0.04] px-2 py-0.5 rounded-full">
+                  {studies.length}
+                </span>
+              </div>
+              <Link
+                href="/case-studies"
+                className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white transition-colors duration-150"
+              >
+                View all
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {studies.map((study) => (
+                <CaseStudyCard key={study.slug} study={study} showMetrics={false} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Categorized repos ──────────────────────────── */}
         {error ? (
           <div className="rounded-xl border border-red-500/15 bg-red-500/[0.03] p-8 text-center">
             <p className="text-red-400">{error}</p>
@@ -213,6 +308,7 @@ export default async function ProjectsPage() {
                       key={repo.id}
                       repo={repo}
                       contributors={contributorsMap[repo.name] || []}
+                      study={getCaseStudyForRepo(repo.name)}
                     />
                   ))}
                 </div>
