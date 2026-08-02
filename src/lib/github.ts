@@ -83,6 +83,96 @@ export async function getOrgProfile() {
   );
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ACTIVITY FEEDS
+   ═══════════════════════════════════════════════════════════ */
+
+export interface GitHubSearchUser {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+}
+
+export interface GitHubPR {
+  number: number;
+  title: string;
+  html_url: string;
+  state: string;
+  merged_at: string | null;
+  user: GitHubSearchUser;
+  repository_url: string;
+}
+
+export interface GitHubIssue {
+  number: number;
+  title: string;
+  html_url: string;
+  state: string;
+  created_at: string;
+  user: GitHubSearchUser;
+  labels: { name: string; color: string }[];
+}
+
+export interface GitHubRelease {
+  tag_name: string;
+  name: string;
+  html_url: string;
+  published_at: string;
+  draft: boolean;
+  prerelease: boolean;
+}
+
+export interface GitHubCommit {
+  sha: string;
+  html_url: string;
+  commit: {
+    message: string;
+    author: { name: string; date: string };
+  };
+  author: GitHubSearchUser | null;
+}
+
+interface SearchResult<T> {
+  total_count: number;
+  items: T[];
+}
+
+/** Latest merged pull requests across the org (GitHub search API). */
+export async function getMergedPRs(perPage = 6): Promise<{ count: number; items: GitHubPR[] }> {
+  const q = encodeURIComponent(`org:${ORG} is:pr is:merged`);
+  const data = await githubFetch<SearchResult<GitHubPR>>(
+    `/search/issues?q=${q}&sort=updated&order=desc&per_page=${perPage}`,
+  );
+  return { count: data.total_count, items: data.items };
+}
+
+/** Open issues across the org (GitHub search API). */
+export async function getOpenIssues(perPage = 6): Promise<{ count: number; items: GitHubIssue[] }> {
+  const q = encodeURIComponent(`org:${ORG} is:issue is:open`);
+  const data = await githubFetch<SearchResult<GitHubIssue>>(
+    `/search/issues?q=${q}&sort=updated&order=desc&per_page=${perPage}`,
+  );
+  return { count: data.total_count, items: data.items };
+}
+
+/** Most recent release of a repo, or null when it has none. */
+export async function getLatestRelease(repo: string): Promise<GitHubRelease | null> {
+  try {
+    return await githubFetch<GitHubRelease>(`/repos/${ORG}/${repo}/releases/latest`);
+  } catch {
+    return null;
+  }
+}
+
+/** Latest commits of a repo (empty on error). */
+export async function getLatestCommits(repo: string, perPage = 3): Promise<GitHubCommit[]> {
+  try {
+    return await githubFetch<GitHubCommit[]>(`/repos/${ORG}/${repo}/commits?per_page=${perPage}`);
+  } catch {
+    return [];
+  }
+}
+
 export function categorizeRepos(repos: GitHubRepo[]) {
   const categories: Record<string, GitHubRepo[]> = {
     "Discord Bots": [],

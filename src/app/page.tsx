@@ -2,54 +2,63 @@
 
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import Stats from "@/components/Stats";
-import Features from "@/components/Features";
-import Projects from "@/components/Projects";
-import AboutDetails from "@/components/AboutDetails";
-import WhyJoinSection from "@/components/WhyJoinSection";
-import WhoIsForSection from "@/components/WhoIsForSection";
-import OpenSourceSection from "@/components/OpenSourceSection";
-import JoinCTA from "@/components/JoinCTA";
-import ContactSection from "@/components/ContactSection";
+import TechMarquee from "@/components/home/TechMarquee";
+import CommunityStats from "@/components/home/CommunityStats";
+import FeaturedProjects from "@/components/home/FeaturedProjects";
+import GitHubActivity from "@/components/home/GitHubActivity";
+import CommunityPillars from "@/components/home/CommunityPillars";
+import DiscordSection from "@/components/home/DiscordSection";
+import CommunityShowcase from "@/components/home/CommunityShowcase";
+import OpenSourceJourney from "@/components/home/OpenSourceJourney";
+import Testimonials from "@/components/home/Testimonials";
+import JoinCTA from "@/components/home/JoinCTA";
+import ContactSection from "@/components/home/ContactSection";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import ShinyText from "@/components/ShinyText";
-import TechMarquee from "@/components/TechMarquee";
 import HeroBackground from "@/components/HeroBackground";
 import { ChevronDown, HelpCircle, ExternalLink } from "lucide-react";
 
 const faqItems = [
   {
-    q: "Is The CodeVerse Hub free?",
-    a: "Yes. The CodeVerse Hub is completely free to join. There are no paid tiers, subscriptions, or hidden costs. Every channel, project, and resource is accessible to all members.",
+    q: "How do I join The CodeVerse Hub?",
+    a: "Join the Discord (button above), introduce yourself in the welcome channel, and pick your language roles to unlock the matching help channels. That's it — no application, no fees, no waiting list.",
   },
   {
-    q: "Do I need experience to join?",
-    a: "No. We welcome absolute beginners. Our good-first-issue labels, mentorship program, and study groups are specifically designed to help newcomers make their first open-source contribution.",
+    q: "I'm a complete beginner. Can I really contribute?",
+    a: "Yes — most of our repositories have issues tagged 'good first issue' specifically for first-timers. You get paired with mentors who walk you through Git, the PR lifecycle, and your first merge. Many of our maintainers started with zero open-source experience.",
   },
   {
     q: "How do I contribute to a project?",
-    a: "Join our Discord, introduce yourself, and browse our GitHub repositories. Each repo has a contributing guide. Pick an issue tagged with 'good first issue', fork the repo, and submit a pull request. Maintainers will guide you through the process.",
+    a: "Browse our GitHub organization, pick a repo, and look for 'good first issue' or 'help wanted'. Fork it, clone it, follow the README setup, and open a pull request. Maintainers and CI review it line by line, and once approved, a maintainer merges it.",
   },
   {
-    q: "What technologies are used?",
-    a: "Our community works across Python, TypeScript, JavaScript, Rust, Go, Lua, and more. We build with React, Next.js, Node.js, Django, FastAPI, and Svelte on the web side; maintain Linux distributions on the systems side; and use tools like Docker, PostgreSQL, Redis, and GraphQL across projects.",
-  },
-  {
-    q: "Can I showcase my own projects?",
-    a: "Absolutely. We have a dedicated project-showcase channel where members share what they are building. Get feedback, find collaborators, and promote your work to a community of developers who care about quality software.",
-  },
-  {
-    q: "How do code reviews work?",
-    a: "When you submit a pull request, maintainers and community members review your code inline on GitHub. You receive line-by-line feedback on logic, style, performance, and best practices. Reviews are constructive and focused on helping you improve.",
-  },
-  {
-    q: "Can beginners really contribute to open source?",
-    a: "Yes. Most of our projects have issues specifically tagged for first-time contributors. We provide guidance on Git workflows, commit conventions, and the PR lifecycle. Many of our active maintainers started with zero open-source experience.",
+    q: "How do code reviews work here?",
+    a: "When you submit a PR, maintainers and community members review it inline on GitHub. You get line-by-line feedback on logic, style, performance, and best practices. Reviews are constructive and focused on helping you improve — not on showing off.",
   },
   {
     q: "How do I become a maintainer?",
-    a: "Maintainers are elected from active contributors. Consistently submit quality PRs, participate in code reviews, help other contributors, and demonstrate understanding of the project. When you are ready, the community will nominate and vote on new maintainers.",
+    a: "Consistently submit quality PRs, participate in reviews, help other contributors, and demonstrate understanding of the project. When you're ready, the community nominates and votes on new maintainers. Influence is earned through quality work.",
+  },
+  {
+    q: "Who owns the projects?",
+    a: "The community does. Repositories live under the TheCodeVerseHub GitHub organization, are licensed openly (MIT / GPL), and their roadmaps are discussed in public. Maintainers steward the projects, but direction is shaped by everyone contributing.",
+  },
+  {
+    q: "What technologies does the community work with?",
+    a: "Python, TypeScript, JavaScript, Rust, Go, Lua, and more. We build with React, Next.js, Node.js, Django, FastAPI on the web side; maintain Linux distributions on the systems side; and use Docker, PostgreSQL, Redis, and modern CI across projects.",
+  },
+  {
+    q: "What actually happens inside the Discord?",
+    a: "Learning & help channels, programming deep-dives, project showcase, code reviews, open-source guidance, voice events, study groups, and curated resources. It's built so you move from asking questions to shipping software.",
+  },
+  {
+    q: "Can I showcase my own projects?",
+    a: "Absolutely. There's a dedicated project-showcase area where members share what they're building — get feedback, find collaborators, and promote your work to a community of developers who care about quality software.",
+  },
+  {
+    q: "How do hackathons and events work?",
+    a: "The community runs coding challenges, Code Review Fridays, open-source sprints, and themed build events. Watch the announcements channel for the next one, and keep event pings enabled if you want early notifications.",
   },
 ];
 
@@ -106,12 +115,12 @@ export default function Home() {
 
           {/* Expanded hero description */}
           <p className="text-[#666666] text-sm sm:text-base md:text-lg leading-relaxed max-w-[650px] mx-auto mt-8">
-            The CodeVerse Hub isn't a "learn to code" server. We chat, connect
+            The CodeVerse Hub isn&apos;t a &ldquo;learn to code&rdquo; server. We chat, connect
             and build real stuff. Discord bots, Linux distros, web apps,
             developer tools you name it. No tutorial hell. No fake projects.
             Just real GitHub repos, real pull requests, real code reviews, and
-            real open-source. Whether you're shipping your first PR or reviewing
-            everyone else's, there's a place for you. Build. Break things.
+            real open-source. Whether you&apos;re shipping your first PR or reviewing
+            everyone else&apos;s, there&apos;s a place for you. Build. Break things.
             Learn. Repeat.
           </p>
 
@@ -150,50 +159,56 @@ export default function Home() {
 
       {/* ─── MAIN CONTENT ──────────────────────────────── */}
       <main>
-        <ScrollReveal>
-          <Stats />
-        </ScrollReveal>
-
+        {/* Visual break: the stacks we work in */}
         <ScrollReveal delay={100}>
-          <div className="section-divider" />
-        </ScrollReveal>
-
-        <ScrollReveal delay={150}>
-          <Features />
-        </ScrollReveal>
-
-        {/* Technologies */}
-        <ScrollReveal delay={450}>
           <TechMarquee />
         </ScrollReveal>
 
-        {/* About The CodeVerse Hub expanded mission and philosophy section */}
+        {/* Community stats — live where possible */}
+        <ScrollReveal delay={150}>
+          <div className="section-divider" />
+        </ScrollReveal>
         <ScrollReveal delay={200}>
-          <AboutDetails />
+          <CommunityStats />
         </ScrollReveal>
 
-        {/* Projects expanded showcase with descriptive text */}
+        {/* Featured projects */}
         <ScrollReveal delay={250}>
-          <Projects />
+          <FeaturedProjects />
         </ScrollReveal>
 
-        {/* Why Join benefits section */}
+        {/* Latest GitHub activity */}
         <ScrollReveal delay={300}>
-          <WhyJoinSection />
+          <GitHubActivity />
         </ScrollReveal>
 
-        {/* Who Is This For audience section */}
+        {/* Community pillars */}
         <ScrollReveal delay={350}>
-          <WhoIsForSection />
+          <CommunityPillars />
         </ScrollReveal>
 
-        {/* Open Source how to contribute section */}
+        {/* Inside the Discord */}
         <ScrollReveal delay={400}>
-          <OpenSourceSection />
+          <DiscordSection />
         </ScrollReveal>
 
-        {/* FAQ expanded useful questions */}
+        {/* Recent community showcases */}
+        <ScrollReveal delay={450}>
+          <CommunityShowcase />
+        </ScrollReveal>
+
+        {/* Open source journey */}
         <ScrollReveal delay={500}>
+          <OpenSourceJourney />
+        </ScrollReveal>
+
+        {/* Testimonials (placeholder until collected) */}
+        <ScrollReveal delay={550}>
+          <Testimonials />
+        </ScrollReveal>
+
+        {/* FAQ */}
+        <ScrollReveal delay={600}>
           <section className="section-spacing" aria-labelledby="faq-heading">
             <div className="section-divider mb-0" />
             <div className="section-container pt-16 md:pt-20">
@@ -215,15 +230,15 @@ export default function Home() {
                     />
                   </h2>
                   <p className="text-[#666666] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                    Everything you need to know about joining and contributing
-                    to The CodeVerse Hub.
+                    Everything you need to know about joining, contributing,
+                    and growing at The CodeVerse Hub.
                   </p>
                 </div>
 
                 <div className="divide-y divide-[#1a1a1a]">
                   {faqItems.map((item) => (
                     <details key={item.q} className="group py-5 cursor-pointer">
-                      <summary className="flex items-center justify-between text-sm sm:text-base font-medium text-white hover:text-[#afafaf] transition-colors duration-150 list-none">
+                      <summary className="flex items-center justify-between text-sm sm:text-base font-medium text-white hover:text-[#afafaf] transition-colors duration-150 list-none [&::-webkit-details-marker]:hidden">
                         <span className="flex items-center gap-3">
                           <HelpCircle className="w-4 h-4 text-[#22d3ee] shrink-0" />
                           {item.q}
@@ -251,16 +266,18 @@ export default function Home() {
           </section>
         </ScrollReveal>
 
-        <ScrollReveal delay={550}>
+        {/* Join CTA */}
+        <ScrollReveal delay={650}>
           <JoinCTA />
         </ScrollReveal>
 
-        <ScrollReveal delay={600}>
+        {/* Contact */}
+        <ScrollReveal delay={700}>
           <ContactSection />
         </ScrollReveal>
       </main>
 
-      <ScrollReveal delay={650}>
+      <ScrollReveal delay={750}>
         <Footer />
       </ScrollReveal>
     </div>

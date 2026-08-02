@@ -1,4 +1,6 @@
 "use client";
+
+import Link from "next/link";
 import ShinyText from "@/components/ShinyText";
 import { Code2, GitPullRequest, Users, Rocket, BookOpen, Globe } from "lucide-react";
 
@@ -47,13 +49,16 @@ const features = [
   },
 ];
 
-export default function Features() {
+export default function CommunityPillars() {
   return (
-    <section className="section-spacing">
+    <section className="section-spacing" aria-labelledby="pillars-heading">
       <div className="section-container">
         <div className="text-center mb-16">
           <span className="section-label mb-6">Community Pillars</span>
-          <h2 className="heading-lg text-3xl sm:text-4xl md:text-5xl mb-4 mt-5">
+          <h2
+            id="pillars-heading"
+            className="heading-lg text-3xl sm:text-4xl md:text-5xl mb-4 mt-5"
+          >
             <ShinyText
               text="Built by developers,"
               shineColor="#ffffff"
@@ -66,8 +71,12 @@ export default function Features() {
             <br />
             <span className="text-[#22d3ee]">for developers</span>
           </h2>
-          <p className="text-[#666666] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Every feature, every channel, every project exists to help you grow as an engineer.
+          <p className="text-[#666666] text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            The CodeVerse Hub is an open-source developer community where people
+            of all skill levels collaborate on real-world projects, contribute
+            to GitHub repositories, and grow together through hands-on
+            experience. Every channel and every project exists to help you grow
+            as an engineer.
           </p>
         </div>
 
@@ -84,9 +93,7 @@ export default function Features() {
                 </span>
 
                 <div className="w-10 h-10 flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 border border-[#1a1a1a] bg-[rgba(255,255,255,0.04)]">
-                  <Icon
-                    className="w-5 h-5 text-[#ffffff] transition-colors duration-300"
-                  />
+                  <Icon className="w-5 h-5 text-[#ffffff] transition-colors duration-300" />
                 </div>
 
                 <h3 className="font-heading text-base font-semibold text-white mb-2 group-hover:text-[#ffffff] transition-colors duration-200">
@@ -105,6 +112,15 @@ export default function Features() {
               </div>
             );
           })}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link
+            href="/about"
+            className="btn-ghost text-[0.8125rem] inline-flex items-center gap-1.5"
+          >
+            Learn more about the community &rarr;
+          </Link>
         </div>
       </div>
     </section>
