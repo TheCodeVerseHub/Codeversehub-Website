@@ -31,7 +31,7 @@ This makes your code readable and colorful.
 
 PEP 8 is the official style guide for Python. It includes guidelines for naming variables (`snake_case`), classes (`CamelCase`), and formatting code to be readable.
 
-### venv — Virtual Environments
+### venv -> Virtual Environments
 
 Always use a virtual environment for your projects! It keeps dependencies isolated:
 

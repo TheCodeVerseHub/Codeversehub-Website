@@ -32,7 +32,7 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: "Our Projects | The CodeVerse Hub",
   description:
-    "Explore all open-source projects from The CodeVerse Hub — Discord bots, Linux distros, developer tools, and more — with deep-dive case studies for our flagship builds.",
+    "Explore all open-source projects from The CodeVerse Hub -> Discord bots, Linux distros, developer tools, and more, with deep-dive case studies for our flagship builds.",
   alternates: { canonical: "/projects" },
 };
 
@@ -227,8 +227,8 @@ export default async function ProjectsPage() {
           <p className="text-white/50 text-base md:text-lg max-w-2xl leading-relaxed">
             We build and maintain open-source software across multiple domains
             from Discord bots and developer tools to Linux distributions and a
-            Wayland compositor. Every project is open for contributions — and
-            our flagship builds come with full engineering case studies.
+            Wayland compositor. Every project is open for contributions, and our
+            flagship builds come with full engineering case studies.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
             <Link
@@ -275,7 +275,11 @@ export default async function ProjectsPage() {
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {studies.map((study) => (
-                <CaseStudyCard key={study.slug} study={study} showMetrics={false} />
+                <CaseStudyCard
+                  key={study.slug}
+                  study={study}
+                  showMetrics={false}
+                />
               ))}
             </div>
           </section>

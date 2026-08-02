@@ -16,12 +16,12 @@ export const caseStudies: CaseStudy[] = [
     category: "Discord Bot",
     title: "Eigen Bot",
     tagline:
-      "A production-ready, all-in-one Discord bot for community engagement, support tickets, and powerful moderation — built with modern async Python and discord.py.",
+      "A production-ready, all-in-one Discord bot for community engagement, support tickets, and powerful moderation built with modern async Python and discord.py.",
     description:
       "Modular utility bot with thread-based support tickets, starboard, tags, elections, staff applications, and engagement games. Hybrid prefix + slash commands, aiosqlite persistence, and Docker deployment.",
     problem: [
       "Community servers outgrow a single feature. By the time The CodeVerse Hub crossed a thousand members, staff were juggling half a dozen disconnected bots: one for moderation, one for tickets, one for fun games, one for starboard. Each bot had its own permissions model, its own database, and its own failure modes.",
-      "Existing all-in-one bots were either closed-source, paid, or shipped opinionated features the community couldn't extend. The team wanted a self-hosted bot they fully owned — one that could grow with the server, be reloaded without downtime, and be hardened against injection attacks.",
+      "Existing all-in-one bots were either closed-source, paid, or shipped opinionated features the community couldn't extend. The team wanted a self-hosted bot they fully owned one that could grow with the server, be reloaded without downtime, and be hardened against injection attacks.",
     ],
     goals: [
       {
@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Cog Layer",
         description:
-          "Tickets, starboard, tags, elections, staff applications, and games each live in an isolated module that can be hot-reloaded with ?reload — no restarts, no downtime during live events.",
+          "Tickets, starboard, tags, elections, staff applications, and games each live in an isolated module that can be hot-reloaded with ?reload no restarts, no downtime during live events.",
       },
       {
         title: "Persistence",
@@ -87,7 +87,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Support Tickets",
         description:
-          "Thread-based categories (Bugs, Support, Partnerships) with persistent button panels — members open a thread with one click and staff work through it in-place.",
+          "Thread-based categories (Bugs, Support, Partnerships) with persistent button panels members open a thread with one click and staff work through it in-place.",
       },
       {
         title: "Starboard System",
@@ -97,7 +97,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Tag System",
         description:
-          "High-speed storage and retrieval of custom text snippets — staff paste common answers in one command instead of retyping them.",
+          "High-speed storage and retrieval of custom text snippets staff paste common answers in one command instead of retyping them.",
       },
       {
         title: "Elections & Voting",
@@ -118,25 +118,33 @@ export const caseStudies: CaseStudy[] = [
     techStack: [
       {
         name: "Python 3.11+",
-        description: "Core language — modern async patterns keep the bot responsive under load.",
+        description:
+          "Core language modern async patterns keep the bot responsive under load.",
       },
       {
         name: "discord.py",
-        description: "Gateway client with hybrid commands (prefix + slash) and cog support.",
+        description:
+          "Gateway client with hybrid commands (prefix + slash) and cog support.",
       },
       {
         name: "aiosqlite",
-        description: "Async SQLite access for per-feature persistence without blocking the event loop.",
+        description:
+          "Async SQLite access for per-feature persistence without blocking the event loop.",
       },
       {
         name: "Docker / Compose",
-        description: "Reproducible containerized deployment with env-driven configuration.",
+        description:
+          "Reproducible containerized deployment with env-driven configuration.",
       },
     ],
     metrics: [
       { value: "14", label: "GitHub Stars", sub: "and climbing" },
       { value: "15", label: "Forks", sub: "community forks" },
-      { value: "3", label: "Ticket Categories", sub: "Bugs · Support · Partnerships" },
+      {
+        value: "3",
+        label: "Ticket Categories",
+        sub: "Bugs · Support · Partnerships",
+      },
       { value: "2", label: "Core Maintainers", sub: "youngcoder45 · 1Frodox" },
     ],
     results:
@@ -179,7 +187,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     lessons: [
-      "Async I/O discipline pays off — a single blocking call in a shared cog stalls every command, so every feature must stay non-blocking.",
+      "Async I/O discipline pays off a single blocking call in a shared cog stalls every command, so every feature must stay non-blocking.",
       "Documentation-as-code (the /docs markdown set) makes a production bot maintainable by a rotating team of contributors.",
       "Self-hosting is a feature: full control over permissions, data, and deployment turned the bot into a teaching artifact for new Discord developers.",
     ],
@@ -198,18 +206,18 @@ export const caseStudies: CaseStudy[] = [
     category: "Web Platform",
     title: "The CodeVerse Hub Website",
     tagline:
-      "The official home of The CodeVerse Hub — a Next.js 16 platform streaming live GitHub data, a markdown docs engine, and community workflows like ban appeals.",
+      "The official home of The CodeVerse Hub a Next.js 16 platform streaming live GitHub data, a markdown docs engine, and community workflows like ban appeals.",
     description:
       "Static-first Next.js 16 site with ISR, live GitHub repository/contributor data via the REST API (10-minute cache), markdown-rendered docs with TOC, RSS feed, sitemap, and JSON-LD structured data.",
     problem: [
-      "For a community whose entire pitch is 'we build real software', a single landing page linking to Discord was not enough. The org needed a website that did what the community does: ship real, live, open-source software — starting with the site itself.",
+      "For a community whose entire pitch is 'we build real software', a single landing page linking to Discord was not enough. The org needed a website that did what the community does: ship real, live, open-source software starting with the site itself.",
       "The team wanted live GitHub data (repositories, contributors, organization metrics) without hitting rate limits or serving stale numbers, plus a documentation engine that non-maintainers could edit without touching React components.",
     ],
     goals: [
       {
         title: "Live GitHub Data",
         description:
-          "Real-time repository listings, contributor stats, and org metrics fetched from the GitHub REST API — cached for performance.",
+          "Real-time repository listings, contributor stats, and org metrics fetched from the GitHub REST API cached for performance.",
       },
       {
         title: "Documentation",
@@ -224,7 +232,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "SEO & Performance",
         description:
-          "Static generation with ISR, JSON-LD structured data, Open Graph, Twitter cards, sitemap, and optimized fonts — on Netlify's edge.",
+          "Static generation with ISR, JSON-LD structured data, Open Graph, Twitter cards, sitemap, and optimized fonts on Netlify's edge.",
       },
     ],
     architecture: [
@@ -269,12 +277,12 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Live GitHub Integration",
         description:
-          "Real repository data, contributor avatars, org stats, and per-repo details — fetched server-side and cached at 10-minute intervals.",
+          "Real repository data, contributor avatars, org stats, and per-repo details fetched server-side and cached at 10-minute intervals.",
       },
       {
         title: "Docs Engine",
         description:
-          "Markdown content pages with automatic tables of contents, sidebar navigation, and icon badges — editable without touching React.",
+          "Markdown content pages with automatic tables of contents, sidebar navigation, and icon badges editable without touching React.",
       },
       {
         title: "Ban Appeal Workflow",
@@ -290,33 +298,47 @@ export const caseStudies: CaseStudy[] = [
     techStack: [
       {
         name: "Next.js 16",
-        description: "App Router, ISR, and server components for a static-first, fast site.",
+        description:
+          "App Router, ISR, and server components for a static-first, fast site.",
       },
       {
         name: "TypeScript",
-        description: "End-to-end typing across pages, API routes, and the GitHub data layer.",
+        description:
+          "End-to-end typing across pages, API routes, and the GitHub data layer.",
       },
       {
         name: "Tailwind CSS v4",
-        description: "Utility-first styling with shadcn/ui-style primitives and a custom design system.",
+        description:
+          "Utility-first styling with shadcn/ui-style primitives and a custom design system.",
       },
       {
         name: "gray-matter + remark",
-        description: "Markdown content pipeline with GFM support and TOC extraction.",
+        description:
+          "Markdown content pipeline with GFM support and TOC extraction.",
       },
       {
         name: "GitHub REST API",
-        description: "Live org, repo, and contributor data with token-augmented rate limits.",
+        description:
+          "Live org, repo, and contributor data with token-augmented rate limits.",
       },
       {
         name: "Netlify",
-        description: "Edge deployment via @netlify/plugin-nextjs with automatic ISR support.",
+        description:
+          "Edge deployment via @netlify/plugin-nextjs with automatic ISR support.",
       },
     ],
     metrics: [
       { value: "9+", label: "Public Routes", sub: "pages, docs, API, RSS" },
-      { value: "600s", label: "ISR Revalidation", sub: "fresh data, static speed" },
-      { value: "8", label: "GitHub Stars", sub: "the site itself is open source" },
+      {
+        value: "600s",
+        label: "ISR Revalidation",
+        sub: "fresh data, static speed",
+      },
+      {
+        value: "8",
+        label: "GitHub Stars",
+        sub: "the site itself is open source",
+      },
       { value: "3", label: "Forks", sub: "community contributors" },
     ],
     results:
@@ -324,13 +346,13 @@ export const caseStudies: CaseStudy[] = [
     challenges: [
       {
         challenge:
-          "GitHub's API allows only 60 unauthenticated requests per hour — a handful of pages would exhaust the budget in minutes.",
+          "GitHub's API allows only 60 unauthenticated requests per hour a handful of pages would exhaust the budget in minutes.",
         solution:
           "A GITHUB_TOKEN raises the limit to 5,000/hr, and every fetch is wrapped in a 10-minute ISR revalidation plus a JSON file cache that serves stale data during outages.",
       },
       {
         challenge:
-          "Markdown docs need tables, anchors, and a sidebar — remark-html alone renders plain HTML with no navigation.",
+          "Markdown docs need tables, anchors, and a sidebar remark-html alone renders plain HTML with no navigation.",
         solution:
           "remark-gfm renders GitHub-flavored tables, and a custom TOC extraction pass rewrites headings with ids and feeds a sticky DocSidebar.",
       },
@@ -350,7 +372,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Editable Docs Engine",
         description:
-          "Contributors update guides by editing markdown in content/pages — no React knowledge required.",
+          "Contributors update guides by editing markdown in content/pages no React knowledge required.",
       },
       {
         title: "Own Dogfood",
@@ -379,11 +401,11 @@ export const caseStudies: CaseStudy[] = [
     category: "Linux Distribution",
     title: "CodeVerse Linux",
     tagline:
-      "A community-built, Arch-based Linux distribution with a Wayland-first focus — ArchISO profile, curated configs, custom packages, and an interactive installer.",
+      "A community-built, Arch-based Linux distribution with a Wayland-first focus ArchISO profile, curated configs, custom packages, and an interactive installer.",
     description:
       "Arch-based distro built with an ArchISO profile, Wayland-first curated configs (niri, waybar, rofi), a local pacman repo of custom packages, and a beginner-friendly cvh-install installer.",
     problem: [
-      "Mainstream distributions ship heavy defaults tuned for nobody in particular. The CodeVerse Hub community wanted a distro shaped by their own workflow — Wayland-first, developer-oriented, and minimal — and, just as importantly, a shared project that would teach members distro engineering from the inside.",
+      "Mainstream distributions ship heavy defaults tuned for nobody in particular. The CodeVerse Hub community wanted a distro shaped by their own workflow Wayland-first, developer-oriented, and minimal and, just as importantly, a shared project that would teach members distro engineering from the inside.",
       "Distro projects are usually opaque: they expect deep Arch knowledge just to build an ISO. The team set out to make the build path a documented learning journey, so a first-timer could go from 'what is an ISO?' to flashing their own build.",
     ],
     goals: [
@@ -400,7 +422,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Configure",
         description:
-          "Curated Wayland-first configs — niri, waybar, rofi, GRUB theme — committed to the repo as the distro's default experience.",
+          "Curated Wayland-first configs niri, waybar, rofi, GRUB theme committed to the repo as the distro's default experience.",
       },
       {
         title: "Learn",
@@ -428,7 +450,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "ArchISO Profile",
         description:
-          "iso/ holds the packages list, airootfs overlay, and bootloader config — the declarative heart of the distribution.",
+          "iso/ holds the packages list, airootfs overlay, and bootloader config the declarative heart of the distribution.",
       },
       {
         title: "Build Tooling",
@@ -455,7 +477,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Interactive Installer",
         description:
-          "cvh-install guides users through disk selection and setup — no command-line partitioning knowledge required.",
+          "cvh-install guides users through disk selection and setup no command-line partitioning knowledge required.",
       },
       {
         title: "Custom Packages",
@@ -471,7 +493,8 @@ export const caseStudies: CaseStudy[] = [
     techStack: [
       {
         name: "ArchISO",
-        description: "The official Arch tooling for building reproducible ISO profiles.",
+        description:
+          "The official Arch tooling for building reproducible ISO profiles.",
       },
       {
         name: "bash / shell",
@@ -479,25 +502,36 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         name: "niri · waybar · rofi",
-        description: "The Wayland-first default desktop stack shipped in configs/.",
+        description:
+          "The Wayland-first default desktop stack shipped in configs/.",
       },
       {
         name: "GRUB",
-        description: "Bootloader with a custom theme, configured in the ISO profile.",
+        description:
+          "Bootloader with a custom theme, configured in the ISO profile.",
       },
       {
         name: "pacman",
-        description: "Package management, extended by a local repo of custom packages.",
+        description:
+          "Package management, extended by a local repo of custom packages.",
       },
     ],
     metrics: [
       { value: "10", label: "GitHub Stars", sub: "community support" },
       { value: "13", label: "Forks", sub: "heavily forked by learners" },
-      { value: "x86_64", label: "Architecture", sub: "one target, no ambiguity" },
-      { value: "4+", label: "Curated Configs", sub: "niri · waybar · rofi · GRUB" },
+      {
+        value: "x86_64",
+        label: "Architecture",
+        sub: "one target, no ambiguity",
+      },
+      {
+        value: "4+",
+        label: "Curated Configs",
+        sub: "niri · waybar · rofi · GRUB",
+      },
     ],
     results:
-      "CodeVerse Linux became the org's flagship systems project and one of its most-forked repositories. The beginner-first documentation has converted members with zero Linux packaging experience into contributors who can build, flash, and install their own distribution — exactly the 'learn by building' outcome the community exists for.",
+      "CodeVerse Linux became the org's flagship systems project and one of its most-forked repositories. The beginner-first documentation has converted members with zero Linux packaging experience into contributors who can build, flash, and install their own distribution exactly the 'learn by building' outcome the community exists for.",
     challenges: [
       {
         challenge:
@@ -507,7 +541,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         challenge:
-          "The installer wipes the selected disk — one wrong choice and a user's data is gone.",
+          "The installer wipes the selected disk one wrong choice and a user's data is gone.",
         solution:
           "The installer is interactive and warns explicitly at each destructive step; docs recommend VM testing until users are comfortable.",
       },
@@ -527,7 +561,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "One-Command Build",
         description:
-          "./scripts/build-iso.sh turns the profile into a bootable .iso in out/ — the entire pipeline is two commands from clone to flash.",
+          "./scripts/build-iso.sh turns the profile into a bootable .iso in out/ the entire pipeline is two commands from clone to flash.",
       },
       {
         title: "Learning by Doing",
@@ -536,7 +570,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     lessons: [
-      "A distribution is a documentation problem as much as an engineering one — beginner docs doubled the contributor pool.",
+      "A distribution is a documentation problem as much as an engineering one beginner docs doubled the contributor pool.",
       "Declaring everything (profile, packages, configs) in the repo makes builds reproducible and reviewable.",
       "VM-first testing turns a scary system-level project into something a first-timer can safely break and rebuild.",
     ],
@@ -555,11 +589,11 @@ export const caseStudies: CaseStudy[] = [
     category: "Linux Distribution",
     title: "Eclipse Linux",
     tagline:
-      "An experimental Void Linux (musl) distribution powered by the custom dynamod init system — Makefile-driven builds, a TUI installer, and hybrid BIOS+UEFI live ISOs.",
+      "An experimental Void Linux (musl) distribution powered by the custom dynamod init system Makefile-driven builds, a TUI installer, and hybrid BIOS+UEFI live ISOs.",
     description:
       "Minimal Void Linux musl-based distro with a from-scratch dynamod init system. Reproducible Makefile pipeline, SquashFS live ISO with GRUB (BIOS + UEFI), dialog-based TUI installer, and a QEMU test harness.",
     problem: [
-      "Modern distros abstract away everything between kernel and userspace. For a community that wanted to understand systems deeply, mainstream distributions were too opaque — package managers, init systems, and boot flows come pre-assembled with no visible seams.",
+      "Modern distros abstract away everything between kernel and userspace. For a community that wanted to understand systems deeply, mainstream distributions were too opaque package managers, init systems, and boot flows come pre-assembled with no visible seams.",
       "Eclipse Linux started as the org's answer to that opacity: a minimal musl-based distribution where the init system is written by the community itself, and every layer of the stack is visible in the repository.",
     ],
     goals: [
@@ -571,7 +605,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Minimal Base",
         description:
-          "Build on the Void Linux musl rootfs — a tiny, fast base with no systemd and no bloat.",
+          "Build on the Void Linux musl rootfs a tiny, fast base with no systemd and no bloat.",
       },
       {
         title: "Reproducible Build",
@@ -604,7 +638,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Init System",
         description:
-          "dynamod is built from source as a normal user — the community owns the very first process the kernel launches.",
+          "dynamod is built from source as a normal user the community owns the very first process the kernel launches.",
       },
       {
         title: "Root Filesystem",
@@ -626,7 +660,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Custom dynamod Init",
         description:
-          "The distro boots with an init system written by the community — a rare, deeply educational engineering exercise.",
+          "The distro boots with an init system written by the community a rare, deeply educational engineering exercise.",
       },
       {
         title: "Hybrid BIOS + UEFI ISO",
@@ -671,23 +705,35 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     metrics: [
-      { value: "17", label: "GitHub Stars", sub: "the org's most-starred repo" },
-      { value: "5", label: "QEMU Targets", sub: "graphical · serial · install" },
+      {
+        value: "17",
+        label: "GitHub Stars",
+        sub: "the org's most-starred repo",
+      },
+      {
+        value: "5",
+        label: "QEMU Targets",
+        sub: "graphical · serial · install",
+      },
       { value: "musl", label: "Libc", sub: "minimal by design" },
-      { value: "0.1.0", label: "Version Track", sub: "experimental & evolving" },
+      {
+        value: "0.1.0",
+        label: "Version Track",
+        sub: "experimental & evolving",
+      },
     ],
     results:
-      "Eclipse Linux is the org's most-starred repository and its boldest systems experiment. The Makefile pipeline and QEMU harness turned a notoriously fiddly process — distro ISO building — into a repeatable workflow that newcomers can run and extend. dynamod remains the community's flagship from-scratch systems achievement.",
+      "Eclipse Linux is the org's most-starred repository and its boldest systems experiment. The Makefile pipeline and QEMU harness turned a notoriously fiddly process distro ISO building into a repeatable workflow that newcomers can run and extend. dynamod remains the community's flagship from-scratch systems achievement.",
     challenges: [
       {
         challenge:
           "The dynamod init source lives outside the repo and is gitignored, so a fresh clone won't build without it.",
         solution:
-          "make dynamod is a first-class target that clones and builds the init bits locally — documented explicitly as an unprivileged step.",
+          "make dynamod is a first-class target that clones and builds the init bits locally documented explicitly as an unprivileged step.",
       },
       {
         challenge:
-          "ISO building requires sudo, mount, chroot, and loop devices — a fragile host environment.",
+          "ISO building requires sudo, mount, chroot, and loop devices a fragile host environment.",
         solution:
           "Scripts validate every required tool (mksquashfs, xorriso, grub-mkimage, mtools…) and print package hints for Void and Arch hosts.",
       },
@@ -702,7 +748,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "From-Scratch Init",
         description:
-          "The kernel's first userland process is the community's own code — an engineering milestone few projects can claim.",
+          "The kernel's first userland process is the community's own code an engineering milestone few projects can claim.",
       },
       {
         title: "Four-Command Build",
@@ -716,7 +762,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     lessons: [
-      "Systems work rewards a good test harness — the QEMU targets made ISO iteration faster and safer than any hardware workflow.",
+      "Systems work rewards a good test harness the QEMU targets made ISO iteration faster and safer than any hardware workflow.",
       "Explicit version pins (VOID_DATE, ECLIPSE_VERSION) are what turn a pipeline into something reproducible months later.",
       "Documenting trade-offs (stripped firmware) builds trust and invites the right contributions.",
     ],
@@ -735,7 +781,7 @@ export const caseStudies: CaseStudy[] = [
     category: "Discord Bot",
     title: "Miku",
     tagline:
-      "A cute, feature-rich Discord leveling bot with a first-principles XP formula, PostgreSQL persistence, and hybrid commands — built for modern communities.",
+      "A cute, feature-rich Discord leveling bot with a first-principles XP formula, PostgreSQL persistence, and hybrid commands built for modern communities.",
     description:
       "Arcane-inspired leveling bot: 15-25 XP per message with a 60s cooldown, XP = 5·level² + 50·level + 100, rank cards, paginated leaderboards, role rewards, admin level tools, and GitHub search commands.",
     problem: [
@@ -756,7 +802,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Persistence",
         description:
-          "Async PostgreSQL via asyncpg — no flat files, no lost progress, per-guild data isolation.",
+          "Async PostgreSQL via asyncpg no flat files, no lost progress, per-guild data isolation.",
       },
       {
         title: "Extensibility",
@@ -779,7 +825,7 @@ export const caseStudies: CaseStudy[] = [
       "└──────────────────────────────────────────────────────────────────────────┘",
     ],
     systemDesign:
-      "Miku is a cog-based discord.py bot with three layers. The gateway layer subscribes to message events (with the Message Content, Server Members, and Guilds intents) and routes them to hybrid commands. The leveling core applies the XP formula, enforces per-user-per-guild cooldowns, and renders rank cards as rich embeds. All state — XP, level, message counts, role rewards — lives in PostgreSQL through asyncpg, with tables auto-created on first run and isolated per guild.",
+      "Miku is a cog-based discord.py bot with three layers. The gateway layer subscribes to message events (with the Message Content, Server Members, and Guilds intents) and routes them to hybrid commands. The leveling core applies the XP formula, enforces per-user-per-guild cooldowns, and renders rank cards as rich embeds. All state XP, level, message counts, role rewards lives in PostgreSQL through asyncpg, with tables auto-created on first run and isolated per guild.",
     stages: [
       {
         title: "Gateway & Commands",
@@ -799,14 +845,14 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Persistence",
         description:
-          "asyncpg talks to PostgreSQL with per-guild rows keyed by user_id + guild_id — data survives restarts and never crosses servers.",
+          "asyncpg talks to PostgreSQL with per-guild rows keyed by user_id + guild_id data survives restarts and never crosses servers.",
       },
     ],
     features: [
       {
         title: "XP & Leveling",
         description:
-          "Arcane-style curve with documented requirements — level 10 needs 3,850 XP, level 50 needs 89,250 — and anti-farming cooldowns.",
+          "Arcane-style curve with documented requirements level 10 needs 3,850 XP, level 50 needs 89,250 and anti-farming cooldowns.",
       },
       {
         title: "Rank Cards",
@@ -821,7 +867,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "GitHub Integration",
         description:
-          "Repo lookups, user/organization profiles, and repository/user search straight from Discord — a natural fit for a developer community.",
+          "Repo lookups, user/organization profiles, and repository/user search straight from Discord a natural fit for a developer community.",
       },
       {
         title: "Admin Tools",
@@ -836,7 +882,8 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         name: "discord.py",
-        description: "Async gateway client with hybrid commands and cog system.",
+        description:
+          "Async gateway client with hybrid commands and cog system.",
       },
       {
         name: "asyncpg",
@@ -849,8 +896,16 @@ export const caseStudies: CaseStudy[] = [
     ],
     metrics: [
       { value: "30+", label: "Commands", sub: "across 6 cogs" },
-      { value: "15-25", label: "XP per Message", sub: "randomized, 60s cooldown" },
-      { value: "89,250", label: "XP at Level 50", sub: "XP = 5·L² + 50·L + 100" },
+      {
+        value: "15-25",
+        label: "XP per Message",
+        sub: "randomized, 60s cooldown",
+      },
+      {
+        value: "89,250",
+        label: "XP at Level 50",
+        sub: "XP = 5·L² + 50·L + 100",
+      },
       { value: "7", label: "Forks", sub: "community re-deployments" },
     ],
     results:
@@ -863,8 +918,7 @@ export const caseStudies: CaseStudy[] = [
           "Randomized 15-25 XP awards plus a 60-second per-user-per-guild cooldown, with bots and DMs excluded entirely.",
       },
       {
-        challenge:
-          "Level-up spam clutters channels in active servers.",
+        challenge: "Level-up spam clutters channels in active servers.",
         solution:
           "Level-up announcements auto-delete after 10 seconds and can be confined to a dedicated setlevelchannel.",
       },
@@ -879,7 +933,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "First-Principles Formula",
         description:
-          "XP = 5·level² + 50·level + 100 is documented, tunable, and shipped with a level-requirement table — no black-box scoring.",
+          "XP = 5·level² + 50·level + 100 is documented, tunable, and shipped with a level-requirement table no black-box scoring.",
       },
       {
         title: "Real Database, Not Files",
@@ -889,11 +943,11 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Per-Guild Isolation",
         description:
-          "Leaderboards and levels never leak across servers — each guild gets its own isolated dataset.",
+          "Leaderboards and levels never leak across servers each guild gets its own isolated dataset.",
       },
     ],
     lessons: [
-      "Gamification is a retention multiplier — the documented XP curve made the system transparent and therefore trusted.",
+      "Gamification is a retention multiplier the documented XP curve made the system transparent and therefore trusted.",
       "Cooldowns and randomization are the two levers that keep engagement systems fair at scale.",
       "Embedding developer tools (GitHub search) into a community bot made it useful beyond gamification.",
     ],
@@ -912,12 +966,12 @@ export const caseStudies: CaseStudy[] = [
     category: "Systems / Wayland",
     title: "CodeVerse Compositor",
     tagline:
-      "An experimental Wayland compositor written in Rust on Smithay — a modular workspace exploring DRM, input handling, and modern Linux desktop engineering.",
+      "An experimental Wayland compositor written in Rust on Smithay a modular workspace exploring DRM, input handling, and modern Linux desktop engineering.",
     description:
       "Rust workspace on Smithay with five crates: compositor binary, window/layout management, TOML config + keybindings, IPC, and a .desktop launcher. Auto-selects Winit (nested) or DRM (real session) backends, with QEMU test scripts.",
     problem: [
       "For developers who maintain a Linux distribution, the desktop itself was the last black box. How does a window actually get drawn? How does input reach an app? How does a compositor talk to the kernel's DRM subsystem?",
-      "The community wanted to answer those questions in Rust — by writing a compositor from scratch on Smithay — and to build it the way they build everything else: modularly, testably, and shaped by the community's own keybindings and theme.",
+      "The community wanted to answer those questions in Rust by writing a compositor from scratch on Smithay and to build it the way they build everything else: modularly, testably, and shaped by the community's own keybindings and theme.",
     ],
     goals: [
       {
@@ -928,7 +982,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Modular Workspace",
         description:
-          "Five crates — compositor, window, config, IPC, launcher — so each concern is independently testable.",
+          "Five crates compositor, window, config, IPC, launcher so each concern is independently testable.",
       },
       {
         title: "Configuration",
@@ -956,7 +1010,7 @@ export const caseStudies: CaseStudy[] = [
       "└──────────────────────────────────────────────────────────────────────────┘",
     ],
     systemDesign:
-      "The project is a Rust workspace where every responsibility is its own crate. codeverse-compositor hosts the binary and Smithay event loop; codeverse-window owns layouts and the workspace tree; codeverse-config parses TOML into keybindings and themes; codeverse-ipc defines the inter-process protocol; and codeverse-launcher discovers applications from .desktop files. At runtime the binary auto-selects its backend — Winit for nested sessions inside an existing desktop, DRM for a real TTY session.",
+      "The project is a Rust workspace where every responsibility is its own crate. codeverse-compositor hosts the binary and Smithay event loop; codeverse-window owns layouts and the workspace tree; codeverse-config parses TOML into keybindings and themes; codeverse-ipc defines the inter-process protocol; and codeverse-launcher discovers applications from .desktop files. At runtime the binary auto-selects its backend Winit for nested sessions inside an existing desktop, DRM for a real TTY session.",
     stages: [
       {
         title: "Core Compositor",
@@ -983,7 +1037,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: "Dual Backends",
         description:
-          "Run nested inside any desktop (Winit) for development, or on a clean TTY (DRM) for a real compositing session — auto-selected.",
+          "Run nested inside any desktop (Winit) for development, or on a clean TTY (DRM) for a real compositing session auto-selected.",
       },
       {
         title: "TOML Configuration",
@@ -1016,21 +1070,27 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         name: "libdrm · GBM/EGL",
-        description: "Kernel DRM access and GPU buffer management for rendering.",
+        description:
+          "Kernel DRM access and GPU buffer management for rendering.",
       },
       {
         name: "TOML",
-        description: "Human-friendly configuration format for keybindings and themes.",
+        description:
+          "Human-friendly configuration format for keybindings and themes.",
       },
     ],
     metrics: [
-      { value: "5", label: "Workspace Crates", sub: "compositor · window · config · ipc · launcher" },
+      {
+        value: "5",
+        label: "Workspace Crates",
+        sub: "compositor · window · config · ipc · launcher",
+      },
       { value: "2", label: "Backends", sub: "Winit (nested) · DRM (real)" },
       { value: "3", label: "GitHub Stars", sub: "experimental but growing" },
       { value: "WIP", label: "Status", sub: "experimental, from scratch" },
     ],
     results:
-      "CodeVerse Compositor is the org's frontier systems project. The crate split means contributors can land meaningful work — a config parser, a launcher, an IPC type — without touching the compositor core, which makes a notoriously intimidating codebase approachable. The QEMU harness means each milestone is verifiable without burning hardware.",
+      "CodeVerse Compositor is the org's frontier systems project. The crate split means contributors can land meaningful work a config parser, a launcher, an IPC type without touching the compositor core, which makes a notoriously intimidating codebase approachable. The QEMU harness means each milestone is verifiable without burning hardware.",
     challenges: [
       {
         challenge:
@@ -1069,7 +1129,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     lessons: [
-      "Compositor engineering demystifies the desktop — after DRM and input handling, no systems project feels out of reach.",
+      "Compositor engineering demystifies the desktop after DRM and input handling, no systems project feels out of reach.",
       "Nested mode is the right on-ramp: iterate in Winit, then test real sessions in QEMU.",
       "A modular workspace turns a monolith-scale problem into beginner-sized contributions.",
     ],

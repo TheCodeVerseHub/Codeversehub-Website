@@ -1,6 +1,6 @@
 # The Codeverse Hub Website
 
-The official website for [The Codeverse Hub](https://thecodeversehub.tech) — a community-driven open-source organization.
+The official website for [The Codeverse Hub](https://thecodeversehub.tech) -> a community-driven open-source organization.
 
 Built with [Next.js](https://nextjs.org) 16, Tailwind CSS v4, and TypeScript.
 
@@ -8,7 +8,7 @@ Built with [Next.js](https://nextjs.org) 16, Tailwind CSS v4, and TypeScript.
 
 | Route | Description |
 |-------|-------------|
-| `/` | Homepage — hero, features, tech stack, about, stats, projects, contact |
+| `/` | Homepage -> hero, features, tech stack, about, stats, projects, contact |
 | `/about` | Organization mission, vision, and values |
 | `/projects` | All open-source repositories categorized by type, with GitHub stats |
 | `/team` | Maintainers and top contributors |
@@ -20,11 +20,11 @@ Built with [Next.js](https://nextjs.org) 16, Tailwind CSS v4, and TypeScript.
 
 ## Features
 
-- **GitHub Integration** — Real-time repository data, contributor stats, and organization metrics via the GitHub API
-- **RSS Feed** — `/feed.xml` for project update notifications
-- **Sitemap** — Auto-generated `/sitemap.xml`
-- **SEO** — Structured data (JSON-LD), Open Graph, Twitter Cards, metadata
-- **Performance** — Static generation with ISR, optimized fonts, WebGL shader backgrounds
+- **GitHub Integration** -> Real-time repository data, contributor stats, and organization metrics via the GitHub API
+- **RSS Feed** -> `/feed.xml` for project update notifications
+- **Sitemap** -> Auto-generated `/sitemap.xml`
+- **SEO** -> Structured data (JSON-LD), Open Graph, Twitter Cards, metadata
+- **Performance** -> Static generation with ISR, optimized fonts, WebGL shader backgrounds
 
 ## Getting Started
 
@@ -63,4 +63,4 @@ Configured for Netlify via `netlify.toml`. The `@netlify/plugin-nextjs` handles 
 
 ## License
 
-GPL-3.0 — see [LICENSE](LICENSE).
+GPL-3.0 -> see [LICENSE](LICENSE).

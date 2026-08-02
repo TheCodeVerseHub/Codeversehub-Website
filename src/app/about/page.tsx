@@ -29,7 +29,7 @@ const philosophy = [
     icon: Code2,
     title: "Learning by Building",
     description:
-      "We don't believe in tutorial marathons. The best way to learn is to ship real software with real users — and get real feedback on it. That's the whole model.",
+      "We don't believe in tutorial marathons. The best way to learn is to ship real software with real users, and get real feedback on it. That's the whole model.",
   },
   {
     icon: Users,
@@ -94,8 +94,8 @@ export default async function AboutPage() {
             <span className="text-[#22d3ee]">Together.</span>
           </h1>
           <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-2xl">
-            The CodeVerse Hub is an open-source developer community — not just
-            a programming chat room. We&apos;re people who believe the best way to
+            The CodeVerse Hub is an open-source developer community, not just a
+            programming chat room. We&apos;re people who believe the best way to
             learn is to build real software, review real code, and ship real
             projects alongside each other.
           </p>
@@ -109,21 +109,21 @@ export default async function AboutPage() {
           <div className="space-y-5 text-white/50 leading-relaxed">
             <p>
               Most programming communities stop at answering questions. Someone
-              asks, someone answers, everyone moves on — and nobody actually
-              builds anything. We wanted a space where the answer to &ldquo;how do I
-              get experience?&rdquo; isn&apos;t a tutorial link, but a repository you can
-              fork.
+              asks, someone answers, everyone moves on, and nobody actually
+              builds anything. We wanted a space where the answer to &ldquo;how
+              do I get experience?&rdquo; isn&apos;t a tutorial link, but a
+              repository you can fork.
             </p>
             <p>
               So we maintain real open-source projects: Discord bots serving
               thousands of users, a Linux distribution, a Wayland compositor
               written from scratch, developer tools, and this website. When you
-              contribute here, your code ships to real users — and your name
-              goes on a real contribution graph.
+              contribute here, your code ships to real users, and your name goes
+              on a real contribution graph.
             </p>
             <p>
-              That&apos;s the whole point. Beginners get a safe place to make their
-              first PR. Experienced developers get a community that treats
+              That&apos;s the whole point. Beginners get a safe place to make
+              their first PR. Experienced developers get a community that treats
               engineering seriously. And everyone gets a portfolio of software
               they actually helped build.
             </p>
@@ -177,8 +177,8 @@ export default async function AboutPage() {
           </div>
           <p className="text-white/40 text-sm leading-relaxed mt-8 max-w-2xl">
             Consistent, quality contributions get noticed. Active contributors
-            get nominated and voted in as maintainers — influence here is
-            earned through the work you ship, not who you know.
+            get nominated and voted in as maintainers, influence here is earned
+            through the work you ship, not who you know.
           </p>
         </section>
 
@@ -194,10 +194,7 @@ export default async function AboutPage() {
               { value: stats?.forks ?? "30+", label: "Forks" },
               { value: "1,900+", label: "Community Members" },
             ].map((s) => (
-              <div
-                key={s.label}
-                className="cvh-card px-5 py-6 text-center"
-              >
+              <div key={s.label} className="cvh-card px-5 py-6 text-center">
                 <p className="text-2xl md:text-3xl font-bold text-white">
                   {s.value}
                 </p>
@@ -219,12 +216,14 @@ export default async function AboutPage() {
           <div className="w-11 h-11 rounded-lg bg-[rgba(255,255,255,0.06)] flex items-center justify-center mb-4">
             <Eye className="w-5 h-5 text-[#22d3ee]" />
           </div>
-          <h2 className="text-xl font-bold text-white mb-3">The long-term vision</h2>
+          <h2 className="text-xl font-bold text-white mb-3">
+            The long-term vision
+          </h2>
           <p className="text-white/50 leading-relaxed">
             We want open-source contribution to become the default path for
-            developer growth — a world where your first PR is a rite of
-            passage, and where maintainers are made, not born. We&apos;ll get there
-            one merged pull request at a time.
+            developer growth, a world where your first PR is a rite of passage,
+            and where maintainers are made, not born. We&apos;ll get there one
+            merged pull request at a time.
           </p>
         </section>
 

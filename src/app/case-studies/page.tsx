@@ -9,7 +9,7 @@ import { getCaseStudies } from "@/lib/case-studies";
 export const metadata: Metadata = {
   title: "Case Studies | The CodeVerse Hub",
   description:
-    "Deep-dive engineering case studies of The CodeVerse Hub's flagship projects — Discord bots, Linux distributions, a Wayland compositor, and the community website.",
+    "Deep-dive engineering case studies of The CodeVerse Hub's flagship projects, Discord bots, Linux distributions, a Wayland compositor, and the community website.",
   alternates: { canonical: "/case-studies" },
 };
 
@@ -34,10 +34,10 @@ export default function CaseStudiesIndex() {
             How we build
           </h1>
           <p className="text-white/50 text-base md:text-lg max-w-2xl leading-relaxed">
-            Deep-dive write-ups on the engineering behind our flagship
-            projects. Every case study walks through the problem, the
-            architecture, the trade-offs, and the lessons learned — the way we
-            actually ship software at The CodeVerse Hub.
+            Deep-dive write-ups on the engineering behind our flagship projects.
+            Every case study walks through the problem, the architecture, the
+            trade-offs, and the lessons learned the way we actually ship
+            software at The CodeVerse Hub.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
             <Link

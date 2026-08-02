@@ -9,10 +9,10 @@ lastUpdated: February 2026
 
 ## Tech Stack
 
-- **[Next.js](https://nextjs.org/)** — The React framework powering this website, providing server-side rendering and static generation
-- **[Vercel](https://vercel.com/)** — Our hosting and deployment infrastructure, enabling seamless CI/CD
-- **[Lucide Icons](https://lucide.dev/)** — The beautiful, consistent icon set used throughout the site
-- **[Tailwind CSS](https://tailwindcss.com/)** — The utility-first CSS framework that styles every component
+- **[Next.js](https://nextjs.org/)** -> The React framework powering this website, providing server-side rendering and static generation
+- **[Vercel](https://vercel.com/)** -> Our hosting and deployment infrastructure, enabling seamless CI/CD
+- **[Lucide Icons](https://lucide.dev/)** -> The beautiful, consistent icon set used throughout the site
+- **[Tailwind CSS](https://tailwindcss.com/)** -> The utility-first CSS framework that styles every component
 
 ---
 
@@ -20,4 +20,4 @@ lastUpdated: February 2026
 
 Thank you to all our **Staff**, **Contributors**, and **Members** who make this place special. Every question answered, every PR merged, and every discussion shared makes CodeVerse Hub stronger.
 
-> This project is and always will be community-driven. Your contributions — big or small — matter.
+> This project is and always will be community-driven. Your contributions big or small matter.

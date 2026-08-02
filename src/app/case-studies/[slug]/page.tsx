@@ -19,10 +19,7 @@ import {
 import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import {
-  getCaseStudies,
-  getCaseStudy,
-} from "@/lib/case-studies";
+import { getCaseStudies, getCaseStudy } from "@/lib/case-studies";
 
 export const dynamic = "force-static";
 
@@ -34,25 +31,27 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const study = getCaseStudy(slug);
   if (!study) {
     return { title: "Case Study Not Found | The Codeverse Hub" };
   }
   return {
-    title: `${study.title} — Case Study | The Codeverse Hub`,
+    title: `${study.title} -> Case Study | The Codeverse Hub`,
     description: study.description,
     alternates: { canonical: `/case-studies/${study.slug}` },
     openGraph: {
-      title: `${study.title} — Case Study`,
+      title: `${study.title} -> Case Study`,
       description: study.description,
       url: `/case-studies/${study.slug}`,
       type: "article",
     },
     twitter: {
       card: "summary",
-      title: `${study.title} — Case Study`,
+      title: `${study.title} -> Case Study`,
       description: study.description,
     },
   };
@@ -248,10 +247,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
       {/* ── BODY ─────────────────────────────────────────── */}
       <main className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-12 md:py-16 w-full">
         {/* Problem */}
-        <Section number="01" title="Problem" icon={<Target className="w-4 h-4" />}>
+        <Section
+          number="01"
+          title="Problem"
+          icon={<Target className="w-4 h-4" />}
+        >
           <div className="space-y-4">
             {study.problem.map((p, i) => (
-              <p key={i} className="text-[0.9375rem] text-white/50 leading-relaxed">
+              <p
+                key={i}
+                className="text-[0.9375rem] text-white/50 leading-relaxed"
+              >
                 {p}
               </p>
             ))}
@@ -259,7 +265,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Section>
 
         {/* Goals */}
-        <Section number="02" title="Goals" icon={<Target className="w-4 h-4" />}>
+        <Section
+          number="02"
+          title="Goals"
+          icon={<Target className="w-4 h-4" />}
+        >
           <div className="grid gap-3 sm:grid-cols-2">
             {study.goals.map((goal) => (
               <div key={goal.title} className="cvh-card p-5">
@@ -275,7 +285,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Section>
 
         {/* Architecture */}
-        <Section number="03" title="Architecture" icon={<Boxes className="w-4 h-4" />}>
+        <Section
+          number="03"
+          title="Architecture"
+          icon={<Boxes className="w-4 h-4" />}
+        >
           <ArchitectureBlock lines={study.architecture} />
           <p className="text-[0.9375rem] text-white/50 leading-relaxed mb-6">
             {study.systemDesign}
@@ -295,7 +309,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Section>
 
         {/* Key Features */}
-        <Section number="04" title="Key Features" icon={<Sparkles className="w-4 h-4" />}>
+        <Section
+          number="04"
+          title="Key Features"
+          icon={<Sparkles className="w-4 h-4" />}
+        >
           <div className="grid gap-3 sm:grid-cols-2">
             {study.features.map((feature) => (
               <div key={feature.title} className="cvh-card p-5 group">
@@ -311,7 +329,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Section>
 
         {/* Tech Stack */}
-        <Section number="05" title="Tech Stack" icon={<Cpu className="w-4 h-4" />}>
+        <Section
+          number="05"
+          title="Tech Stack"
+          icon={<Cpu className="w-4 h-4" />}
+        >
           <div className="grid gap-3 sm:grid-cols-2">
             {study.techStack.map((tech) => (
               <div
@@ -335,10 +357,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Section>
 
         {/* Results */}
-        <Section number="06" title="Results" icon={<BarChart3 className="w-4 h-4" />}>
+        <Section
+          number="06"
+          title="Results"
+          icon={<BarChart3 className="w-4 h-4" />}
+        >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04] border border-white/[0.04] mb-6">
             {study.metrics.map((metric) => (
-              <div key={metric.label} className="bg-[#0a0a0a] px-4 py-6 text-center">
+              <div
+                key={metric.label}
+                className="bg-[#0a0a0a] px-4 py-6 text-center"
+              >
                 <div className="font-mono text-2xl md:text-3xl text-white leading-none">
                   {metric.value}
                 </div>
@@ -346,7 +375,9 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   {metric.label}
                 </div>
                 {metric.sub && (
-                  <div className="text-[0.625rem] text-white/20 mt-1">{metric.sub}</div>
+                  <div className="text-[0.625rem] text-white/20 mt-1">
+                    {metric.sub}
+                  </div>
                 )}
               </div>
             ))}
@@ -363,7 +394,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
           icon={<AlertTriangle className="w-4 h-4" />}
         >
           {study.challenges.map((c, i) => (
-            <ChallengePair key={i} challenge={c.challenge} solution={c.solution} />
+            <ChallengePair
+              key={i}
+              challenge={c.challenge}
+              solution={c.solution}
+            />
           ))}
         </Section>
 

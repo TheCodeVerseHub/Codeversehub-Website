@@ -44,7 +44,7 @@ const journey = [
     icon: MessageSquare,
     title: "Receive a Review",
     description:
-      "Maintainers and CI review your code — line by line, constructive, and focused on teaching. Respond to feedback and refine.",
+      "Maintainers and CI review your code line by line, constructive, and focused on teaching. Respond to feedback and refine.",
   },
   {
     icon: GitMerge,
@@ -110,8 +110,8 @@ export default function OpenSourceJourney() {
               />
             </h2>
             <p className="text-base md:text-lg text-[#666666] leading-relaxed max-w-2xl mx-auto">
-              From first hello to maintainer, here is exactly how a member
-              goes from lurker to shipping maintainer at The CodeVerse Hub.
+              From first hello to maintainer, here is exactly how a member goes
+              from lurker to shipping maintainer at The CodeVerse Hub.
             </p>
           </div>
 
@@ -125,7 +125,10 @@ export default function OpenSourceJourney() {
               {journey.map((step, i) => {
                 const Icon = step.icon;
                 return (
-                  <li key={step.title} className="relative flex items-start gap-5">
+                  <li
+                    key={step.title}
+                    className="relative flex items-start gap-5"
+                  >
                     <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center border border-[#1a1a1a] bg-[#090909] transition-all duration-300 group-hover:scale-110">
                       <span className="font-mono text-[0.625rem] text-[#22d3ee]">
                         {String(i + 1).padStart(2, "0")}
@@ -159,7 +162,10 @@ export default function OpenSourceJourney() {
               {principles.map((principle) => {
                 const Icon = principle.icon;
                 return (
-                  <div key={principle.title} className="card p-6 group text-center">
+                  <div
+                    key={principle.title}
+                    className="card p-6 group text-center"
+                  >
                     <div className="w-10 h-10 flex items-center justify-center mx-auto mb-4 border border-[#1a1a1a] bg-[rgba(255,255,255,0.04)] transition-all duration-300 group-hover:scale-110">
                       <Icon className="w-5 h-5 text-[#22d3ee]" />
                     </div>

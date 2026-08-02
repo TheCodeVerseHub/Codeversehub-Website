@@ -1,6 +1,6 @@
 # Contributing to CodeVerse Hub
 
-First off, **thank you** for taking the time to contribute — this project and the wider CodeVerse Hub ecosystem are powered by the community.
+First off, **thank you** for taking the time to contribute, this project and the wider CodeVerse Hub ecosystem are powered by the community.
 
 This file is a short, repo-level guide. For the full, always-up-to-date documentation, see the website page:
 
@@ -62,7 +62,7 @@ Check the **Issues** tab for `good first issue` and `help wanted` labels.
 
 - Use small, focused commits
 - PR titles should roughly follow the same convention as commits
-- A PR should do **one logical thing** — avoid drive‑by changes
+- A PR should do **one logical thing** , avoid drive‑by changes
 - Include screenshots or gifs for visual/UI changes
 - Link any related issues in the PR description
 

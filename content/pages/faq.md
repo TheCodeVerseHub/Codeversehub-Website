@@ -5,7 +5,7 @@ icon: help-circle
 lastUpdated: August 2026
 ---
 
-> Before posting in public channels, skim this FAQ first — many common questions are already answered here.
+> Before posting in public channels, skim this FAQ first many common questions are already answered here.
 
 ---
 
@@ -15,7 +15,7 @@ lastUpdated: August 2026
 
 1. Join the [Discord server](https://discord.gg/3xKFvKhuGR).
 2. Introduce yourself in the welcome channel.
-3. Pick your **language roles** and **skill roles** — this unlocks the matching help channels.
+3. Pick your **language roles** and **skill roles** -> this unlocks the matching help channels.
 
 That's it. No application, no fees, no minimum skill requirement.
 
@@ -25,7 +25,7 @@ Yes. Most of our repositories carry issues tagged **`good first issue`** or **`h
 
 ### What should I learn first?
 
-Pick one language and one project you find interesting, then start small. Reading our [contributing guide](/pages/contributing) and the README of any repository will get you further than a month of tutorials. If you are not sure where to start, ask in the community — someone will point you at a good first issue.
+Pick one language and one project you find interesting, then start small. Reading our [contributing guide](/pages/contributing) and the README of any repository will get you further than a month of tutorials. If you are not sure where to start, ask in the community someone will point you at a good first issue.
 
 ---
 
@@ -43,18 +43,18 @@ Full details live in the [contributing guide](/pages/contributing).
 
 ### What is the difference between forking and cloning?
 
-**Forking** copies a repository to your own GitHub account — that is where your changes will live and where your pull request comes from. **Cloning** copies a repository to your local machine so you can edit it. The typical flow is: fork on GitHub, then clone your fork locally.
+**Forking** copies a repository to your own GitHub account that is where your changes will live and where your pull request comes from. **Cloning** copies a repository to your local machine so you can edit it. The typical flow is: fork on GitHub, then clone your fork locally.
 
 ### What makes a good pull request?
 
 - A clear, descriptive title and a short description of *what* and *why*.
-- Small, focused changes — one logical fix per PR.
+- Small, focused changes one logical fix per PR.
 - Commit messages that explain the change, not just "update".
 - Tests or at least a manual test note when the change is non-trivial.
 
 ### How do GitHub code reviews work here?
 
-When you open a PR, maintainers and community members review it inline on GitHub. You get line-by-line feedback on logic, style, performance, and best practices. Reviews are constructive and focused on helping you improve — not on showing off. Respond to feedback, push updates, and once approved, a maintainer merges your PR.
+When you open a PR, maintainers and community members review it inline on GitHub. You get line-by-line feedback on logic, style, performance, and best practices. Reviews are constructive and focused on helping you improve not on showing off. Respond to feedback, push updates, and once approved, a maintainer merges your PR.
 
 ### What happens after my PR is merged?
 
@@ -74,7 +74,7 @@ The community does. Repositories live under the [TheCodeVerseHub GitHub organiza
 
 ### Can I start a project in the organization?
 
-Yes — members who prove themselves can propose new repositories. Discuss the idea in the community first, and if there is interest and a maintainer willing to steward it, it can become an official org project.
+Yes! members who prove themselves can propose new repositories. Discuss the idea in the community first, and if there is interest and a maintainer willing to steward it, it can become an official org project.
 
 ---
 
@@ -84,14 +84,14 @@ Yes — members who prove themselves can propose new repositories. Discuss the i
 
 The server is organized around how people actually learn to build software:
 
-- **Learning & Help** — language help channels where you post the error, the code, and what you tried.
-- **Programming Channels** — deep dives on Linux, web development, AI/ML, systems, databases, and DevOps.
-- **Project Showcase** — share what you are building and get feedback and collaborators.
-- **Code Reviews** — constructive, line-by-line feedback on your code.
-- **Open Source** — guidance and support for your first PR.
-- **Voice Events** — pair programming, Code Review Fridays, and open-source sprints.
-- **Study Groups** — structured groups for DSA, React, Rust, and more.
-- **Resources** — curated docs and roadmaps, no blog spam.
+- **Learning & Help** -> language help channels where you post the error, the code, and what you tried.
+- **Programming Channels** -> deep dives on Linux, web development, AI/ML, systems, databases, and DevOps.
+- **Project Showcase** -> share what you are building and get feedback and collaborators.
+- **Code Reviews** -> constructive, line-by-line feedback on your code.
+- **Open Source** -> guidance and support for your first PR.
+- **Voice Events** -> pair programming, Code Review Fridays, and open-source sprints.
+- **Study Groups** -> structured groups for DSA, React, Rust, and more.
+- **Resources** -> curated docs and roadmaps, no blog spam.
 
 ### What roles exist and how do I get them?
 
@@ -123,8 +123,8 @@ If you still believe you are missing access, open a support ticket so staff can 
 
 - Most bots use **slash commands**. Type `/` in the appropriate bot channel to see options.
 - Some bots have **dedicated channels** (economy, counting, bumping, quiz bots). Commands only work where the bot is allowed.
-- A few bots still use **prefixes** (`!`, `$`, `?`) — check the bot name or pinned messages.
-- Many bots provide a `/help` menu — check that first if you are unsure.
+- A few bots still use **prefixes** (`!`, `$`, `?`) -> check the bot name or pinned messages.
+- Many bots provide a `/help` menu -> check that first if you are unsure.
 
 ---
 
@@ -133,13 +133,13 @@ If you still believe you are missing access, open a support ticket so staff can 
 ### How do I participate in coding events?
 
 1. Watch the **announcements** and **events** channels for new event posts.
-2. Read the event message — it explains how to register, where to submit, and the deadline.
+2. Read the event message it explains how to register, where to submit, and the deadline.
 3. Follow the required submission format (GitHub link, code snippet, or project description).
 4. Keep event pings enabled if you want early notifications.
 
 ### What are the guidelines for submitting projects or challenge answers?
 
-- Share **actual code** (code blocks, repository links, or source files — not executables).
+- Share **actual code** (code blocks, repository links, or source files not executables).
 - Include a short explanation of what the project does and how to run it.
 - Make sure the work is **your own**. If you used external or AI-generated code, clearly credit and explain it.
 - Respect event-specific rules on format, libraries, and deadlines.

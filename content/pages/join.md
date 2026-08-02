@@ -9,11 +9,11 @@ lastUpdated: February 2026
 
 ## Why Join?
 
-- **Learn & Grow** — Get help from experienced developers, find curated resources, and level up your skills
-- **Share Your Work** — Showcase your projects, get feedback, and collaborate with others
-- **Events & Challenges** — Participate in coding contests, mini-challenges, and community events
-- **Open Source** — Contribute to our open-source projects and earn the Contributor role
-- **Hang Out** — Chat about tech, gaming, and everything in between in our casual channels
+- **Learn & Grow** -> Get help from experienced developers, find curated resources, and level up your skills
+- **Share Your Work** -> Showcase your projects, get feedback, and collaborate with others
+- **Events & Challenges** -> Participate in coding contests, mini-challenges, and community events
+- **Open Source** -> Contribute to our open-source projects and earn the Contributor role
+- **Hang Out** -> Chat about tech, gaming, and everything in between in our casual channels
 
 ---
 

@@ -123,20 +123,29 @@ export default function CommunityStats() {
           </h2>
           <p className="text-[#666666] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
             {live
-              ? "Live numbers pulled straight from our GitHub organization."
-              : "Estimates while we wire up live data — GitHub stats load automatically."}
+              ? "Live numbers pulled straight from our GitHub organization/Discord Server."
+              : "Estimates while we wire up live data, GitHub stats load automatically."}
           </p>
           {live && (
             <p className="mt-3 inline-flex items-center gap-2 text-[0.6875rem] font-mono text-[#22d3ee] tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#22d3ee]" style={{ animation: "glow-pulse 2s ease-in-out infinite" }} />
-              LIVE · {snapshot?.fetchedAt ? new Date(snapshot.fetchedAt).toLocaleTimeString() : "github"}
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-[#22d3ee]"
+                style={{ animation: "glow-pulse 2s ease-in-out infinite" }}
+              />
+              LIVE ·{" "}
+              {snapshot?.fetchedAt
+                ? new Date(snapshot.fetchedAt).toLocaleTimeString()
+                : "github"}
             </p>
           )}
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
           {statCards.map((stat) => {
-            const value = live && stat.live && snapshot ? stat.live(snapshot) : stat.fallback;
+            const value =
+              live && stat.live && snapshot
+                ? stat.live(snapshot)
+                : stat.fallback;
             const isPlaceholder = value === "—";
             const note = live && stat.liveNote ? stat.liveNote : stat.note;
             return (

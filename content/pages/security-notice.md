@@ -33,6 +33,6 @@ The following are **NOT** in scope:
 
 ## Response
 
-We will do our best to reply as fast as possible. Responsible disclosure is appreciated — we ask that you give us reasonable time to patch vulnerabilities before making them public.
+We will do our best to reply as fast as possible. Responsible disclosure is appreciated we ask that you give us reasonable time to patch vulnerabilities before making them public.
 
 > Thank you for helping keep CodeVerse Hub safe for everyone.

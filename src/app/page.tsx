@@ -22,11 +22,11 @@ import { ChevronDown, HelpCircle, ExternalLink } from "lucide-react";
 const faqItems = [
   {
     q: "How do I join The CodeVerse Hub?",
-    a: "Join the Discord (button above), introduce yourself in the welcome channel, and pick your language roles to unlock the matching help channels. That's it — no application, no fees, no waiting list.",
+    a: "Join the Discord (button above), introduce yourself in the welcome channel, and pick your language roles to unlock the matching help channels. That's it! no application, no fees, no waiting list.",
   },
   {
     q: "I'm a complete beginner. Can I really contribute?",
-    a: "Yes — most of our repositories have issues tagged 'good first issue' specifically for first-timers. You get paired with mentors who walk you through Git, the PR lifecycle, and your first merge. Many of our maintainers started with zero open-source experience.",
+    a: "Yes! most of our repositories have issues tagged 'good first issue' specifically for first-timers. You get paired with mentors who walk you through Git, the PR lifecycle, and your first merge. Many of our maintainers started with zero open-source experience.",
   },
   {
     q: "How do I contribute to a project?",
@@ -34,7 +34,7 @@ const faqItems = [
   },
   {
     q: "How do code reviews work here?",
-    a: "When you submit a PR, maintainers and community members review it inline on GitHub. You get line-by-line feedback on logic, style, performance, and best practices. Reviews are constructive and focused on helping you improve — not on showing off.",
+    a: "When you submit a PR, maintainers and community members review it inline on GitHub. You get line-by-line feedback on logic, style, performance, and best practices. Reviews are constructive and focused on helping you improve, not on showing off.",
   },
   {
     q: "How do I become a maintainer?",
@@ -54,7 +54,7 @@ const faqItems = [
   },
   {
     q: "Can I showcase my own projects?",
-    a: "Absolutely. There's a dedicated project-showcase area where members share what they're building — get feedback, find collaborators, and promote your work to a community of developers who care about quality software.",
+    a: "Absolutely. There's a dedicated project-showcase area where members share what they're building, get feedback, find collaborators, and promote your work to a community of developers who care about quality software.",
   },
   {
     q: "How do hackathons and events work?",
@@ -115,13 +115,13 @@ export default function Home() {
 
           {/* Expanded hero description */}
           <p className="text-[#666666] text-sm sm:text-base md:text-lg leading-relaxed max-w-[650px] mx-auto mt-8">
-            The CodeVerse Hub isn&apos;t a &ldquo;learn to code&rdquo; server. We chat, connect
-            and build real stuff. Discord bots, Linux distros, web apps,
-            developer tools you name it. No tutorial hell. No fake projects.
-            Just real GitHub repos, real pull requests, real code reviews, and
-            real open-source. Whether you&apos;re shipping your first PR or reviewing
-            everyone else&apos;s, there&apos;s a place for you. Build. Break things.
-            Learn. Repeat.
+            The CodeVerse Hub isn&apos;t a &ldquo;learn to code&rdquo; server.
+            We chat, connect and build real stuff. Discord bots, Linux distros,
+            web apps, developer tools you name it. No tutorial hell. No fake
+            projects. Just real GitHub repos, real pull requests, real code
+            reviews, and real open-source. Whether you&apos;re shipping your
+            first PR or reviewing everyone else&apos;s, there&apos;s a place for
+            you. Build. Break things. Learn. Repeat.
           </p>
 
           {/* Buttons */}
@@ -164,7 +164,7 @@ export default function Home() {
           <TechMarquee />
         </ScrollReveal>
 
-        {/* Community stats — live where possible */}
+        {/* Community stats live where possible */}
         <ScrollReveal delay={150}>
           <div className="section-divider" />
         </ScrollReveal>
@@ -230,8 +230,8 @@ export default function Home() {
                     />
                   </h2>
                   <p className="text-[#666666] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                    Everything you need to know about joining, contributing,
-                    and growing at The CodeVerse Hub.
+                    Everything you need to know about joining, contributing, and
+                    growing at The CodeVerse Hub.
                   </p>
                 </div>
 

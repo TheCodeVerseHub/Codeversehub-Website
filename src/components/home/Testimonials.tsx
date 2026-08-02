@@ -57,12 +57,12 @@ export default function Testimonials() {
             ))}
           </div>
         ) : (
-          /* Honest placeholder — your words could be here. */
+          /* Honest placeholder your words could be here. */
           <div className="max-w-2xl mx-auto border border-dashed border-[#1a1a1a] p-10 md:p-14 text-center">
             <Quote className="w-6 h-6 text-white/20 mx-auto mb-5" />
             <p className="text-white/50 text-base md:text-lg leading-relaxed">
               Testimonials are coming soon. Join the community, ship something,
-              and tell us how it went — your words could end up here.
+              and tell us how it went your words could end up here.
             </p>
             <a
               href={LINKS.DISCORD}

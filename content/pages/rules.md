@@ -5,7 +5,7 @@ icon: shield
 lastUpdated: May 2026
 ---
 
-> These rules exist to protect every member and ensure CodeVerse Hub remains a friendly, welcoming space. Please read them carefully — ignorance is not an excuse.
+> These rules exist to protect every member and ensure CodeVerse Hub remains a friendly, welcoming space. Please read them carefully ignorance is not an excuse.
 
 ## Follow Discord Terms & Guidelines
 
@@ -24,7 +24,7 @@ Do not participate in, joke about, or threaten raids, doxxing, or swatting. Any 
 
 ## No Scams, Malware, or Malicious Links
 
-Using Discord for scams, malware, viruses, IP grabbers, or harmful links is **strictly prohibited** — both inside the server and in DMs.
+Using Discord for scams, malware, viruses, IP grabbers, or harmful links is **strictly prohibited** both inside the server and in DMs.
 
 - Cybersecurity discussions are allowed only in appropriate channels
 - Do not share malware, source code, tutorials, tools, or stream such content
@@ -83,7 +83,7 @@ Advertising is not allowed on this server.
 
 ---
 
-## No Rule Loopholes — Use Common Sense
+## No Rule Loopholes Use Common Sense
 
 These rules are not exhaustive. Trying to bypass rules is not allowed. If you're unsure, ask staff via tickets or just don't do it.
 

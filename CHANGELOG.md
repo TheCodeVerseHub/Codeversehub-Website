@@ -12,25 +12,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Added
 - Ban appeal form at `/ban-appeal` that submits to `/api/ban-appeal` and delivers appeals to a Discord channel via webhook
 - Animated terminal window component with typewriter effect and language switcher (Python / TypeScript / Rust)
-- `Features` section — 8-card grid covering community offerings (help desk, code reviews, OSS hub, etc.)
-- `TechMarquee` component — dual-row infinite scrolling marquee of 28+ languages and frameworks
+- `Features` section 8-card grid covering community offerings (help desk, code reviews, OSS hub, etc.)
+- `TechMarquee` component dual-row infinite scrolling marquee of 28+ languages and frameworks
 - Interactive language-tab buttons in terminal header with visible labels and proper hit areas
 - Subtle grid overlay texture on hero background
 - Social proof strip in hero (active daily · 10+ OSS projects · Free forever)
 
 ### Changed
-- **Hero section** — replaced TextPressure title widget with a bold 3-line headline and Discord CTA button
-- **About section** — rewrote copy with developer-specific language (2am debugging, OSS contributions, 50+ countries)
-- **JoinCTA section** — redesigned as a full card with Discord server icon, member avatar row, and gradient CTA
+- **Hero section** replaced TextPressure title widget with a bold 3-line headline and Discord CTA button
+- **About section** rewrote copy with developer-specific language (2am debugging, OSS contributions, 50+ countries)
+- **JoinCTA section** redesigned as a full card with Discord server icon, member avatar row, and gradient CTA
 - Marquee animations added to `globals.css` with hover-pause behaviour
 - Contributing guide expanded with commit conventions, PR template, code style rules, and full workflow
 
 ### Fixed
-- Language switcher buttons were `8×8px` — increased to pill-shaped labelled tabs with sufficient touch target
+- Language switcher buttons were `8×8px` increased to pill-shaped labelled tabs with sufficient touch target
 
 ---
 
-## [0.3.0] — 2026-02-XX
+## [0.3.0] 2026-02-XX
 
 ### Added
 - `/pages/[slug]` dynamic route with sidebar navigation (`DocSidebar`)
@@ -48,7 +48,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [0.2.0] — 2025-12-XX
+## [0.2.0] 2025-12-XX
 
 ### Added
 - `Stats` section with animated count-up numbers using `IntersectionObserver`
@@ -62,7 +62,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [0.1.0] — 2025-11-XX
+## [0.1.0] 2025-11-XX
 
 ### Added
 - Initial Next.js 15 project scaffold with Turbopack

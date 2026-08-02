@@ -59,7 +59,7 @@ export interface CommunitySnapshot {
 /** Fetch the community snapshot client-side, returning null on any failure. */
 export async function fetchCommunitySnapshot(): Promise<CommunitySnapshot | null> {
   try {
-    // Client-side fetch — caching is handled by the API route's Cache-Control.
+    // Client-side fetch caching is handled by the API route's Cache-Control. A simple one.
     const res = await fetch("/api/github/community");
     if (!res.ok) return null;
     return (await res.json()) as CommunitySnapshot;

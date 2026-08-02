@@ -884,7 +884,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-   ACCESSIBILITY — Reduced Motion
+   ACCESSIBILITY Reduced Motion
    ═══════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
     *,

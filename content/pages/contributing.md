@@ -1,11 +1,11 @@
 ---
 title: Contribution Guide
-description: Everything you need to know about contributing to CodeVerse Hub open-source projects — from first issue to merged PR.
+description: Everything you need to know about contributing to CodeVerse Hub open-source projects from first issue to merged PR.
 icon: hand-heart
 lastUpdated: March 2026
 ---
 
-> Thank you for your interest in contributing to **The CodeVerse Hub**. Every line of code, documentation fix, or bug report makes a difference. We welcome all contributors — regardless of experience level.
+> Thank you for your interest in contributing to **The CodeVerse Hub**. Every line of code, documentation fix, or bug report makes a difference. We welcome all contributors regardless of experience level.
 
 ---
 
@@ -30,11 +30,11 @@ lastUpdated: March 2026
 
 Anyone can contribute. You do not need years of experience or a computer science degree.
 
-- **Beginners** — good first issues are labelled `good first issue`
-- **Experienced devs** — tackle open bugs and feature requests
-- **Designers** — improve UI/UX, icons, and assets
-- **Writers** — fix typos, improve docs, or write guides
-- **DevOps** — help with CI/CD, workflows, and automation
+- **Beginners** -> good first issues are labelled `good first issue`
+- **Experienced devs** -> tackle open bugs and feature requests
+- **Designers** -> improve UI/UX, icons, and assets
+- **Writers** -> fix typos, improve docs, or write guides
+- **DevOps** -> help with CI/CD, workflows, and automation
 
 > If you're unsure where to start, hop into our [Discord server](https://discord.gg/3xKFvKhuGR) and ask in `#contributing`.
 
@@ -171,7 +171,7 @@ Closes #
 - [ ] Follows code style
 ```
 
-> Reviewers may request changes. This is normal and part of the process — please don't take it personally.
+> Reviewers may request changes. This is normal and part of the process please don't take it personally.
 
 ---
 
@@ -179,7 +179,7 @@ Closes #
 
 - Follow the style of the existing codebase
 - Run the linter before committing: `npm run lint`
-- Use meaningful variable names — avoid `x`, `tmp`, `data` on their own
+- Use meaningful variable names avoid `x`, `tmp`, `data` on their own
 - Keep functions small and focused
 - Comment non-obvious logic, but prefer readable code over comments
 - No commented-out dead code in PRs
@@ -191,7 +191,7 @@ For Python repos:
 For TypeScript/Next.js:
 - Prefer functional components and hooks
 - Use `const` over `let` where possible
-- Keep components under ~200 lines — split if larger
+- Keep components under ~200 lines split if larger
 
 ---
 
@@ -215,7 +215,7 @@ For TypeScript/Next.js:
    - The problem you're solving
    - Your proposed solution
    - Alternative approaches you considered
-3. Wait for maintainer approval before building — to avoid wasted effort
+3. Wait for maintainer approval before building to avoid wasted effort
 
 ---
 
@@ -244,7 +244,7 @@ All meaningful contributions are:
 - **Recognised** on our website's contributors section (coming soon)
 - **Rewarded** with the `@Contributors` role on the CodeVerse Hub Discord
 
-We believe every contribution — even a typo fix — matters.
+We believe every contribution even a typo fix matters.
 
 ---
 

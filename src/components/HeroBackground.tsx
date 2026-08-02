@@ -3,7 +3,7 @@
 import { useEffect, useRef, useMemo } from "react";
 
 /* ═══════════════════════════════════════════════════════
-   LAYER 6 — Blueprint Decorations (SVG)
+   LAYER 6 Blueprint Decorations (SVG)
    ═══════════════════════════════════════════════════════ */
 function BlueprintDecorations() {
   return (
@@ -183,13 +183,13 @@ function BlueprintDecorations() {
         <rect x="81.5%" y="16.5%" width="25" height="25" />
       </g>
 
-      {/* Wireframe squares — bottom-left area */}
+      {/* Wireframe squares bottom-left area */}
       <g opacity="0.05" stroke="#ffffff" strokeWidth="0.5" fill="none">
         <rect x="8%" y="75%" width="50" height="50" />
         <rect x="9.5%" y="76.5%" width="30" height="30" />
       </g>
 
-      {/* Technical dots — scattered */}
+      {/* Technical dots scattered */}
       <g fill="rgba(255,255,255,0.1)">
         <circle cx="20%" cy="30%" r="1.5" />
         <circle cx="78%" cy="25%" r="1" />
@@ -205,12 +205,12 @@ function BlueprintDecorations() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   LAYER 7 — SVG Waves
+   LAYER 7 SVG Waves
    ═══════════════════════════════════════════════════════ */
 function SVGWaves() {
   return (
     <>
-      {/* Wave 1 — lower third */}
+      {/* Wave 1 lower third */}
       <svg
         className="absolute w-full pointer-events-none svg-wave-1"
         style={{ zIndex: 7, bottom: "28%", opacity: 0.06 }}
@@ -232,7 +232,7 @@ function SVGWaves() {
         />
       </svg>
 
-      {/* Wave 2 — upper area */}
+      {/* Wave 2 upper area */}
       <svg
         className="absolute w-full pointer-events-none svg-wave-2"
         style={{ zIndex: 7, top: "22%", opacity: 0.05 }}
@@ -258,7 +258,7 @@ function SVGWaves() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   LAYER 8 — Floating Geometric Shapes
+   LAYER 8 Floating Geometric Shapes
    ═══════════════════════════════════════════════════════ */
 function FloatingShapes() {
   const shapes = useMemo(
@@ -463,7 +463,7 @@ function FloatingShapes() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   LAYER 9 — Cursor Spotlight
+   LAYER 9 Cursor Spotlight
    ═══════════════════════════════════════════════════════ */
 function CursorSpotlight() {
   const spotlightRef = useRef<HTMLDivElement>(null);
@@ -503,7 +503,7 @@ function CursorSpotlight() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   MAIN — HeroBackground (composes all 10 layers)
+   MAIN HeroBackground (composes all 10 layers)
    ═══════════════════════════════════════════════════════ */
 export default function HeroBackground() {
   return (

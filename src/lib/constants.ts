@@ -4,7 +4,7 @@
  */
 export const COMMUNITY = {
   /** Estimated active community members */
-  MEMBER_COUNT: "1900+",
+  MEMBER_COUNT: "2000+",
   /** Number of GitHub repositories */
   REPO_COUNT: "15+",
   /** Total GitHub stars across all repos */

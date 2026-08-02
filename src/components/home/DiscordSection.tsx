@@ -18,7 +18,7 @@ const areas = [
     icon: MessageSquare,
     title: "Learning & Help",
     description:
-      "Language help channels where you post the error, the code, and what you tried — and get real answers from developers across every time zone, at any hour.",
+      "Language help channels where you post the error, the code, and what you tried and get real answers from developers across every time zone, at any hour.",
     why: "The fastest way past a bug is someone who has hit it before.",
   },
   {

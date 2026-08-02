@@ -1,11 +1,16 @@
 "use client";
 
 import ShinyText from "@/components/ShinyText";
-import { Rocket, Image as ImageIcon, Github, MessageCircle } from "lucide-react";
+import {
+  Rocket,
+  Image as ImageIcon,
+  Github,
+  MessageCircle,
+} from "lucide-react";
 import { LINKS } from "@/lib/constants";
 
 /**
- * Data shape for a community showcase card. Currently empty — populate from
+ * Data shape for a community showcase card. Currently empty populate from
  * a CMS, a Discord webhook, or a community form once available.
  */
 interface Showcase {
@@ -85,17 +90,32 @@ export default function CommunityShowcase() {
                 </p>
                 <div className="flex items-center gap-3 border-t border-[#1a1a1a] pt-3">
                   {item.github && (
-                    <a href={item.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[0.75rem] text-white/50 hover:text-white transition-colors duration-150">
+                    <a
+                      href={item.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[0.75rem] text-white/50 hover:text-white transition-colors duration-150"
+                    >
                       <Github className="w-3.5 h-3.5" /> Source
                     </a>
                   )}
                   {item.demo && (
-                    <a href={item.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[0.75rem] text-white/50 hover:text-white transition-colors duration-150">
+                    <a
+                      href={item.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[0.75rem] text-white/50 hover:text-white transition-colors duration-150"
+                    >
                       <Rocket className="w-3.5 h-3.5" /> Demo
                     </a>
                   )}
                   {item.discordThread && (
-                    <a href={item.discordThread} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[0.75rem] text-white/50 hover:text-white transition-colors duration-150">
+                    <a
+                      href={item.discordThread}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[0.75rem] text-white/50 hover:text-white transition-colors duration-150"
+                    >
                       <MessageCircle className="w-3.5 h-3.5" /> Thread
                     </a>
                   )}
@@ -104,7 +124,7 @@ export default function CommunityShowcase() {
             ))}
           </div>
         ) : (
-          /* Honest placeholder — no invented projects. */
+          /* Honest placeholder no invented projects. */
           <div className="grid gap-4 sm:grid-cols-3 max-w-5xl mx-auto">
             {[0, 1, 2].map((i) => (
               <div
@@ -114,7 +134,9 @@ export default function CommunityShowcase() {
                 <div className="w-10 h-10 flex items-center justify-center mb-4 border border-[#1a1a1a] bg-[rgba(255,255,255,0.03)]">
                   <ImageIcon className="w-5 h-5 text-white/20" />
                 </div>
-                <p className="text-sm text-white/40 font-medium">Your project here</p>
+                <p className="text-sm text-white/40 font-medium">
+                  Your project here
+                </p>
                 <p className="text-[0.75rem] text-white/25 mt-1.5 leading-relaxed">
                   Showcases are coming soon. Built something with CVH? Share it
                   in the showcase channel.

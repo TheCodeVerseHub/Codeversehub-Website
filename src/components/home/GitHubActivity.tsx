@@ -61,7 +61,7 @@ function buildFeeds(s: CommunitySnapshot): Feed[] {
       items: (s.newestRepos ?? []).map((r) => ({
         key: r.name,
         title: r.name,
-        meta: `${r.language || "—"} · ${timeAgo(r.created_at)}`,
+        meta: `${r.language || "->"} · ${timeAgo(r.created_at)}`,
         sub: `${r.stargazers_count} ★`,
         href: r.html_url,
       })),
@@ -74,7 +74,7 @@ function buildFeeds(s: CommunitySnapshot): Feed[] {
       items: (s.recentlyUpdated ?? []).map((r) => ({
         key: r.name,
         title: r.name,
-        meta: `${r.language || "—"} · pushed ${timeAgo(r.pushed_at)}`,
+        meta: `${r.language || "->"} · pushed ${timeAgo(r.pushed_at)}`,
         href: r.html_url,
       })),
       empty: "No recent commits to show.",
@@ -91,7 +91,7 @@ function buildFeeds(s: CommunitySnapshot): Feed[] {
         sub: pr.user?.login,
         href: pr.html_url,
       })),
-      empty: "No merged pull requests yet — yours could be first.",
+      empty: "No merged pull requests yet, yours could be first.",
     },
     {
       key: "issues",
@@ -132,7 +132,7 @@ function buildFeeds(s: CommunitySnapshot): Feed[] {
         sub: c.repos.slice(0, 2).join(", "),
         href: c.html_url,
       })),
-      empty: "No contributors yet — be the first!",
+      empty: "No contributors yet, be the first!",
     },
   ];
 }
@@ -227,7 +227,7 @@ export default function GitHubActivity() {
             />
           </h2>
           <p className="text-[#666666] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Real activity from our organization — fresh PRs, issues, repos and
+            Real activity from our organization, fresh PRs, issues, repos and
             releases, straight from the GitHub API.
           </p>
         </div>
@@ -260,7 +260,7 @@ export default function GitHubActivity() {
         {failed ? (
           <div className="max-w-6xl mx-auto border border-[#1a1a1a] bg-[#090909] p-10 text-center">
             <p className="text-white/40 text-sm">
-              GitHub activity is unavailable right now — it will load
+              GitHub activity is unavailable right now, it will load
               automatically once the API is reachable.
             </p>
             <a
