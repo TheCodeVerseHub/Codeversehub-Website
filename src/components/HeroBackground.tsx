@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useMemo } from "react";
+import DotGrid from "@/components/DotGrid";
 
 /* ═══════════════════════════════════════════════════════
    LAYER 6 Blueprint Decorations (SVG)
@@ -527,14 +528,25 @@ export default function HeroBackground() {
       {/* Cursor spotlight */}
       <CursorSpotlight />
 
+      {/* Dot grid background */}
+      <DotGrid
+        className="absolute inset-0"
+        style={{ zIndex: 5 }}
+        dotSize={3}
+        gap={12}
+        baseColor="#2F293A"
+        activeColor="#c1f4ed"
+        proximity={120}
+        shockRadius={250}
+        shockStrength={4}
+        resistance={650}
+        returnDuration={1.5}
+      />
+
       {/* Depth: vignette edges */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          zIndex: 10,
-          background:
-            "radial-gradient(ellipse at center, transparent 40%, rgba(5,5,5,0.6) 100%)",
-        }}
+        style={{ zIndex: 11, background: "radial-gradient(ellipse at center, transparent 40%, rgba(5,5,5,0.6) 100%)" }}
       />
     </div>
   );
