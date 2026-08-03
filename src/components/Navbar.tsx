@@ -55,7 +55,7 @@ export default function Navbar() {
             priority
           />
           <span className="font-heading text-sm font-semibold tracking-tight text-white group-hover:text-white transition-colors duration-200">
-            CodeVerse Hub
+            The CodeVerse Hub
           </span>
         </Link>
 
