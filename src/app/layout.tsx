@@ -1,22 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import localGeist from "next/font/local";
+import localFont from "next/font/local";
 import "./globals.css";
 import LoadingScreen from "@/components/LoadingScreen";
 import SiteBackground from "@/components/SiteBackground";
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-heading",
-  weight: ["400", "500", "600", "700"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-mono",
-});
 
 const geist = localGeist({
   src: "../../public/fonts/GeistVF.woff2",
@@ -30,6 +17,80 @@ const geistPixel = localGeist({
   display: "swap",
   variable: "--font-pixel",
   weight: "100 900",
+});
+
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "../../public/fonts/vendor/SpaceGrotesk-400.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/SpaceGrotesk-500.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/SpaceGrotesk-600.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/SpaceGrotesk-700.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  display: "swap",
+  variable: "--font-heading",
+});
+
+const jetbrainsMono = localFont({
+  src: [
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-100.ttf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-200.ttf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-300.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-400.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-500.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-600.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-700.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/vendor/JetBrainsMono-800.ttf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  display: "swap",
+  variable: "--font-mono",
 });
 
 const siteUrl =

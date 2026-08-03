@@ -18,6 +18,7 @@ const moreLinks = [
   { href: "/case-studies", label: "Case Studies" },
   { href: "/team", label: "Team" },
   { href: "/contributing", label: "Contributing" },
+  { href: "/join-organization", label: "Join Organization" },
   { href: "/pages/faq", label: "FAQ" },
   { href: "/pages/rules", label: "Rules" },
   { href: "/ban-appeal", label: "Ban Appeal" },

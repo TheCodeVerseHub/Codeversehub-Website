@@ -34,6 +34,7 @@ const categories: LinkCategory[] = [
     links: [
       { name: "All Projects", href: "/projects" },
       { name: "Case Studies", href: "/case-studies" },
+      { name: "Join Organization", href: "/join-organization" },
       { name: "GitHub Organization", href: LINKS.GITHUB_ORG, external: true },
       { name: "Contribution Guide", href: "/contributing" },
       { name: "Open Source Docs", href: "/pages/contributing" },
