@@ -54,7 +54,7 @@ export async function generateStaticParams() {
     return files
         .filter((file) => file.endsWith(".md"))
         .map((file) => ({
-            slug: file.replace(/\\.md$/, ""),
+            slug: file.replace(/\.md$/, ""),
         }));
 }
 
@@ -88,7 +88,8 @@ async function getPageContent(slug: string | undefined) {
         return null;
     }
 
-    const fullPath = path.join(contentDirectory, `${slug}.md`);
+    const normalizedSlug = slug.replace(/\.md$/i, "");
+    const fullPath = path.join(contentDirectory, `${normalizedSlug}.md`);
 
     try {
         const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -102,8 +103,8 @@ async function getPageContent(slug: string | undefined) {
         const { toc, processedHtml } = extractToc(rawHtml);
 
         return {
-            slug,
-            title: data.title || slug.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()),
+            slug: normalizedSlug,
+            title: data.title || normalizedSlug.replace(/-/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()),
             description: data.description || "",
             icon: data.icon || "",
             lastUpdated: data.lastUpdated || "",
