@@ -8,7 +8,7 @@ import {
   GitPullRequest,
   GitFork,
   Mic,
-  Users,
+  Calendar,
   BookOpen,
 } from "lucide-react";
 import { LINKS } from "@/lib/constants";
@@ -57,11 +57,11 @@ const areas = [
     why: "Some things are easier to solve out loud.",
   },
   {
-    icon: Users,
-    title: "Study Groups",
+    icon: Calendar,
+    title: "Community Activities",
     description:
-      "Structured groups for DSA, React, Rust, and more. Work through problems together, share resources, and hold each other accountable.",
-    why: "Learning with a group sticks better than solo.",
+      "Regular community activities that go beyond text chat, including coding challenges, live coding sessions, movie nights, and voice hangouts.",
+    why: "Shared events turn the Discord into a real community hub.",
   },
   {
     icon: BookOpen,

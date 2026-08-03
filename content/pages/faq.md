@@ -90,7 +90,7 @@ The server is organized around how people actually learn to build software:
 - **Code Reviews** -> constructive, line-by-line feedback on your code.
 - **Open Source** -> guidance and support for your first PR.
 - **Voice Events** -> pair programming, Code Review Fridays, and open-source sprints.
-- **Study Groups** -> structured groups for DSA, React, Rust, and more.
+- **Community Activities** -> coding challenges, live coding sessions, movie nights, and voice hangouts.
 - **Resources** -> curated docs and roadmaps, no blog spam.
 
 ### What roles exist and how do I get them?

@@ -36,6 +36,6 @@ export const SITE = {
   NAME: "The CodeVerse Hub",
   SHORT_NAME: "CodeVerse Hub",
   DESCRIPTION:
-    "A developer community that builds real open-source software. Discord bots, Linux distros, developer tools, and more.",
+    "A developer community that builds real open-source software, hosts community activities, and ships Discord bots, Linux distros, developer tools, and more.",
   TAGLINE: "Write Code. Review PRs. Ship Together.",
 } as const;

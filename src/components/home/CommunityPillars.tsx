@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import ShinyText from "@/components/ShinyText";
-import { Code2, GitPullRequest, Users, Rocket, BookOpen, Globe } from "lucide-react";
+import {
+  Code2,
+  GitPullRequest,
+  Calendar,
+  Rocket,
+  BookOpen,
+  Globe,
+} from "lucide-react";
 
 const features = [
   {
@@ -21,10 +28,10 @@ const features = [
   },
   {
     number: "03",
-    title: "Study Groups",
+    title: "Community Activities",
     description:
-      "Learning DSA or picking up a new framework? Find people at your level and work through it together. Structured, focused, consistent.",
-    icon: Users,
+      "Join regular community activities that keep the server lively beyond text chat. From coding challenges to voice hangouts, there is always something to jump into.",
+    icon: Calendar,
   },
   {
     number: "04",

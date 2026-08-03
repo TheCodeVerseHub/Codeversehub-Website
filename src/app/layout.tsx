@@ -36,7 +36,7 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://thecodeversehub.tech";
 const siteName = "The CodeVerse Hub";
 const siteDescription =
-  "A developer community that builds real open-source software. Discord bots, Linux distros, developer tools, and more.";
+  "A developer community that builds real open-source software, hosts community activities, and ships Discord bots, Linux distros, developer tools, and more.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -52,6 +52,9 @@ export const metadata: Metadata = {
     "programming community",
     "developer discord server",
     "coding help",
+    "community activities",
+    "community events",
+    "coding events",
     "open source projects",
     "learn to code",
     "software engineering community",

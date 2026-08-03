@@ -50,7 +50,7 @@ const faqItems = [
   },
   {
     q: "What actually happens inside the Discord?",
-    a: "Learning & help channels, programming deep-dives, project showcase, code reviews, open-source guidance, voice events, study groups, and curated resources. It's built so you move from asking questions to shipping software.",
+    a: "Learning & help channels, programming deep-dives, project showcase, code reviews, open-source guidance, community activities, and curated resources. It's built so you move from asking questions to shipping software.",
   },
   {
     q: "Can I showcase my own projects?",
