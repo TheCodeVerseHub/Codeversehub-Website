@@ -1,21 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import ShinyText from "@/components/ShinyText";
-import { Quote, MessageCircle } from "lucide-react";
+import { ExternalLink, MessageCircle, Quote } from "lucide-react";
 import { LINKS } from "@/lib/constants";
+import {
+  testimonialSourceLinks,
+  testimonials,
+  type TestimonialEntry,
+} from "@/components/home/testimonials-data";
 
-/**
- * Real testimonials live here once we collect them (e.g. via a form or
- * Discord pins). We deliberately do NOT invent quotes.
- */
-interface Testimonial {
-  id: string;
-  quote: string;
-  author: string;
-  role: string;
+function platformStyles(platform: TestimonialEntry["platform"]) {
+  return platform === "Top.gg"
+    ? "border-white/15 bg-white/5 text-white"
+    : "border-[#1a1a1a] bg-[rgba(255,255,255,0.03)] text-[#afafaf]";
 }
-
-const testimonials: Testimonial[] = [];
 
 export default function Testimonials() {
   return (
@@ -40,19 +39,62 @@ export default function Testimonials() {
         </div>
 
         {testimonials.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-3 max-w-5xl mx-auto">
-            {testimonials.map((t) => (
-              <figure key={t.id} className="card p-7">
-                <Quote className="w-5 h-5 text-[#22d3ee] mb-4" />
-                <blockquote className="text-[0.9375rem] text-white/80 leading-relaxed mb-5">
-                  {t.quote}
-                </blockquote>
-                <figcaption className="text-[0.8125rem] text-white font-medium">
-                  {t.author}
-                  <span className="block text-[0.75rem] text-white/30 mt-0.5">
-                    {t.role}
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 max-w-6xl mx-auto">
+            {testimonials.map((t, index) => (
+              <figure
+                key={t.id}
+                className="card p-6 md:p-7 flex flex-col animate-testimonial-rise opacity-0"
+                style={{ animationDelay: `${index * 90}ms` }}
+              >
+                <div className="flex items-start gap-4 mb-5">
+                  <Image
+                    src={t.avatarSource}
+                    alt={`${t.username} profile picture`}
+                    width={52}
+                    height={52}
+                    unoptimized
+                    className="w-[52px] h-[52px] rounded-full border border-[#1a1a1a] bg-[#0a0a0a] shrink-0"
+                    title={t.avatarNote}
+                  />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <figcaption className="text-sm font-semibold text-white leading-none">
+                        {t.username}
+                      </figcaption>
+                      <span
+                        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[0.625rem] font-mono tracking-wider uppercase ${platformStyles(
+                          t.platform,
+                        )}`}
+                      >
+                        {t.platform}
+                      </span>
+                    </div>
+                    <p className="text-[0.75rem] text-white/35 font-mono">
+                      {t.dateLabel}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 text-[#22d3ee] mb-4">
+                  <Quote className="w-4 h-4 shrink-0" />
+                  <span className="text-[0.75rem] font-mono uppercase tracking-wider text-[#22d3ee]/60">
+                    Review
                   </span>
-                </figcaption>
+                </div>
+
+                <blockquote className="text-[0.9375rem] text-white/80 leading-relaxed flex-1">
+                  {t.review}
+                </blockquote>
+
+                <a
+                  href={t.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center gap-1.5 text-[0.6875rem] font-mono uppercase tracking-wider text-[#666666] hover:text-white transition-colors duration-150"
+                >
+                  View source
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </figure>
             ))}
           </div>
@@ -75,6 +117,28 @@ export default function Testimonials() {
             </a>
           </div>
         )}
+
+        <p className="text-center text-[0.8125rem] text-[#666666] mt-10">
+          Reviews are sourced from our public{" "}
+          <a
+            href={testimonialSourceLinks.topgg}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-[#afafaf] transition-colors duration-150"
+          >
+            Top.gg
+          </a>{" "}
+          and{" "}
+          <a
+            href={testimonialSourceLinks.disboard}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-[#afafaf] transition-colors duration-150"
+          >
+            DISBOARD
+          </a>{" "}
+          listings.
+        </p>
       </div>
     </section>
   );
