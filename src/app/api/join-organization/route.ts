@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import {
   checkRateLimit,
   createApplicationRecord,
-  getRecentApplicationByGithubUsername,
+  findRecentDuplicate,
+  generateApplicationId,
+  hasPreviousApplications,
+  writeApplicationBackup,
 } from "@/lib/application-storage";
 import { logger } from "@/lib/application-logger";
 import {
@@ -10,6 +13,11 @@ import {
   JOIN_ORGANIZATION_MIN_SUBMIT_AGE_MS,
   JOIN_ORGANIZATION_SITE_URL,
 } from "@/config/webhook";
+import { fetchGitHubProfile, type GitHubProfile } from "@/lib/github-profile";
+import {
+  analyzeApplication,
+  describeAccountAge,
+} from "@/lib/application-analysis";
 
 function normalizeString(value: unknown): string {
   if (typeof value !== "string") return "";
@@ -50,18 +58,6 @@ function isValidUrl(value: string): boolean {
   }
 }
 
-function containsSpamPatterns(value: string): boolean {
-  const patterns = [
-    /\bcrypto\s*(giveaway|free|claim)\b/i,
-    /\b(?:buy|sell)\s*(?:nitro|discord\s*admin)\b/i,
-    /\b(?:free|cheap)\s*(?:followers|likes|boosts)\b/i,
-    /\b(?:bit\.ly|tinyurl|discord(?:gift|nitro)\.(?:ru|cn))\b/i,
-    /(.)\1{20,}/,
-    /(https?:\/\/[^\s]+\s?){4,}/i,
-  ];
-  return patterns.some((pattern) => pattern.test(value));
-}
-
 function getClientIp(req: Request): string {
   const forwarded = req.headers.get("x-forwarded-for");
   if (forwarded) {
@@ -99,6 +95,49 @@ function buildField(name: string, value: string, inline = false) {
     value: value || "—",
     inline,
   };
+}
+
+type Field = ReturnType<typeof buildField>;
+
+/**
+ * Discord caps an embed at 6000 characters total. The form allows generous
+ * input, so shrink the longest values until the embed fits within budget.
+ */
+function fitFieldsToBudget(fields: Field[], budget = 5000): Field[] {
+  const total = fields.reduce(
+    (sum, field) => sum + field.name.length + field.value.length,
+    0,
+  );
+  if (total <= budget) return fields;
+
+  const working = fields.map((field) => ({ ...field }));
+  let current = total;
+  let guard = 0;
+
+  while (current > budget && guard < 40) {
+    let longestIndex = -1;
+    let longestLength = 0;
+    working.forEach((field, index) => {
+      if (field.value.length > longestLength) {
+        longestLength = field.value.length;
+        longestIndex = index;
+      }
+    });
+    if (longestIndex === -1 || longestLength < 60) break;
+
+    const field = working[longestIndex];
+    const newLength = Math.max(60, Math.floor(longestLength / 1.6));
+    current -= longestLength - newLength;
+    field.value = truncate(field.value, newLength);
+    guard += 1;
+  }
+
+  return working;
+}
+
+function normalizeArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((entry) => normalizeString(entry)).filter(Boolean);
 }
 
 export async function POST(req: Request) {
@@ -157,6 +196,8 @@ export async function POST(req: Request) {
     );
   }
 
+  /* ── Extract & normalize ── */
+
   const fullName = normalizeString(data.fullName);
   const githubUsername = normalizeString(data.githubUsername);
   const email = normalizeString(data.email);
@@ -167,21 +208,26 @@ export async function POST(req: Request) {
   const discordActivity = normalizeString(data.discordActivity);
   const aboutYou = normalizeMultiline(data.aboutYou);
   const experience = normalizeString(data.experience);
-  const languages = Array.isArray(data.languages)
-    ? data.languages.map((entry) => normalizeString(entry)).filter(Boolean)
-    : [];
+  const languages = normalizeArray(data.languages);
   const openSourceExperience = normalizeString(data.openSourceExperience);
+  const projectTypes = normalizeArray(data.projectTypes);
+  const projectTypesOther = normalizeString(data.projectTypesOther);
+  const weeklyHours = normalizeString(data.weeklyHours);
+  const osMotivation = normalizeMultiline(data.osMotivation);
+  const priorOpenSource = normalizeString(data.priorOpenSource) === "Yes" ? "Yes" : "No";
+  const priorProjectName = normalizeString(data.priorProjectName);
+  const priorProjectLink = normalizeString(data.priorProjectLink);
+  const priorContribution = normalizeMultiline(data.priorContribution);
   const projects = normalizeMultiline(data.projects);
   const whyJoin = normalizeMultiline(data.whyJoin);
-  const contributionInterests = Array.isArray(data.contributionInterests)
-    ? data.contributionInterests
-        .map((entry) => normalizeString(entry))
-        .filter(Boolean)
-    : [];
+  const contributionInterests = normalizeArray(data.contributionInterests);
   const portfolio = normalizeString(data.portfolio);
   const linkedin = normalizeString(data.linkedin);
+  const hopingToGain = normalizeMultiline(data.hopingToGain);
   const additionalNotes = normalizeMultiline(data.additionalNotes);
   const agreement = Boolean(data.agreement);
+
+  /* ── Validation ── */
 
   if (!githubUsername) {
     return NextResponse.json(
@@ -267,6 +313,75 @@ export async function POST(req: Request) {
     );
   }
 
+  if (projectTypes.length === 0) {
+    return NextResponse.json(
+      { error: "Select at least one type of project you enjoy building." },
+      { status: 400 },
+    );
+  }
+
+  if (projectTypes.includes("Other") && !projectTypesOther) {
+    return NextResponse.json(
+      { error: "Specify the other project types you enjoy building." },
+      { status: 400 },
+    );
+  }
+
+  if (!weeklyHours) {
+    return NextResponse.json(
+      { error: "Select how many hours you can contribute per week." },
+      { status: 400 },
+    );
+  }
+
+  if (!osMotivation) {
+    return NextResponse.json(
+      { error: "Tell us what motivates you to contribute to open source." },
+      { status: 400 },
+    );
+  }
+
+  if (osMotivation.length < 30) {
+    return NextResponse.json(
+      { error: "Open source motivation must be at least 30 characters." },
+      { status: 400 },
+    );
+  }
+
+  if (osMotivation.length > 1500) {
+    return NextResponse.json(
+      { error: "Open source motivation must be 1500 characters or less." },
+      { status: 400 },
+    );
+  }
+
+  if (priorOpenSource === "Yes") {
+    if (!priorProjectName) {
+      return NextResponse.json(
+        { error: "Tell us the project you contributed to." },
+        { status: 400 },
+      );
+    }
+    if (!priorProjectLink || !isValidUrl(priorProjectLink)) {
+      return NextResponse.json(
+        { error: "Provide a valid link to the project you contributed to." },
+        { status: 400 },
+      );
+    }
+    if (!priorContribution) {
+      return NextResponse.json(
+        { error: "Describe your contribution to the project." },
+        { status: 400 },
+      );
+    }
+    if (priorContribution.length > 1000) {
+      return NextResponse.json(
+        { error: "Contribution description must be 1000 characters or less." },
+        { status: 400 },
+      );
+    }
+  }
+
   if (!whyJoin) {
     return NextResponse.json(
       { error: "Why do you want to join is required." },
@@ -291,6 +406,13 @@ export async function POST(req: Request) {
   if (projects.length > 1200) {
     return NextResponse.json(
       { error: "Projects must be 1200 characters or less." },
+      { status: 400 },
+    );
+  }
+
+  if (hopingToGain.length > 1000) {
+    return NextResponse.json(
+      { error: "Hoping to gain must be 1000 characters or less." },
       { status: 400 },
     );
   }
@@ -323,29 +445,29 @@ export async function POST(req: Request) {
     );
   }
 
-  const spamCheckFields = [
-    fullName,
-    githubUsername,
-    email,
-    discordUsername,
-    aboutYou,
-    projects,
-    whyJoin,
-    additionalNotes,
-  ].filter(Boolean);
+  /* ── GitHub verification (do not continue if the user doesn't exist) ── */
 
-  for (const field of spamCheckFields) {
-    if (containsSpamPatterns(field)) {
-      logger.warn("Spam pattern detected", {
-        ip: clientIp,
-        field: field.slice(0, 60),
-      });
-      return NextResponse.json(
-        { error: "Your submission was flagged as spam." },
-        { status: 400 },
-      );
-    }
+  let githubProfile: GitHubProfile | null = null;
+  let githubVerified = false;
+  const githubResult = await fetchGitHubProfile(githubUsername);
+
+  if (githubResult.status === "notfound") {
+    return NextResponse.json(
+      {
+        error:
+          "This GitHub username doesn't exist. Double-check the spelling before submitting.",
+      },
+      { status: 400 },
+    );
   }
+
+  if (githubResult.status === "found") {
+    githubProfile = githubResult.profile;
+    githubVerified = true;
+  }
+  // On transient GitHub API errors we still accept but mark as unverified.
+
+  /* ── Rate limit ── */
 
   const rateLimitResult = await checkRateLimit({
     ip: clientIp,
@@ -368,16 +490,106 @@ export async function POST(req: Request) {
     );
   }
 
-  const duplicate = await getRecentApplicationByGithubUsername(githubUsername);
-  if (duplicate) {
-    return NextResponse.json(
-      {
-        error:
-          "You already submitted an application recently. Please wait for a response before submitting again.",
-      },
-      { status: 409 },
-    );
-  }
+  /* ── Duplicate detection (warn, never silently accept; do not reject) ── */
+
+  const duplicate = await findRecentDuplicate({
+    githubUsername,
+    discordUsername,
+    email,
+  });
+
+  const previousApplicant = await hasPreviousApplications({
+    githubUsername,
+    discordUsername,
+    email,
+  });
+
+  /* ── Staff-only analysis (score + risk flags) ── */
+
+  const analysis = analyzeApplication({
+    fullName,
+    githubUsername,
+    email,
+    discordUsername,
+    aboutYou,
+    projects,
+    whyJoin,
+    additionalNotes,
+    osMotivation,
+    hopingToGain,
+    priorContribution,
+    experience,
+    openSourceExperience,
+    weeklyHours,
+    portfolio,
+    linkedin,
+    priorProjectLink,
+    languages,
+    projectTypes,
+    contributionInterests,
+    githubProfile,
+  });
+
+  /* ── Pre-generate application ID (record is persisted only after the
+     webhook succeeds, so a failed delivery doesn't create a duplicate). ── */
+
+  const applicationId = await generateApplicationId();
+
+  const backupSnapshot = {
+    githubUsername,
+    fullName,
+    email,
+    discordMember,
+    discordUsername,
+    discordUserId,
+    discordActivity,
+    aboutYou,
+    experience,
+    languages,
+    openSourceExperience,
+    projectTypes,
+    projectTypesOther,
+    weeklyHours,
+    osMotivation,
+    priorOpenSource,
+    priorProjectName,
+    priorProjectLink,
+    priorContribution,
+    projects,
+    whyJoin,
+    contributionInterests,
+    portfolio,
+    linkedin,
+    hopingToGain,
+    additionalNotes,
+    githubVerified,
+    githubProfile: githubProfile
+      ? {
+          login: githubProfile.login,
+          name: githubProfile.name,
+          bio: githubProfile.bio,
+          followers: githubProfile.followers,
+          following: githubProfile.following,
+          public_repos: githubProfile.public_repos,
+          location: githubProfile.location,
+          company: githubProfile.company,
+          created_at: githubProfile.created_at,
+          html_url: githubProfile.html_url,
+        }
+      : null,
+    staffOnly: {
+      score: analysis.score,
+      breakdown: analysis.breakdown,
+      spamScore: analysis.spamScore,
+      riskFlags: analysis.riskFlags,
+      verdict: analysis.verdict,
+      duplicateDetected: duplicate.duplicate,
+      matchedKeys: duplicate.matchedKeys,
+      previousApplicant,
+    },
+  };
+
+  /* ── Build Discord webhook ── */
 
   const safeFullName = truncate(fullName, 256);
   const safeGithubUsername = truncate(githubUsername, 64);
@@ -389,6 +601,24 @@ export async function POST(req: Request) {
   const safeExperience = truncate(experience, 128);
   const safeLanguages = truncate(languages.join(", "), 1024);
   const safeOpenSourceExperience = truncate(openSourceExperience, 128);
+  const safeProjectTypes = truncate(
+    [
+      ...projectTypes,
+      ...(projectTypes.includes("Other") && projectTypesOther
+        ? [projectTypesOther]
+        : []),
+    ].join(", "),
+    1024,
+  );
+  const safeWeeklyHours = truncate(weeklyHours, 64);
+  const safeOsMotivation = truncate(osMotivation, 1024);
+  const safePriorOpenSource =
+    priorOpenSource === "Yes"
+      ? truncate(
+          [priorProjectName, priorProjectLink, priorContribution].join("\n"),
+          1024,
+        )
+      : "No";
   const safeProjects = truncate(projects || "—", 1024);
   const safeWhyJoin = truncate(whyJoin, 1024);
   const safeInterests = truncate(
@@ -399,6 +629,7 @@ export async function POST(req: Request) {
   );
   const safePortfolio = truncate(portfolio, 256);
   const safeLinkedIn = truncate(linkedin, 256);
+  const safeHopingToGain = truncate(hopingToGain || "—", 1024);
   const safeAdditionalNotes = truncate(additionalNotes, 1024);
 
   const fields = [
@@ -421,27 +652,116 @@ export async function POST(req: Request) {
     buildField("Experience", safeExperience, true),
     buildField("Languages", safeLanguages, false),
     buildField("Open Source Experience", safeOpenSourceExperience, true),
+    buildField("Project Types", safeProjectTypes, false),
+    buildField("Weekly Availability", safeWeeklyHours, true),
+    buildField("Open Source Motivation", safeOsMotivation, false),
+    buildField("Prior Open Source Contribution", safePriorOpenSource, false),
     buildField("Projects", safeProjects, false),
     buildField("Contribution Interests", safeInterests || "—", false),
     buildField("Portfolio", safePortfolio || "—", true),
     buildField("LinkedIn", safeLinkedIn || "—", true),
     buildField("Why Join?", safeWhyJoin, false),
+    buildField("Hoping to Gain", safeHopingToGain, false),
     buildField("Additional Notes", safeAdditionalNotes || "—", false),
   );
 
-  const payload = {
-    embeds: [
-      {
-        title: "New GitHub Organization Application",
-        color: 0x22d3ee,
-        fields,
-        timestamp: new Date().toISOString(),
-        footer: {
-          text: "The CodeVerse Hub Website",
-        },
+  // GitHub profile embed (only when verified).
+  const embeds: Record<string, unknown>[] = [
+    {
+      title: "New GitHub Organization Application",
+      color: 0x22d3ee,
+      fields: fitFieldsToBudget(fields),
+      timestamp: new Date().toISOString(),
+      footer: {
+        text: `The CodeVerse Hub Website · ${applicationId}`,
       },
-    ],
-  };
+    },
+  ];
+
+  if (githubProfile) {
+    embeds.push({
+      title: "GitHub Profile",
+      color: 0x161b22,
+      thumbnail: { url: githubProfile.avatar_url },
+      fields: [
+        buildField(
+          "Name",
+          truncate(githubProfile.name || githubProfile.login, 128),
+          true,
+        ),
+        buildField("Followers", String(githubProfile.followers), true),
+        buildField("Following", String(githubProfile.following), true),
+        buildField("Public Repos", String(githubProfile.public_repos), true),
+        buildField("Account Age", describeAccountAge(githubProfile), true),
+        buildField("Location", githubProfile.location || "—", true),
+        buildField("Company", githubProfile.company || "—", true),
+        buildField("Bio", githubProfile.bio || "—", false),
+        buildField(
+          "Profile",
+          `[${githubProfile.login}](${githubProfile.html_url})`,
+          false,
+        ),
+      ],
+    });
+  }
+
+  // Staff-only review embed.
+  const staffFields = [
+    buildField("Application Score", `${analysis.score}/100`, true),
+    buildField("Spam Score", `${analysis.spamScore}/100`, true),
+    buildField(
+      "Verdict",
+      analysis.verdict.charAt(0).toUpperCase() + analysis.verdict.slice(1),
+      true,
+    ),
+    buildField(
+      "Risk Flags",
+      analysis.riskFlags.length > 0
+        ? analysis.riskFlags.map((flag) => `• ${flag}`).join("\n")
+        : "None",
+      false,
+    ),
+    buildField(
+      "Duplicate Detected",
+      duplicate.duplicate
+        ? `Yes (${duplicate.matchedKeys.join(", ")}) — prior application ${duplicate.previousApplicationId}`
+        : "No",
+      true,
+    ),
+    buildField("GitHub Exists", githubVerified ? "Yes" : "Unverified", true),
+    buildField("Portfolio Included", portfolio ? "Yes" : "No", true),
+    buildField("Previous Applicant", previousApplicant ? "Yes" : "No", true),
+    buildField("Application ID", applicationId, true),
+  ];
+
+  embeds.push({
+    title: "Staff Only — Review Notes",
+    color: analysis.verdict === "spam" ? 0xef4444 : analysis.verdict === "sus" ? 0xf59e0b : 0x22c55e,
+    fields: staffFields,
+    footer: {
+      text: "Score & flags are internal. Do not share with the applicant.",
+    },
+  });
+
+  // Webhook action buttons: GitHub profile, and portfolio when provided.
+  const components: Record<string, unknown>[] = [
+    {
+      type: 1,
+      components: [
+        {
+          type: 2,
+          style: 5,
+          label: "GitHub Profile",
+          url: `https://github.com/${githubUsername}`,
+        },
+        ...(portfolio
+          ? [{ type: 2, style: 5, label: "Portfolio", url: portfolio }]
+          : []),
+      ],
+    },
+  ];
+
+  const payload = { embeds, components };
 
   try {
     const discordRes = await fetch(DISCORD_APPLICATION_WEBHOOK, {
@@ -449,6 +769,25 @@ export async function POST(req: Request) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
+
+    let backupPath: string | null = null;
+
+    if (discordRes.ok) {
+      await createApplicationRecord({
+        id: applicationId,
+        githubUsername,
+        email,
+        discordMember,
+        discordUsername,
+        score: analysis.score,
+      });
+
+      backupPath = await writeApplicationBackup({
+        applicationId,
+        githubUsername,
+        snapshot: backupSnapshot,
+      });
+    }
 
     if (!discordRes.ok) {
       if (discordRes.status === 404) {
@@ -476,21 +815,27 @@ export async function POST(req: Request) {
       );
     }
 
-    const applicationId = await createApplicationRecord({
-      githubUsername,
-      email,
-      discordMember,
-    });
-
     logger.audit("GitHub organization application submitted", {
       applicationId,
       githubUsername,
       discordMember,
+      score: analysis.score,
+      verdict: analysis.verdict,
+      duplicate: duplicate.duplicate,
+      backup: backupPath,
     });
 
     return NextResponse.json(
       {
         ok: true,
+        applicationId,
+        duplicateWarning: duplicate.duplicate
+          ? {
+              message:
+                "We noticed a similar application was already submitted recently. We've still received this one — staff will review it, but you only need to apply once.",
+              matchedKeys: duplicate.matchedKeys,
+            }
+          : null,
         message:
           "Application submitted. We will review it manually and contact you if needed.",
       },
