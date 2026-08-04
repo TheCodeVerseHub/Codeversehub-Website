@@ -27,13 +27,19 @@ export type GitHubLookupResult =
   | { status: "notfound" }
   | { status: "error"; message: string };
 
+const FETCH_TIMEOUT_MS = 4000;
+
 export async function fetchGitHubProfile(
   username: string,
 ): Promise<GitHubLookupResult> {
   try {
     const res = await fetch(
       `${GITHUB_API}/users/${encodeURIComponent(username)}`,
-      { headers, cache: "no-store" },
+      {
+        headers,
+        cache: "no-store",
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      },
     );
 
     if (res.status === 404) {

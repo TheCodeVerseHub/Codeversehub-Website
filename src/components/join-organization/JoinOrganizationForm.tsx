@@ -369,9 +369,9 @@ function GitHubProfileCard({
       <div className="mt-3 flex items-start gap-2 text-xs text-amber-400/90 border border-[#1a1a1a] bg-[rgba(255,255,255,0.02)] px-3.5 py-2.5 rounded-lg">
         <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0" />
         <span>
-          GitHub is temporarily unavailable, so we couldn&apos;t verify this
-          username. You can still continue — we verify on our end before
-          processing.
+          We couldn&apos;t auto-fetch this GitHub profile right now (GitHub may be
+          rate-limited or briefly unavailable). You can still submit — our
+          staff verify the profile from the GitHub link on the application.
         </span>
       </div>
     );
@@ -798,7 +798,8 @@ export default function JoinOrganizationForm() {
           />
           <p id="githubUsername-help" className="text-xs text-white/30 mt-1">
             Example: youngcoder45 — we fetch your profile automatically to
-            verify your account.
+            verify your account. If GitHub is down, you can still submit and
+            staff will verify from the link.
           </p>
           <FieldError error={errors.githubUsername} />
           <GitHubProfileCard

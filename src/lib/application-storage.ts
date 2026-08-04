@@ -132,9 +132,9 @@ function identityKeys(
   email: string,
 ): string[] {
   return [
-    githubUsername.toLowerCase(),
-    discordUsername.toLowerCase(),
-    email.toLowerCase(),
+    (githubUsername || "").toLowerCase(),
+    (discordUsername || "").toLowerCase(),
+    (email || "").toLowerCase(),
   ].filter(Boolean);
 }
 
