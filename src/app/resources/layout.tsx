@@ -4,14 +4,14 @@ import React from "react";
 export const metadata: Metadata = {
   title: "Developer Resources | The Codeverse Hub",
   description:
-    "Hand-picked programming resources for Python, Rust, JavaScript, TypeScript, C++, Java, Go and more from The Codeverse Hub community.",
+    "500+ hand-curated developer resources — programming languages, web & mobile development, databases, DevOps, cloud, AI/ML, cybersecurity, system design, and more. Official docs, courses, books, and practice platforms from The Codeverse Hub community.",
   alternates: {
     canonical: "/resources",
   },
   openGraph: {
     title: "Developer Resources | The Codeverse Hub",
     description:
-      "Hand-picked programming resources for Python, Rust, JavaScript, TypeScript, C++, Java, Go and more from The Codeverse Hub community.",
+      "500+ hand-curated developer resources across every topic — official docs, courses, books, and practice platforms from The Codeverse Hub community.",
     url: "/resources",
     type: "website",
   },
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Developer Resources | The Codeverse Hub",
     description:
-      "Curated coding resources for all levels, from The Codeverse Hub.",
+      "500+ curated coding resources for all levels, from The Codeverse Hub.",
   },
 };
 

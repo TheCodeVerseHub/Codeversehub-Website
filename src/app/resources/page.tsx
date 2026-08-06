@@ -1,27 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Wrench } from "lucide-react";
+import {
+  ArrowLeft,
+  Atom,
+  BadgeCheck,
+  BookOpen,
+  Brain,
+  Briefcase,
+  Cloud,
+  Code2,
+  Container,
+  Cpu,
+  Database,
+  ExternalLink,
+  FileText,
+  Gamepad2,
+  Globe,
+  GraduationCap,
+  MousePointerClick,
+  Palette,
+  PlayCircle,
+  ScrollText,
+  Search,
+  Server,
+  Shield,
+  Smartphone,
+  Terminal,
+  Users,
+  X,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
+import type {
+  Badge,
+  Resource,
+  ResourceCategory,
+} from "@/lib/resources";
+import { languages as initialLanguages } from "@/lib/resources/data/languages";
 
-interface Resource {
-  title: string;
-  url: string;
-  description: string;
-  tag?: string;
-}
-
-interface Category {
-  id: string;
-  label: string;
-  icon: React.ReactNode;
-  description: string;
-  sections: {
-    heading: string;
-    resources: Resource[];
-  }[];
-}
+/* ── Logo images (existing assets) ───────────────────────────── */
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
   return (
@@ -30,11 +57,13 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
       alt={alt}
       className="w-5 h-5"
       loading="lazy"
+      width={20}
+      height={20}
     />
   );
 }
 
-const logos: Record<string, React.ReactNode> = {
+const logos: Record<string, ReactNode> = {
   python: <LogoImage src="/assets/logos/python.svg" alt="Python" />,
   rust: <LogoImage src="/assets/logos/rust.svg" alt="Rust" />,
   javascript: <LogoImage src="/assets/logos/javascript.svg" alt="JavaScript" />,
@@ -43,763 +72,273 @@ const logos: Record<string, React.ReactNode> = {
   go: <LogoImage src="/assets/logos/go.svg" alt="Go" />,
 };
 
-const categories: Category[] = [
-  {
-    id: "python",
-    label: "Python",
-    icon: logos.python,
-    description:
-      "From automating scripts to machine learning the most beginner-friendly powerhouse.",
-    sections: [
-      {
-        heading: "Beginner",
-        resources: [
-          {
-            title: "Automate the Boring Stuff with Python",
-            url: "https://automatetheboringstuff.com/",
-            description:
-              "One of the best books out there for beginners. Teaches basics and automation.",
-            tag: "Free Book",
-          },
-          {
-            title: "CS50P: Intro to Programming with Python",
-            url: "https://cs50.harvard.edu/python/2022/",
-            description:
-              "Harvard's free self-paced course. Highly recommended.",
-            tag: "Course",
-          },
-          {
-            title: "Python Crash Course",
-            url: "https://nostarch.com/pythoncrashcourse2e",
-            description:
-              "A fast-paced, thorough introduction to programming with Python.",
-            tag: "Book",
-          },
-          {
-            title: "Real Python",
-            url: "https://realpython.com/",
-            description: "A treasure trove of quizzes, tutorials, and content.",
-            tag: "Tutorials",
-          },
-        ],
-      },
-      {
-        heading: "Intermediate & Advanced",
-        resources: [
-          {
-            title: "Fluent Python",
-            url: "https://www.oreilly.com/library/view/fluent-python/9781491946237/",
-            description:
-              "Deep dives into Python's internals. A must-read for professionals.",
-            tag: "Book",
-          },
-          {
-            title: "Effective Python",
-            url: "https://effectivepython.com/",
-            description: "90 best practices for writing excellent Python code.",
-            tag: "Book",
-          },
-          {
-            title: "Software Design by Example",
-            url: "https://third-bit.com/sdxpy/",
-            description:
-              "A tool-based introduction to software design patterns in Python.",
-            tag: "Free Book",
-          },
-        ],
-      },
-      {
-        heading: "Data Science & ML",
-        resources: [
-          {
-            title: "Data Science from Scratch",
-            url: "https://www.oreilly.com/library/view/data-science-from/9781492041122/",
-            description: "A ground-up introduction to data science.",
-            tag: "Book",
-          },
-          {
-            title: "Kaggle Pandas Tutorial",
-            url: "https://www.kaggle.com/learn/pandas",
-            description: "Interactive tutorial for learning Pandas.",
-            tag: "Interactive",
-          },
-          {
-            title: "Neural Networks from Scratch",
-            url: "https://nnfs.io/",
-            description:
-              "Build neural networks from scratch to understand deep learning.",
-            tag: "Book",
-          },
-          {
-            title: "Google Colab",
-            url: "https://colab.research.google.com/",
-            description:
-              "Run code in the cloud with GPU support, perfect for ML experiments.",
-            tag: "Tool",
-          },
-        ],
-      },
-      {
-        heading: "Video Tutorials",
-        resources: [
-          {
-            title: "Corey Schafer",
-            url: "https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g",
-            description:
-              "High-quality tutorials on Python, Django, Flask, and more.",
-            tag: "YouTube",
-          },
-          {
-            title: "Sentdex",
-            url: "https://www.youtube.com/user/sentdex",
-            description:
-              "Enormous amount of Python content for all skill levels.",
-            tag: "YouTube",
-          },
-          {
-            title: "mCoding",
-            url: "https://www.youtube.com/@mCoding",
-            description:
-              "Advanced Python concepts and deep dives into Python internals.",
-            tag: "YouTube",
-          },
-        ],
-      },
-    ],
+/* ── Category icons ──────────────────────────────────────────── */
+
+const categoryIcons: Record<string, LucideIcon> = {
+  languages: Code2,
+  web: Globe,
+  mobile: Smartphone,
+  backend: Server,
+  databases: Database,
+  devops: Container,
+  cloud: Cloud,
+  "ai-ml": Brain,
+  security: Shield,
+  cs: GraduationCap,
+  career: Briefcase,
+  design: Palette,
+  gamedev: Gamepad2,
+  hardware: Cpu,
+  science: Atom,
+  linux: Terminal,
+  productivity: Zap,
+};
+
+/* Sidebar display labels (known statically, since categories load lazily).
+   Keep in sync with the `label` field in each data module. */
+const categoryLabels: Record<string, string> = {
+  languages: "Programming Languages",
+  web: "Web Development",
+  mobile: "Mobile Development",
+  backend: "Backend",
+  databases: "Databases",
+  devops: "DevOps",
+  cloud: "Cloud",
+  "ai-ml": "AI & Machine Learning",
+  security: "Cybersecurity",
+  cs: "Computer Science",
+  career: "Career & System Design",
+  design: "Design",
+  gamedev: "Game Development",
+  hardware: "Hardware & Robotics",
+  science: "Mathematics & Physics",
+  linux: "Linux",
+  productivity: "Productivity",
+};
+
+/* ── Lazy data loading ─────────────────────────────────────────
+   Only the default category ships in the initial bundle; every
+   other category is loaded on demand (and search pulls in the
+   rest progressively). Keeps the page's JS footprint small.     */
+
+const categoryLoaders: Record<string, () => Promise<ResourceCategory>> = {
+  languages: () =>
+    import("@/lib/resources/data/languages").then((m) => m.languages),
+  web: () => import("@/lib/resources/data/web").then((m) => m.web),
+  mobile: () => import("@/lib/resources/data/mobile").then((m) => m.mobile),
+  backend: () => import("@/lib/resources/data/backend").then((m) => m.backend),
+  databases: () =>
+    import("@/lib/resources/data/databases").then((m) => m.databases),
+  devops: () => import("@/lib/resources/data/devops").then((m) => m.devops),
+  cloud: () => import("@/lib/resources/data/cloud").then((m) => m.cloud),
+  "ai-ml": () => import("@/lib/resources/data/ai-ml").then((m) => m.aiMl),
+  security: () => import("@/lib/resources/data/security").then((m) => m.security),
+  cs: () => import("@/lib/resources/data/cs").then((m) => m.cs),
+  career: () => import("@/lib/resources/data/career").then((m) => m.career),
+  design: () => import("@/lib/resources/data/design").then((m) => m.design),
+  gamedev: () => import("@/lib/resources/data/gamedev").then((m) => m.gameDev),
+  hardware: () => import("@/lib/resources/data/hardware").then((m) => m.hardware),
+  science: () => import("@/lib/resources/data/science").then((m) => m.science),
+  linux: () => import("@/lib/resources/data/linux").then((m) => m.linux),
+  productivity: () =>
+    import("@/lib/resources/data/productivity").then((m) => m.productivity),
+};
+
+/* ── Badge styling (monochrome + subtle cyan accent) ─────────── */
+
+const badgeStyles: Record<
+  Badge,
+  { icon: LucideIcon; className: string }
+> = {
+  Official: { icon: BadgeCheck, className: "border-white/30 text-white" },
+  Community: { icon: Users, className: "border-white/10 text-white/60" },
+  Interactive: {
+    icon: MousePointerClick,
+    className: "border-[#22d3ee]/40 text-[#22d3ee]",
   },
-  {
-    id: "rust",
-    label: "Rust",
-    icon: logos.rust,
-    description:
-      "Memory safety without garbage collection blazingly fast, reliable, and productive.",
-    sections: [
-      {
-        heading: "Getting Started",
-        resources: [
-          {
-            title: "The Rust Programming Language (The Book)",
-            url: "https://doc.rust-lang.org/book/",
-            description:
-              "The official Rust book. The definitive starting point for learning Rust.",
-            tag: "Free Book",
-          },
-          {
-            title: "Rust By Example",
-            url: "https://doc.rust-lang.org/rust-by-example/",
-            description:
-              "Learn Rust through annotated example programs you can run in the browser.",
-            tag: "Interactive",
-          },
-          {
-            title: "Rustlings",
-            url: "https://github.com/rust-lang/rustlings",
-            description:
-              "Small exercises to get you used to reading and writing Rust code.",
-            tag: "Exercises",
-          },
-          {
-            title: "A Half Hour to Learn Rust",
-            url: "https://fasterthanli.me/articles/a-half-hour-to-learn-rust",
-            description:
-              "A lightning-fast introduction to Rust syntax and concepts.",
-            tag: "Article",
-          },
-        ],
-      },
-      {
-        heading: "Intermediate & Advanced",
-        resources: [
-          {
-            title: "Programming Rust (O'Reilly)",
-            url: "https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/",
-            description:
-              "Comprehensive guide covering Rust's speed, concurrency, and safety.",
-            tag: "Book",
-          },
-          {
-            title: "Rust for Rustaceans",
-            url: "https://nostarch.com/rust-rustaceans",
-            description:
-              "Intermediate-level guide for developers who know the basics.",
-            tag: "Book",
-          },
-          {
-            title: "The Rustonomicon",
-            url: "https://doc.rust-lang.org/nomicon/",
-            description:
-              "The dark arts of unsafe Rust advanced memory and concurrency patterns.",
-            tag: "Free Book",
-          },
-          {
-            title: "Rust Design Patterns",
-            url: "https://rust-unofficial.github.io/patterns/",
-            description:
-              "A catalogue of Rust design patterns, anti-patterns and idioms.",
-            tag: "Free Book",
-          },
-        ],
-      },
-      {
-        heading: "Async & Systems",
-        resources: [
-          {
-            title: "Asynchronous Programming in Rust",
-            url: "https://rust-lang.github.io/async-book/",
-            description:
-              "Official guide to async/await in Rust with Tokio and Futures.",
-            tag: "Free Book",
-          },
-          {
-            title: "Zero To Production In Rust",
-            url: "https://www.zero2prod.com/",
-            description:
-              "Build a real-world email newsletter API, learning backend dev in Rust.",
-            tag: "Book",
-          },
-          {
-            title: "Comprehensive Rust (Google)",
-            url: "https://google.github.io/comprehensive-rust/",
-            description:
-              "Google's multi-day Rust course covering bare metal to async.",
-            tag: "Course",
-          },
-        ],
-      },
-      {
-        heading: "Video Tutorials",
-        resources: [
-          {
-            title: "Jon Gjengset",
-            url: "https://www.youtube.com/@jonhoo",
-            description:
-              "Deep Rust streams Crust of Rust series is a must-watch.",
-            tag: "YouTube",
-          },
-          {
-            title: "No Boilerplate",
-            url: "https://www.youtube.com/@NoBoilerplate",
-            description:
-              "Fast, technical videos about Rust and why it matters.",
-            tag: "YouTube",
-          },
-          {
-            title: "Let's Get Rusty",
-            url: "https://www.youtube.com/@letsgetrusty",
-            description:
-              "Follows The Rust Book chapter by chapter in video form.",
-            tag: "YouTube",
-          },
-        ],
-      },
-    ],
+  "Video Course": { icon: PlayCircle, className: "border-white/10 text-white/60" },
+  Documentation: {
+    icon: FileText,
+    className: "border-white/15 text-white/70",
   },
-  {
-    id: "javascript",
-    label: "JavaScript / TypeScript",
-    icon: logos.javascript,
-    description:
-      "The language of the web from interactive UIs to full-stack servers and beyond.",
-    sections: [
-      {
-        heading: "JavaScript Fundamentals",
-        resources: [
-          {
-            title: "MDN Web Docs",
-            url: "https://developer.mozilla.org/",
-            description:
-              "The definitive resource for Web Development HTML, CSS, JS reference.",
-            tag: "Docs",
-          },
-          {
-            title: "The Odin Project",
-            url: "https://www.theodinproject.com/",
-            description:
-              "A full-stack web development curriculum. Completely free and open source.",
-            tag: "Course",
-          },
-          {
-            title: "JavaScript.info",
-            url: "https://javascript.info/",
-            description:
-              "Modern JavaScript tutorial from basics to advanced. Extremely thorough.",
-            tag: "Free Book",
-          },
-          {
-            title: "Eloquent JavaScript",
-            url: "https://eloquentjavascript.net/",
-            description:
-              "A modern introduction to programming through JavaScript.",
-            tag: "Free Book",
-          },
-        ],
-      },
-      {
-        heading: "TypeScript",
-        resources: [
-          {
-            title: "TypeScript Handbook",
-            url: "https://www.typescriptlang.org/docs/handbook/",
-            description:
-              "The official TypeScript handbook. The best starting point.",
-            tag: "Docs",
-          },
-          {
-            title: "Total TypeScript",
-            url: "https://www.totaltypescript.com/",
-            description:
-              "Matt Pocock's comprehensive TypeScript courses from beginner to wizard.",
-            tag: "Course",
-          },
-          {
-            title: "Type Challenges",
-            url: "https://github.com/type-challenges/type-challenges",
-            description:
-              "Practice advanced TypeScript type gymnastics with community challenges.",
-            tag: "Exercises",
-          },
-          {
-            title: "Effective TypeScript",
-            url: "https://effectivetypescript.com/",
-            description:
-              "62 specific ways to improve your TypeScript. Intermediate level.",
-            tag: "Book",
-          },
-        ],
-      },
-      {
-        heading: "Frameworks & Ecosystem",
-        resources: [
-          {
-            title: "React Docs (react.dev)",
-            url: "https://react.dev/",
-            description:
-              "Official React documentation with interactive examples and guides.",
-            tag: "Docs",
-          },
-          {
-            title: "Next.js Learn",
-            url: "https://nextjs.org/learn",
-            description:
-              "Official Next.js interactive tutorial. Build a full-stack app step by step.",
-            tag: "Course",
-          },
-          {
-            title: "Node.js Best Practices",
-            url: "https://github.com/goldbergyoni/nodebestpractices",
-            description:
-              "Comprehensive guide to Node.js production-grade best practices.",
-            tag: "Guide",
-          },
-          {
-            title: "Deno Manual",
-            url: "https://deno.land/manual",
-            description:
-              "The modern JavaScript/TypeScript runtime. Secure by default.",
-            tag: "Docs",
-          },
-        ],
-      },
-      {
-        heading: "Video Tutorials",
-        resources: [
-          {
-            title: "Fireship",
-            url: "https://www.youtube.com/@Fireship",
-            description:
-              "Fast-paced tech explainers and 100-second concept breakdowns.",
-            tag: "YouTube",
-          },
-          {
-            title: "Theo (t3.gg)",
-            url: "https://www.youtube.com/@t3dotgg",
-            description:
-              "TypeScript, Next.js, tRPC modern full-stack web development.",
-            tag: "YouTube",
-          },
-          {
-            title: "Jack Herrington",
-            url: "https://www.youtube.com/@jherr",
-            description:
-              "Deep dives into React, TypeScript, and frontend architecture.",
-            tag: "YouTube",
-          },
-        ],
-      },
-    ],
+  Book: { icon: BookOpen, className: "border-white/10 text-white/60" },
+  Practice: { icon: Code2, className: "border-white/10 text-white/60" },
+  "Cheat Sheet": {
+    icon: ScrollText,
+    className: "border-white/15 text-white/70",
   },
-  {
-    id: "cpp",
-    label: "C / C++",
-    icon: logos.cpp,
-    description:
-      "Low-level power for systems, game engines, and performance-critical applications.",
-    sections: [
-      {
-        heading: "C Fundamentals",
-        resources: [
-          {
-            title: "Beej's Guide to C Programming",
-            url: "https://beej.us/guide/bgc/",
-            description:
-              "A free, friendly guide that walks you through modern C programming.",
-            tag: "Free Book",
-          },
-          {
-            title: "C Programming Language (K&R)",
-            url: "https://en.wikipedia.org/wiki/The_C_Programming_Language",
-            description:
-              "The classic C book still one of the best references around.",
-            tag: "Book",
-          },
-          {
-            title: "Learn C in Y Minutes",
-            url: "https://learnxinyminutes.com/docs/c/",
-            description:
-              "Compact reference-style overview of C syntax and idioms.",
-            tag: "Article",
-          },
-        ],
-      },
-      {
-        heading: "Modern C++",
-        resources: [
-          {
-            title: "C++ Core Guidelines",
-            url: "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines",
-            description:
-              "Curated best practices for modern C++ from the C++ community.",
-            tag: "Guide",
-          },
-          {
-            title: "cppreference",
-            url: "https://en.cppreference.com/w/",
-            description:
-              "The go-to online reference for the C and C++ standard libraries.",
-            tag: "Docs",
-          },
-          {
-            title: "Effective Modern C++",
-            url: "https://www.oreilly.com/library/view/effective-modern-c/9781491908419/",
-            description:
-              "Focused guidance on writing clean, modern C++11 and C++14 code.",
-            tag: "Book",
-          },
-        ],
-      },
-      {
-        heading: "Video & Practice",
-        resources: [
-          {
-            title: "The Cherno C++",
-            url: "https://www.youtube.com/playlist?list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT",
-            description:
-              "Popular C++ playlist covering the language from the ground up.",
-            tag: "YouTube",
-          },
-          {
-            title: "freeCodeCamp C++ Course",
-            url: "https://www.youtube.com/watch?v=vLnPwxZdW4Y",
-            description: "A full C++ course on YouTube aimed at beginners.",
-            tag: "YouTube",
-          },
-          {
-            title: "CodinGame",
-            url: "https://www.codingame.com/",
-            description:
-              "Solve puzzles and compete in code battles in many languages including C++.",
-            tag: "Exercises",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "java",
-    label: "Java",
-    icon: logos.java,
-    description:
-      "Battle-tested language for backend services, Android apps, and enterprise systems.",
-    sections: [
-      {
-        heading: "Getting Started",
-        resources: [
-          {
-            title: "The Java™ Tutorials",
-            url: "https://docs.oracle.com/javase/tutorial/",
-            description:
-              "Official tutorials from Oracle covering core Java concepts.",
-            tag: "Docs",
-          },
-          {
-            title: "Head First Java",
-            url: "https://www.oreilly.com/library/view/head-first-java/0596009208/",
-            description:
-              "Beginner-friendly, visual introduction to Java and object-oriented thinking.",
-            tag: "Book",
-          },
-          {
-            title: "Java Programming: Solving Problems with Software",
-            url: "https://www.coursera.org/learn/java-programming",
-            description:
-              "A Coursera course that introduces Java via practical problem solving.",
-            tag: "Course",
-          },
-        ],
-      },
-      {
-        heading: "Intermediate & Advanced",
-        resources: [
-          {
-            title: "Effective Java",
-            url: "https://www.oreilly.com/library/view/effective-java-3rd/9780134686097/",
-            description:
-              "Best practices and patterns for writing robust, modern Java.",
-            tag: "Book",
-          },
-          {
-            title: "Modern Java in Action",
-            url: "https://www.manning.com/books/modern-java-in-action",
-            description:
-              "Covers streams, lambdas, and modern Java features with real examples.",
-            tag: "Book",
-          },
-          {
-            title: "Spring Boot Reference Documentation",
-            url: "https://docs.spring.io/spring-boot/reference/htmlsingle/",
-            description:
-              "Official guide to building production-grade services with Spring Boot.",
-            tag: "Docs",
-          },
-        ],
-      },
-      {
-        heading: "Video & Practice",
-        resources: [
-          {
-            title: "freeCodeCamp Java Course",
-            url: "https://www.youtube.com/watch?v=grEKMHGYyns",
-            description: "Free full Java course on YouTube for beginners.",
-            tag: "YouTube",
-          },
-          {
-            title: "Bro Code Java Playlist",
-            url: "https://www.youtube.com/playlist?list=PLZPZq0r_RZOPa03Q9Mjl7wQ0X_z4J8TZ-",
-            description:
-              "Beginner-friendly Java tutorials with lots of practical examples.",
-            tag: "YouTube",
-          },
-          {
-            title: "HackerRank Java Track",
-            url: "https://www.hackerrank.com/domains/java",
-            description:
-              "Practice Java problems from basic syntax to advanced topics.",
-            tag: "Exercises",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "go",
-    label: "Go (Golang)",
-    icon: logos.go,
-    description:
-      "Simple, fast, and concurrent ideal for microservices, tooling, and cloud-native apps.",
-    sections: [
-      {
-        heading: "Getting Started",
-        resources: [
-          {
-            title: "A Tour of Go",
-            url: "https://go.dev/tour/",
-            description:
-              "Official interactive introduction to Go straight in your browser.",
-            tag: "Interactive",
-          },
-          {
-            title: "The Go Programming Language",
-            url: "https://www.gopl.io/",
-            description:
-              "Canonical book that teaches Go through clear examples and exercises.",
-            tag: "Book",
-          },
-          {
-            title: "Go by Example",
-            url: "https://gobyexample.com/",
-            description:
-              "Hands-on introduction to Go using annotated example programs.",
-            tag: "Guide",
-          },
-          {
-            title: "Go Documentation",
-            url: "https://go.dev/doc/",
-            description:
-              "Official docs, tutorials, and references for the Go language.",
-            tag: "Docs",
-          },
-        ],
-      },
-      {
-        heading: "Intermediate & Advanced",
-        resources: [
-          {
-            title: "Effective Go",
-            url: "https://go.dev/doc/effective_go",
-            description:
-              "Guidelines for writing clear, idiomatic, and efficient Go.",
-            tag: "Guide",
-          },
-          {
-            title: "Concurrency in Go",
-            url: "https://www.oreilly.com/library/view/concurrency-in-go/9781491941294/",
-            description:
-              "In-depth look at concurrency patterns and design in Go.",
-            tag: "Book",
-          },
-          {
-            title: "Go Proverbs",
-            url: "https://go-proverbs.github.io/",
-            description:
-              "Short, insightful sayings capturing Go's philosophy and idioms.",
-            tag: "Article",
-          },
-        ],
-      },
-      {
-        heading: "Video & Practice",
-        resources: [
-          {
-            title: "JustForFunc: Programming in Go",
-            url: "https://www.youtube.com/@justforfunc",
-            description:
-              "YouTube channel focused on building real-world projects in Go.",
-            tag: "YouTube",
-          },
-          {
-            title: "freeCodeCamp Go Course",
-            url: "https://www.youtube.com/watch?v=YS4e4q9oBaU",
-            description:
-              "Beginner-friendly Go course that covers the language fundamentals.",
-            tag: "YouTube",
-          },
-          {
-            title: "Gophercises",
-            url: "https://gophercises.com/",
-            description:
-              "Hands-on Go exercises that help you build small but useful projects.",
-            tag: "Exercises",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "tools",
-    label: "Tools & General",
-    icon: <Wrench className="w-5 h-5 text-white" />,
-    description:
-      "Editors, version control, regex, and cross-language resources every developer needs.",
-    sections: [
-      {
-        heading: "Editors & IDEs",
-        resources: [
-          {
-            title: "VS Code",
-            url: "https://code.visualstudio.com/",
-            description:
-              "Fully-featured, extendable editor. The most popular choice among devs.",
-            tag: "Tool",
-          },
-          {
-            title: "Neovim",
-            url: "https://neovim.io/",
-            description:
-              "Hyperextensible Vim-based editor for those who love the terminal.",
-            tag: "Tool",
-          },
-          {
-            title: "JetBrains IDEs",
-            url: "https://www.jetbrains.com/",
-            description:
-              "IntelliJ, PyCharm, WebStorm, RustRover premium IDEs for every language.",
-            tag: "Tool",
-          },
-          {
-            title: "Zed",
-            url: "https://zed.dev/",
-            description:
-              "A high-performance, multiplayer code editor from the creators of Atom.",
-            tag: "Tool",
-          },
-        ],
-      },
-      {
-        heading: "Version Control & Git",
-        resources: [
-          {
-            title: "Git Guide",
-            url: "https://rogerdudler.github.io/git-guide/",
-            description:
-              "A simple, no-nonsense guide to getting started with Git.",
-            tag: "Guide",
-          },
-          {
-            title: "Oh My Git!",
-            url: "https://ohmygit.org/",
-            description: "An open-source card game to learn Git interactively.",
-            tag: "Interactive",
-          },
-          {
-            title: "Conventional Commits",
-            url: "https://www.conventionalcommits.org/",
-            description:
-              "A specification for adding human and machine readable meaning to commits.",
-            tag: "Guide",
-          },
-        ],
-      },
-      {
-        heading: "Interactive Practice",
-        resources: [
-          {
-            title: "Exercism",
-            url: "https://exercism.org/",
-            description:
-              "Level up skills with mentored code exercises in 70+ languages.",
-            tag: "Exercises",
-          },
-          {
-            title: "LeetCode",
-            url: "https://leetcode.com/",
-            description:
-              "The go-to platform for coding interview preparation and DSA practice.",
-            tag: "Exercises",
-          },
-          {
-            title: "Regex101",
-            url: "https://regex101.com/",
-            description:
-              "An online tool for testing and debugging regular expressions.",
-            tag: "Tool",
-          },
-          {
-            title: "Project Euler",
-            url: "https://projecteuler.net/",
-            description:
-              "Mathematical/computer programming problems to sharpen your skills.",
-            tag: "Exercises",
-          },
-        ],
-      },
-    ],
-  },
-];
+};
+
+const pillBase =
+  "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border bg-white/[0.06]";
+
+function BadgePill({ badge }: { badge: Badge }) {
+  const style = badgeStyles[badge];
+  const Icon = style.icon;
+  return (
+    <span className={`${pillBase} ${style.className}`}>
+      <Icon className="w-2.5 h-2.5" aria-hidden="true" />
+      {badge}
+    </span>
+  );
+}
+
+function MetaPill({ children }: { children: ReactNode }) {
+  return (
+    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/[0.06] bg-white/[0.04] text-white/45">
+      {children}
+    </span>
+  );
+}
+
+/* ── Resource card ───────────────────────────────────────────── */
+
+interface ResourceCardProps {
+  resource: Resource;
+  contextLabel?: string;
+}
+
+function ResourceCard({ resource, contextLabel }: ResourceCardProps) {
+  return (
+    <a
+      href={resource.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="cvh-card p-4 group flex flex-col"
+    >
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <h4 className="font-semibold text-white text-sm group-hover:text-[#ffffff] transition-colors duration-150 leading-snug">
+          {resource.title}
+        </h4>
+        <ExternalLink
+          className="w-3.5 h-3.5 text-white/20 group-hover:text-[#ffffff] shrink-0 mt-0.5 transition-colors duration-150"
+          aria-hidden="true"
+        />
+      </div>
+      <p className="text-white/40 text-xs leading-relaxed mb-3">
+        {resource.description}
+      </p>
+      <div className="mt-auto pt-1 flex flex-wrap items-center gap-1.5">
+        {contextLabel && (
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/[0.08] bg-white/[0.03] text-white/50">
+            {contextLabel}
+          </span>
+        )}
+        <BadgePill badge={resource.badge} />
+        <MetaPill>{resource.difficulty}</MetaPill>
+        <MetaPill>{resource.access}</MetaPill>
+      </div>
+    </a>
+  );
+}
+
+/* ── Searchable item shape ───────────────────────────────────── */
+
+interface SearchItem {
+  resource: Resource;
+  categoryId: string;
+  categoryLabel: string;
+  subcategoryLabel: string;
+}
+
+const MAX_SEARCH_RESULTS = 100;
+
+/* ── Page ────────────────────────────────────────────────────── */
 
 export default function ResourcesPage() {
-  const [activeCategory, setActiveCategory] = useState("python");
+  const [activeId, setActiveId] = useState("languages");
+  const [loaded, setLoaded] = useState<Record<string, ResourceCategory>>({
+    languages: initialLanguages,
+  });
+  const [query, setQuery] = useState("");
+  const loadingRef = useRef<Set<string>>(new Set());
 
-  const active = categories.find((c) => c.id === activeCategory)!;
+  const loadCategory = useCallback(
+    async (id: string) => {
+      // `loaded` already contains the statically-imported default category,
+      // so it is never fetched twice.
+      if (loaded[id] || loadingRef.current.has(id)) return;
+      loadingRef.current.add(id);
+      try {
+        const cat = await categoryLoaders[id]();
+        setLoaded((prev) => (prev[id] ? prev : { ...prev, [id]: cat }));
+      } catch {
+        // A transient chunk failure just leaves the category unloaded;
+        // the user can retry by clicking the category again.
+      } finally {
+        loadingRef.current.delete(id);
+      }
+    },
+    [loaded],
+  );
+
+  const selectCategory = useCallback(
+    (id: string) => {
+      setActiveId(id);
+      setQuery("");
+      void loadCategory(id);
+    },
+    [loadCategory],
+  );
+
+  // While searching, progressively pull in any not-yet-loaded categories.
+  const isSearching = query.trim().length > 0;
+  useEffect(() => {
+    if (!isSearching) return;
+    const unloaded = Object.keys(categoryLoaders).filter(
+      (id) => !loaded[id] && !loadingRef.current.has(id),
+    );
+    unloaded.forEach((id) => void loadCategory(id));
+  }, [isSearching, loaded, loadCategory]);
+
+  const searchIndex = useMemo<SearchItem[]>(() => {
+    return Object.values(loaded).flatMap((cat) =>
+      cat.subcategories.flatMap((sub) =>
+        sub.resources.map((resource) => ({
+          resource,
+          categoryId: cat.id,
+          categoryLabel: cat.label,
+          subcategoryLabel: sub.label,
+        })),
+      ),
+    );
+  }, [loaded]);
+
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const terms = q.split(/\s+/).filter(Boolean);
+    const matches = searchIndex.filter((item) => {
+      const haystack = [
+        item.resource.title,
+        item.resource.description,
+        item.resource.category,
+        item.resource.difficulty,
+        item.resource.access,
+        item.resource.badge,
+        item.categoryLabel,
+        item.subcategoryLabel,
+        ...item.resource.tags,
+      ]
+        .join(" ")
+        .toLowerCase();
+      return terms.every((term) => haystack.includes(term));
+    });
+    return matches;
+  }, [query, searchIndex]);
+
+  const groupedResults = useMemo(() => {
+    const map = new Map<string, SearchItem[]>();
+    for (const item of searchResults.slice(0, MAX_SEARCH_RESULTS)) {
+      const list = map.get(item.categoryId) ?? [];
+      list.push(item);
+      map.set(item.categoryId, list);
+    }
+    return [...map.entries()];
+  }, [searchResults]);
+
+  const active = loaded[activeId];
+  const ActiveIcon = categoryIcons[activeId] ?? Code2;
 
   return (
     <div className="min-h-screen bg-black">
@@ -813,87 +352,182 @@ export default function ResourcesPage() {
           Back to Home
         </Link>
 
-        <div className="mb-10">
+        <div className="mb-8">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 tracking-tight">
             Learning Resources
           </h1>
           <p className="text-white/50 text-base md:text-lg max-w-2xl">
-            Curated by the CodeVerse Hub community pick a language or tool and
-            dive in.
+            Curated by the CodeVerse Hub community — pick a topic and dive in,
+            or search the whole library below.
           </p>
         </div>
 
+        {/* Search */}
+        <div
+          role="search"
+          className="relative mb-10 max-w-2xl"
+          aria-label="Search resources"
+        >
+          <label htmlFor="resource-search" className="sr-only">
+            Search resources
+          </label>
+          <Search
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none"
+            aria-hidden="true"
+          />
+          <input
+            id="resource-search"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search 500+ resources across every topic…"
+            className="w-full pl-10 pr-10 py-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/40 focus:bg-white/[0.05] transition-colors duration-150"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label="Clear search"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-md text-white/40 hover:text-white hover:bg-white/[0.06] transition-colors duration-150"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-8">
-          <nav className="lg:w-64 shrink-0">
+          <nav className="lg:w-64 shrink-0" aria-label="Resource categories">
             <div className="lg:sticky lg:top-24 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-left whitespace-nowrap transition-all duration-150 ${
-                    activeCategory === cat.id
-                      ? "bg-white/[0.08] text-white border border-white/[0.12]"
-                      : "text-white/50 hover:text-white hover:bg-white/[0.03] border border-transparent"
-                  }`}
-                >
-                  <span className="p-1.5 rounded-lg bg-[#333333] text-white">
-                    {cat.icon}
-                  </span>
-                  <span className="font-medium text-sm">{cat.label}</span>
-                </button>
-              ))}
+              {Object.keys(categoryLoaders).map((id) => {
+                const Icon = categoryIcons[id] ?? Code2;
+                const isActive = activeId === id && !isSearching;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => selectCategory(id)}
+                    aria-pressed={isActive}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-left whitespace-nowrap transition-all duration-150 ${
+                      isActive
+                        ? "bg-white/[0.08] text-white border border-white/[0.12]"
+                        : "text-white/50 hover:text-white hover:bg-white/[0.03] border border-transparent"
+                    }`}
+                  >
+                    <span className="p-1.5 rounded-lg bg-[#333333] text-white">
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    </span>
+                    <span className="font-medium text-sm">
+                      {categoryLabels[id] ?? id}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </nav>
 
           <main className="flex-1 min-w-0">
-            <div className="mb-8 p-6 rounded-xl border border-white/[0.08] bg-white/[0.02]">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="p-2 rounded-lg bg-[#333333] text-white">
-                  {active.icon}
-                </span>
-                <h2 className="text-2xl font-bold text-white tracking-tight">
-                  {active.label}
-                </h2>
-              </div>
-              <p className="text-white/50 text-sm">{active.description}</p>
-            </div>
+            {isSearching ? (
+              /* ── Search results ─────────────────────────────── */
+              <div>
+                <div className="mb-6">
+                  <p className="text-white/60 text-sm" role="status">
+                    {searchResults.length === 0
+                      ? "No results"
+                      : `${Math.min(searchResults.length, MAX_SEARCH_RESULTS)}${
+                          searchResults.length > MAX_SEARCH_RESULTS
+                            ? ` of ${searchResults.length}`
+                            : ""
+                        } result${searchResults.length === 1 ? "" : "s"} for “${query.trim()}”`}
+                  </p>
+                  {searchResults.length > MAX_SEARCH_RESULTS && (
+                    <p className="text-white/30 text-xs mt-1">
+                      Showing the first {MAX_SEARCH_RESULTS} — refine your
+                      search to narrow it down.
+                    </p>
+                  )}
+                </div>
 
-            <div className="space-y-10">
-              {active.sections.map((section) => (
-                <div key={section.heading}>
-                  <h3 className="text-lg font-semibold text-white/80 mb-4 flex items-center gap-2">
-                    <div className="w-0.5 h-5 rounded-full bg-[#ffffff]" />
-                    {section.heading}
-                  </h3>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {section.resources.map((resource) => (
-                      <a
-                        key={resource.title}
-                        href={resource.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cvh-card p-4 group"
-                      >
-                        <div className="flex items-start justify-between gap-2 mb-2">
-                          <h4 className="font-semibold text-white text-sm group-hover:text-[#ffffff] transition-colors duration-150">
-                            {resource.title}
-                          </h4>
-                          <ExternalLink className="w-3.5 h-3.5 text-white/20 group-hover:text-[#ffffff] shrink-0 mt-0.5 transition-colors duration-150" />
-                        </div>
-                        <p className="text-white/40 text-xs leading-relaxed mb-3">
-                          {resource.description}
-                        </p>
-                        {resource.tag && (
-                          <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/[0.06] text-white/50">
-                            {resource.tag}
+                {searchResults.length === 0 ? (
+                  <div className="p-10 rounded-xl border border-white/[0.08] bg-white/[0.02] text-center">
+                    <p className="text-white/40 text-sm mb-2">
+                      No resources match “{query.trim()}”.
+                    </p>
+                    <p className="text-white/30 text-xs">
+                      Try a different term, a language name, or a topic like
+                      “docker” or “algorithms”.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-10">
+                    {groupedResults.map(([catId, items]) => {
+                      const Icon = categoryIcons[catId] ?? Code2;
+                      return (
+                        <section key={catId}>
+                          <h3 className="text-lg font-semibold text-white/80 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 rounded-lg bg-[#333333] text-white">
+                              <Icon className="w-4 h-4" aria-hidden="true" />
+                            </span>
+                            {items[0].categoryLabel}
+                            <span className="text-white/30 text-xs font-normal">
+                              {items.length}
+                            </span>
+                          </h3>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {items.map((item) => (
+                              <ResourceCard
+                                key={item.resource.url}
+                                resource={item.resource}
+                                contextLabel={item.subcategoryLabel}
+                              />
+                            ))}
+                          </div>
+                        </section>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            ) : !active ? (
+              /* ── Category still loading ─────────────────────── */
+              <div className="p-10 rounded-xl border border-white/[0.08] bg-white/[0.02] text-center">
+                <p className="text-white/40 text-sm">Loading resources…</p>
+              </div>
+            ) : (
+              /* ── Category view ──────────────────────────────── */
+              <>
+                <div className="mb-8 p-6 rounded-xl border border-white/[0.08] bg-white/[0.02]">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="p-2 rounded-lg bg-[#333333] text-white">
+                      <ActiveIcon className="w-5 h-5" aria-hidden="true" />
+                    </span>
+                    <h2 className="text-2xl font-bold text-white tracking-tight">
+                      {active.label}
+                    </h2>
+                  </div>
+                  <p className="text-white/50 text-sm">{active.description}</p>
+                </div>
+
+                <div className="space-y-10">
+                  {active.subcategories.map((section) => (
+                    <div key={section.id}>
+                      <h3 className="text-lg font-semibold text-white/80 mb-4 flex items-center gap-2">
+                        <div className="w-0.5 h-5 rounded-full bg-[#ffffff]" />
+                        {logos[section.id] ?? (
+                          <span className="w-5 h-5 rounded-md bg-white/[0.08] flex items-center justify-center text-[10px] font-bold text-white/40">
+                            {section.label.charAt(0)}
                           </span>
                         )}
-                      </a>
-                    ))}
-                  </div>
+                        {section.label}
+                      </h3>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {section.resources.map((resource) => (
+                          <ResourceCard key={resource.url} resource={resource} />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            )}
           </main>
         </div>
 
