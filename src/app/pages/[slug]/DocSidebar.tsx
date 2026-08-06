@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { List } from "lucide-react";
+import type { ContentPageNavItem } from "@/lib/content-pages";
 
 interface TocItem {
     id: string;
@@ -12,26 +13,10 @@ interface TocItem {
 
 interface DocSidebarProps {
     toc: TocItem[];
+    pages: ContentPageNavItem[];
 }
 
-const pagesNav = [
-    { href: "/pages/rules", label: "Rules" },
-    { href: "/pages/faq", label: "FAQ" },
-    { href: "/pages/server-info", label: "Server Info" },
-    { href: "/pages/how-to-ask", label: "How to Ask" },
-    { href: "/pages/how-to-help", label: "How to Help" },
-    { href: "/pages/join", label: "Join Guide" },
-    { href: "/pages/contributing", label: "Contributing" },
-    { href: "/pages/moderation-guide", label: "Moderation Guide" },
-    { href: "/pages/code-of-conduct", label: "Code of Conduct" },
-    { href: "/pages/privacy-policy", label: "Privacy Policy" },
-    { href: "/pages/security-notice", label: "Security Notice" },
-    { href: "/pages/staff-roles", label: "Staff Roles" },
-    { href: "/pages/tags", label: "Tags Reference" },
-    { href: "/pages/acknowledgements", label: "Acknowledgements" },
-];
-
-export default function DocSidebar({ toc }: DocSidebarProps) {
+export default function DocSidebar({ toc, pages }: DocSidebarProps) {
     const [activeId, setActiveId] = useState<string>("");
     const [isOpen, setIsOpen] = useState(false);
 
@@ -97,7 +82,7 @@ export default function DocSidebar({ toc }: DocSidebarProps) {
                                 All pages
                             </p>
                             <ul className="space-y-1">
-                                {pagesNav.map((page) => (
+                                {pages.map((page) => (
                                     <li key={page.href}>
                                         <Link
                                             href={page.href}

@@ -6,48 +6,14 @@ import html from "remark-html";
 import remarkGfm from "remark-gfm";
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-    ArrowLeft,
-    Shield,
-    BookOpen,
-    ScrollText,
-    HelpCircle,
-    MessageCircleQuestion,
-    Users,
-    FileText,
-    Heart,
-    Lock,
-    AlertTriangle,
-    Info,
-    Tag,
-    Gavel,
-    HandHeart,
-    Calendar,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DocSidebar from "./DocSidebar";
+import { getContentPageNav } from "@/lib/content-pages";
+import { contentIcons, FallbackContentIcon } from "@/lib/content-icons";
 
 const contentDirectory = path.join(process.cwd(), "content", "pages");
-
-const iconMap: Record<string, LucideIcon> = {
-    shield: Shield,
-    "book-open": BookOpen,
-    "scroll-text": ScrollText,
-    "help-circle": HelpCircle,
-    "message-circle-question": MessageCircleQuestion,
-    users: Users,
-    "file-text": FileText,
-    heart: Heart,
-    lock: Lock,
-    "alert-triangle": AlertTriangle,
-    info: Info,
-    tag: Tag,
-    gavel: Gavel,
-    "hand-heart": HandHeart,
-    calendar: Calendar,
-};
 
 export async function generateStaticParams() {
     const files = fs.readdirSync(contentDirectory);
@@ -177,7 +143,8 @@ export default async function ContentPage({ params }: PageProps) {
         );
     }
 
-    const IconComponent = page.icon ? iconMap[page.icon] : null;
+    const IconComponent = page.icon ? contentIcons[page.icon] ?? FallbackContentIcon : null;
+    const pagesNav = getContentPageNav();
 
     return (
         <div className="min-h-screen bg-black flex flex-col">
@@ -211,7 +178,7 @@ export default async function ContentPage({ params }: PageProps) {
 
                 <div className="doc-layout">
                     {page.toc.length > 0 && (
-                        <DocSidebar toc={page.toc} />
+                        <DocSidebar toc={page.toc} pages={pagesNav} />
                     )}
 
                     <article className="doc-content min-w-0">
