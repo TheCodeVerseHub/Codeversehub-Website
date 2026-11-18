@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 
 /* The reference design's link labels, mapped onto the existing site's routes. */
 const navLinks = [
@@ -16,11 +17,27 @@ const navLinks = [
   { href: "/team", label: "Community" },
 ];
 
+/* Secondary pages grouped under the "More" dropdown. */
+const moreLinks = [
+  { href: "/pages", label: "All Pages" },
+  { href: "/join-organization", label: "Join the Organization" },
+  { href: "/pages/faq", label: "FAQ" },
+  { href: "/pages/rules", label: "Rules" },
+  { href: "/pages/code-of-conduct", label: "Code of Conduct" },
+  { href: "/pages/hall-of-fame", label: "Hall of Fame" },
+  { href: "/pages/moderation-guide", label: "Moderation Guide" },
+  { href: "/ban-appeal", label: "Ban Appeal" },
+  { href: "/pages/privacy-policy", label: "Privacy Policy" },
+  { href: "/pages/security-notice", label: "Security Notice" },
+];
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [time, setTime] = useState("--:--");
   const [date, setDate] = useState("—");
+  const moreRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -36,9 +53,22 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    const onPointerDown = (event: PointerEvent) => {
+      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
+        setMoreOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMoreOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+
     return () => {
       window.clearInterval(clockTimer);
       window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, []);
 
@@ -60,6 +90,35 @@ export default function Navbar() {
             {link.label}
           </Link>
         ))}
+
+        <div className={`cvh-nav-more${moreOpen ? " open" : ""}`} ref={moreRef}>
+          <button
+            type="button"
+            className="cvh-more-btn"
+            aria-expanded={moreOpen}
+            aria-haspopup="true"
+            onClick={() => setMoreOpen((open) => !open)}
+          >
+            More
+            <ChevronDown className="cvh-more-chevron" aria-hidden="true" />
+          </button>
+          <div className="cvh-more-menu" role="menu">
+            {moreLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                role="menuitem"
+                className={pathname === link.href ? "active" : undefined}
+                onClick={() => {
+                  setMoreOpen(false);
+                  setMobileOpen(false);
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </nav>
 
       <div className="cvh-nav-clock">

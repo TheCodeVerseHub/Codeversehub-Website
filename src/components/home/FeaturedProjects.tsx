@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ShinyText from "@/components/ShinyText";
+import Carousel from "@/components/Carousel";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -297,7 +298,7 @@ export default function FeaturedProjects() {
   return (
     <section className="section-spacing" aria-labelledby="projects-heading">
       <div className="section-divider mb-0" />
-      <div className="section-container pt-16 md:pt-20">
+      <div className="section-container cvh-wide pt-16 md:pt-20">
         <div className="text-center mb-14">
           <span className="section-label mb-6">Projects</span>
           <h2
@@ -345,10 +346,13 @@ export default function FeaturedProjects() {
         </div>
 
         {/* Repo cards */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto mb-12">
-          {repos.slice(0, 6).map((repo) => (
-            <RepoCard key={repo.id} repo={repo} />
-          ))}
+        <div className="mb-12">
+          <Carousel
+            items={repos.slice(0, 6)}
+            keyOf={(repo) => repo.id}
+            ariaLabel="Featured projects"
+            renderItem={(repo) => <RepoCard repo={repo} />}
+          />
         </div>
 
         <div className="text-center">

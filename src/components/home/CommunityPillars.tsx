@@ -59,7 +59,7 @@ const features = [
 export default function CommunityPillars() {
   return (
     <section className="section-spacing" aria-labelledby="pillars-heading">
-      <div className="section-container">
+      <div className="section-container cvh-full">
         <div className="text-center mb-16">
           <span className="section-label mb-6">Community Pillars</span>
           <h2
@@ -87,26 +87,26 @@ export default function CommunityPillars() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
               <div
                 key={feature.number}
-                className="card p-7 md:p-8 group relative"
+                className="card p-5 group relative flex flex-col"
               >
-                <span className="font-mono text-[0.625rem] text-[#666666] tracking-wider mb-4 block">
+                <span className="font-mono text-[0.625rem] text-[#666666] tracking-wider mb-3 block">
                   {feature.number}
                 </span>
 
-                <div className="w-10 h-10 flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 border border-[#1a1a1a] bg-[rgba(255,255,255,0.04)]">
+                <div className="w-10 h-10 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 border border-[#1a1a1a] bg-[rgba(255,255,255,0.04)]">
                   <Icon className="w-5 h-5 text-[#ffffff] transition-colors duration-300" />
                 </div>
 
-                <h3 className="font-heading text-base font-semibold text-white mb-2 group-hover:text-[#ffffff] transition-colors duration-200">
+                <h3 className="font-heading text-sm font-semibold text-white mb-2 group-hover:text-[#ffffff] transition-colors duration-200">
                   {feature.title}
                 </h3>
-                <p className="text-[0.8125rem] text-[#666666] leading-relaxed">
+                <p className="text-[0.75rem] text-[#666666] leading-relaxed">
                   {feature.description}
                 </p>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import ShinyText from "@/components/ShinyText";
+import Carousel from "@/components/Carousel";
 import {
   MessageSquare,
   Code2,
@@ -89,7 +90,7 @@ export default function DiscordSection() {
   return (
     <section className="section-spacing" aria-labelledby="discord-heading">
       <div className="section-divider mb-0" />
-      <div className="section-container pt-16 md:pt-20">
+      <div className="section-container cvh-wide pt-16 md:pt-20">
         <div className="text-center mb-14">
           <span className="section-label mb-6">The Discord</span>
           <h2
@@ -115,11 +116,15 @@ export default function DiscordSection() {
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-          {areas.map((area) => {
+        <Carousel
+          items={areas}
+          keyOf={(area) => area.title}
+          ariaLabel="What happens inside the Discord"
+          view="four"
+          renderItem={(area) => {
             const Icon = area.icon;
             return (
-              <div key={area.title} className="card p-6 group flex flex-col">
+              <div className="card p-6 group flex flex-col">
                 <div className="w-10 h-10 flex items-center justify-center mb-4 border border-[#1a1a1a] bg-[rgba(255,255,255,0.04)] transition-all duration-300 group-hover:scale-110">
                   <Icon className="w-5 h-5 text-[#22d3ee]" />
                 </div>
@@ -134,8 +139,8 @@ export default function DiscordSection() {
                 </p>
               </div>
             );
-          })}
-        </div>
+          }}
+        />
 
         {/* Audience strip (absorbed from the old "Who Is This For" section) */}
         <div className="max-w-5xl mx-auto mt-14">

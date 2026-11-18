@@ -10,6 +10,8 @@ import {
   CircleDot,
   Rocket,
   Users,
+  UserPlus,
+  Lightbulb,
   ExternalLink,
   Star,
 } from "lucide-react";
@@ -134,6 +136,60 @@ function buildFeeds(s: CommunitySnapshot): Feed[] {
       })),
       empty: "No contributors yet, be the first!",
     },
+    {
+      key: "new-contributors",
+      label: "New Contributors",
+      icon: UserPlus,
+      count: s.stats?.contributorsCount,
+      items: (s.topContributors ?? [])
+        .slice()
+        .reverse()
+        .slice(0, 4)
+        .map((c) => ({
+          key: `new-${c.login}`,
+          title: c.login,
+          meta: `${c.contributions} contribution${c.contributions === 1 ? "" : "s"} · welcome!`,
+          sub: c.repos.slice(0, 2).join(", "),
+          href: c.html_url,
+        })),
+      empty: "No new contributors yet, be the first!",
+    },
+    {
+      key: "ideas",
+      label: "Suggested Project Ideas",
+      icon: Lightbulb,
+      items: [
+        {
+          key: "idea-docs",
+          title: "Improve the docs",
+          meta: "Good first issue · documentation",
+          sub: "Pick a repo and clarify its README",
+          href: "/contributing",
+        },
+        {
+          key: "idea-cli",
+          title: "Build a beginner CLI",
+          meta: "Good first issue · tooling",
+          sub: "Automate a small daily task",
+          href: "/projects",
+        },
+        {
+          key: "idea-bot",
+          title: "Add a Discord bot command",
+          meta: "Intermediate · TypeScript",
+          sub: "Extend an existing community bot",
+          href: "/projects",
+        },
+        {
+          key: "idea-tutorial",
+          title: "Write a tutorial",
+          meta: "All levels · content",
+          sub: "Share what you learned this week",
+          href: "/resources",
+        },
+      ],
+      empty: "",
+    },
   ];
 }
 
@@ -158,8 +214,9 @@ function FeedPanel({ feed }: { feed: Feed }) {
             <li key={item.key}>
               <a
                 href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(item.href.startsWith("/")
+                  ? {}
+                  : { target: "_blank", rel: "noopener noreferrer" })}
                 className="block px-4 py-3 group/item hover:bg-[rgba(255,255,255,0.02)] transition-colors duration-150"
               >
                 <p className="text-[0.8125rem] text-white/80 font-medium truncate group-hover/item:text-white transition-colors duration-150">
@@ -209,7 +266,7 @@ export default function GitHubActivity() {
   return (
     <section className="section-spacing" aria-labelledby="activity-heading">
       <div className="section-divider mb-0" />
-      <div className="section-container pt-16 md:pt-20">
+      <div className="section-container cvh-wide pt-16 md:pt-20">
         <div className="text-center mb-14">
           <span className="section-label mb-6">GitHub</span>
           <h2
@@ -233,7 +290,7 @@ export default function GitHubActivity() {
         </div>
 
         {/* Terminal-style header bar */}
-        <div className="max-w-6xl mx-auto mb-4">
+        <div className="mb-4">
           <div className="border border-[#1a1a1a] bg-[#090909] px-4 py-2.5 flex items-center gap-3 flex-wrap">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-white/15" />
@@ -258,7 +315,7 @@ export default function GitHubActivity() {
         </div>
 
         {failed ? (
-          <div className="max-w-6xl mx-auto border border-[#1a1a1a] bg-[#090909] p-10 text-center">
+          <div className="border border-[#1a1a1a] bg-[#090909] p-10 text-center">
             <p className="text-white/40 text-sm">
               GitHub activity is unavailable right now, it will load
               automatically once the API is reachable.
@@ -273,7 +330,7 @@ export default function GitHubActivity() {
             </a>
           </div>
         ) : (
-          <div className="max-w-6xl mx-auto grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {feeds?.map((feed) => (
               <FeedPanel key={feed.key} feed={feed} />
             ))}
