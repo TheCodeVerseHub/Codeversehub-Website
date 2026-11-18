@@ -13,6 +13,9 @@ import {
   Shield,
   GitBranch as GitBranchIcon,
   Users,
+  ArrowRight,
+  ArrowLeft,
+  ArrowDown,
 } from "lucide-react";
 
 const journey = [
@@ -87,6 +90,47 @@ const principles = [
   },
 ];
 
+type JourneyStep = (typeof journey)[number];
+
+function FlowCard({
+  step,
+  index,
+}: {
+  step: JourneyStep;
+  index: number;
+}) {
+  const Icon = step.icon;
+  return (
+    <div className="cvh-flow-card card p-5 group">
+      <div className="flex items-center gap-3 mb-3">
+        <span className="h-10 w-10 shrink-0 flex items-center justify-center border border-[#1a1a1a] bg-[#090909] font-mono text-[0.625rem] text-[#22d3ee]">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div className="w-8 h-8 flex items-center justify-center border border-[#1a1a1a] bg-[rgba(255,255,255,0.03)] transition-all duration-300 group-hover:scale-110">
+          <Icon className="w-4 h-4 text-[#22d3ee]" />
+        </div>
+        <h3 className="font-heading text-sm font-semibold text-white">
+          {step.title}
+        </h3>
+      </div>
+      <p className="text-[0.8125rem] text-[#666666] leading-relaxed">
+        {step.description}
+      </p>
+    </div>
+  );
+}
+
+/* Serpentine two-column order: 1→2, down, 4←3, down, 5→6, down, 8←7 … */
+const flowRows = Array.from(
+  { length: Math.ceil(journey.length / 2) },
+  (_, row) => ({
+    leftIndex: row % 2 === 0 ? row * 2 : row * 2 + 1,
+    rightIndex: row % 2 === 0 ? row * 2 + 1 : row * 2,
+    direction: row % 2 === 0 ? ("right" as const) : ("left" as const),
+    turn: row % 2 === 0 ? ("right" as const) : ("left" as const),
+  }),
+);
+
 export default function OpenSourceJourney() {
   return (
     <section className="section-spacing" aria-labelledby="journey-heading">
@@ -115,42 +159,46 @@ export default function OpenSourceJourney() {
             </p>
           </div>
 
-          {/* Journey timeline */}
-          <div className="relative mb-12">
-            <div
-              className="absolute left-[1.15rem] top-2 bottom-2 w-px bg-[#1a1a1a]"
-              aria-hidden="true"
-            />
-            <ol className="space-y-3">
-              {journey.map((step, i) => {
-                const Icon = step.icon;
-                return (
-                  <li
-                    key={step.title}
-                    className="relative flex items-start gap-5"
+          {/* Journey flowchart — serpentine zigzag with connected arrows */}
+          <div className="cvh-flow mb-12" role="list" aria-label="Your open source journey steps">
+            {flowRows.map((row, rowIndex) => (
+              <div key={rowIndex} className="cvh-flow-group">
+                <div
+                  className={`cvh-flow-row${
+                    rowIndex % 2 === 1 ? " cvh-flow-row--reverse" : ""
+                  }`}
+                >
+                  <div role="listitem" className="cvh-flow-slot">
+                    <FlowCard step={journey[row.leftIndex]} index={row.leftIndex} />
+                  </div>
+                  <div
+                    className={`cvh-flow-arrow cvh-flow-arrow--${row.direction}`}
+                    aria-hidden="true"
                   >
-                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center border border-[#1a1a1a] bg-[#090909] transition-all duration-300 group-hover:scale-110">
-                      <span className="font-mono text-[0.625rem] text-[#22d3ee]">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
+                    <span className="cvh-flow-hline" />
+                    {row.direction === "right" ? (
+                      <ArrowRight className="w-4 h-4 shrink-0" />
+                    ) : (
+                      <ArrowLeft className="w-4 h-4 shrink-0" />
+                    )}
+                  </div>
+                  <div role="listitem" className="cvh-flow-slot">
+                    <FlowCard step={journey[row.rightIndex]} index={row.rightIndex} />
+                  </div>
+                </div>
+                {rowIndex < flowRows.length - 1 && (
+                  <div
+                    className={`cvh-flow-turn cvh-flow-turn--${row.turn}`}
+                    aria-hidden="true"
+                  >
+                    <div className="cvh-flow-turn-inner">
+                      <span className="cvh-flow-vline" />
+                      <ArrowDown className="w-4 h-4" />
                     </div>
-                    <div className="card p-6 flex-1 group">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 flex items-center justify-center border border-[#1a1a1a] bg-[rgba(255,255,255,0.03)]">
-                          <Icon className="w-4 h-4 text-[#22d3ee]" />
-                        </div>
-                        <h3 className="font-heading text-sm font-semibold text-white">
-                          {step.title}
-                        </h3>
-                      </div>
-                      <p className="text-[0.8125rem] text-[#666666] leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Principles */}
