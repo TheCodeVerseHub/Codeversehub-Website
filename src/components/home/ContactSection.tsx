@@ -117,7 +117,7 @@ export default function ContactSection() {
   return (
     <section className="section-spacing">
       <div className="section-container">
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <span className="section-label mb-6">Contact</span>
           <h2 className="heading-lg text-3xl sm:text-4xl md:text-5xl mb-4 mt-5 text-white">
             Get in touch

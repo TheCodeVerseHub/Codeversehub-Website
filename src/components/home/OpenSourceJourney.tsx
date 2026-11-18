@@ -91,9 +91,9 @@ export default function OpenSourceJourney() {
   return (
     <section className="section-spacing" aria-labelledby="journey-heading">
       <div className="section-divider mb-0" />
-      <div className="section-container pt-16 md:pt-20">
+      <div className="section-container pt-10 md:pt-12">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <span className="section-label mb-6">Open Source</span>
             <h2
               id="journey-heading"
@@ -116,7 +116,7 @@ export default function OpenSourceJourney() {
           </div>
 
           {/* Journey timeline */}
-          <div className="relative mb-16">
+          <div className="relative mb-12">
             <div
               className="absolute left-[1.15rem] top-2 bottom-2 w-px bg-[#1a1a1a]"
               aria-hidden="true"

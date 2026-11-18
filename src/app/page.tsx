@@ -126,9 +126,9 @@ export default function Home() {
         <ScrollReveal delay={600}>
           <section className="section-spacing" aria-labelledby="faq-heading">
             <div className="section-divider mb-0" />
-            <div className="section-container pt-16 md:pt-20">
+            <div className="section-container pt-10 md:pt-12">
               <div className="max-w-3xl mx-auto">
-                <div className="text-center mb-14">
+                <div className="text-center mb-10">
                   <span className="section-label mb-6">FAQ</span>
                   <h2
                     id="faq-heading"

@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import DotGrid from "@/components/DotGrid";
 
 const words = [
   "Real Software",
@@ -20,7 +21,6 @@ export default function Hero() {
   const [wordPhase, setWordPhase] = useState<"idle" | "out" | "in">("idle");
   const [cardOpen, setCardOpen] = useState(false);
   const [flipped, setFlipped] = useState(false);
-  const emblemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setReady(true));
@@ -52,20 +52,21 @@ export default function Hero() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [cardOpen]);
 
-  useEffect(() => {
-    const onPointerMove = (e: PointerEvent) => {
-      if (cardOpen || !emblemRef.current) return;
-      const x = e.clientX / window.innerWidth - 0.5;
-      const y = e.clientY / window.innerHeight - 0.5;
-      emblemRef.current.style.transform = `translate(${x * -18}px, ${y * -18}px) rotateX(${y * 6}deg) rotateY(${x * -6}deg)`;
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onPointerMove);
-  }, [cardOpen]);
-
   return (
     <section className={`cvh-hero${ready ? " ready" : ""}`} id="home">
-      <div className="cvh-hero-glow" />
+      <div className="cvh-hero-dots" aria-hidden="true">
+        <DotGrid
+          dotSize={3}
+          gap={16}
+          baseColor="#262626"
+          activeColor="#22d3ee"
+          proximity={120}
+          shockRadius={200}
+          shockStrength={3}
+          resistance={650}
+          returnDuration={1.2}
+        />
+      </div>
       <div className="cvh-hero-inner">
         <div className="cvh-hero-left">
           <span className="cvh-tag reveal-hero">
@@ -118,11 +119,8 @@ export default function Hero() {
         </div>
 
         <div className="cvh-hero-right reveal-hero">
-          <div className="cvh-emblem" ref={emblemRef}>
+          <div className="cvh-emblem">
             <Image src="/logo.png" alt="The CodeVerse Hub logo" width={500} height={500} priority />
-            <span className="cvh-chip chip-a">&lt;/&gt; open source</span>
-            <span className="cvh-chip chip-b">rust · python · c</span>
-            <span className="cvh-chip chip-c">16 repos</span>
           </div>
           <button className="cvh-ability-btn" type="button" onClick={() => setCardOpen(true)}>
             Our ability card

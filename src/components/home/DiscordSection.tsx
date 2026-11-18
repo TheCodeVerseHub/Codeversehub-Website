@@ -90,8 +90,8 @@ export default function DiscordSection() {
   return (
     <section className="section-spacing" aria-labelledby="discord-heading">
       <div className="section-divider mb-0" />
-      <div className="section-container cvh-wide pt-16 md:pt-20">
-        <div className="text-center mb-14">
+      <div className="section-container cvh-wide pt-10 md:pt-12">
+        <div className="text-center mb-10">
           <span className="section-label mb-6">The Discord</span>
           <h2
             id="discord-heading"
@@ -143,7 +143,7 @@ export default function DiscordSection() {
         />
 
         {/* Audience strip (absorbed from the old "Who Is This For" section) */}
-        <div className="max-w-5xl mx-auto mt-14">
+        <div className="max-w-5xl mx-auto mt-10">
           <p className="text-center text-[0.6875rem] font-mono text-white/30 tracking-widest uppercase mb-5">
             Who it&apos;s for
           </p>
@@ -163,7 +163,7 @@ export default function DiscordSection() {
           </p>
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <a
             href={LINKS.DISCORD}
             target="_blank"

@@ -20,7 +20,7 @@ export default function Testimonials() {
   return (
     <section className="section-spacing" aria-labelledby="testimonials-heading">
       <div className="section-container">
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <span className="section-label mb-6">Testimonials</span>
           <h2
             id="testimonials-heading"

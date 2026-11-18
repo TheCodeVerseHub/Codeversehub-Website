@@ -266,8 +266,8 @@ export default function GitHubActivity() {
   return (
     <section className="section-spacing" aria-labelledby="activity-heading">
       <div className="section-divider mb-0" />
-      <div className="section-container cvh-wide pt-16 md:pt-20">
-        <div className="text-center mb-14">
+      <div className="section-container cvh-wide pt-10 md:pt-12">
+        <div className="text-center mb-10">
           <span className="section-label mb-6">GitHub</span>
           <h2
             id="activity-heading"

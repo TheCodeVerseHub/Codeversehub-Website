@@ -12,6 +12,16 @@ interface CarouselProps<T> {
   view?: "three" | "four";
 }
 
+/** Jump instantly, overriding the track's CSS `scroll-behavior: smooth`. */
+function jumpTo(track: HTMLDivElement, left: number) {
+  const previous = track.style.scrollBehavior;
+  track.style.scrollBehavior = "auto";
+  track.scrollTo({ left, behavior: "auto" });
+  requestAnimationFrame(() => {
+    track.style.scrollBehavior = previous;
+  });
+}
+
 export default function Carousel<T>({
   items,
   renderItem,
@@ -58,6 +68,22 @@ export default function Carousel<T>({
     const styles = window.getComputedStyle(track);
     const gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
     const step = first.getBoundingClientRect().width + gap;
+    if (!step) return;
+
+    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+    const current = Math.round(track.scrollLeft / step);
+    const last = maxScroll > 0 ? Math.round(maxScroll / step) : 0;
+
+    // Wrap around at the edges instead of stopping there.
+    if (direction === 1 && current >= last) {
+      jumpTo(track, 0);
+      return;
+    }
+    if (direction === -1 && current <= 0) {
+      jumpTo(track, maxScroll);
+      return;
+    }
+
     track.scrollBy({ left: direction * step, behavior: "smooth" });
   };
 

@@ -60,7 +60,7 @@ export default function CommunityPillars() {
   return (
     <section className="section-spacing" aria-labelledby="pillars-heading">
       <div className="section-container cvh-full">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <span className="section-label mb-6">Community Pillars</span>
           <h2
             id="pillars-heading"
@@ -121,7 +121,7 @@ export default function CommunityPillars() {
           })}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <Link
             href="/about"
             className="btn-ghost text-[0.8125rem] inline-flex items-center gap-1.5"

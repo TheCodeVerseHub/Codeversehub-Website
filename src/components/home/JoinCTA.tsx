@@ -7,7 +7,7 @@ export default function JoinCTA() {
   return (
     <section className="section-spacing">
       <div className="section-divider mb-0" />
-      <div className="section-container pt-16 md:pt-20">
+      <div className="section-container pt-10 md:pt-12">
         <div className="relative max-w-3xl mx-auto">
           <div className="relative border border-[#1a1a1a] bg-[#0a0a0a] p-10 md:p-14 text-center overflow-hidden">
             <div className="absolute top-0 left-1/4 w-[300px] h-[300px] bg-[radial-gradient(circle,rgba(255,255,255,0.05)_0%,transparent_70%)] pointer-events-none" />
