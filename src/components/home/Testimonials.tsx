@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import ShinyText from "@/components/ShinyText";
+import InfiniteCarousel from "@/components/InfiniteCarousel";
 import { ExternalLink, MessageCircle, Quote } from "lucide-react";
 import { LINKS } from "@/lib/constants";
 import {
@@ -16,10 +17,64 @@ function platformStyles(platform: TestimonialEntry["platform"]) {
     : "border-[#1a1a1a] bg-[rgba(255,255,255,0.03)] text-[#afafaf]";
 }
 
+function TestimonialCard({ t }: { t: TestimonialEntry }) {
+  return (
+    <figure className="card p-6 md:p-7 flex flex-col h-full">
+      <div className="flex items-start gap-4 mb-5">
+        <Image
+          src={t.avatarSource}
+          alt={`${t.username} profile picture`}
+          width={52}
+          height={52}
+          unoptimized
+          className="w-[52px] h-[52px] rounded-full border border-[#1a1a1a] bg-[#0a0a0a] shrink-0"
+          title={t.avatarNote}
+        />
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <figcaption className="text-sm font-semibold text-white leading-none">
+              {t.username}
+            </figcaption>
+            <span
+              className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[0.625rem] font-mono tracking-wider uppercase ${platformStyles(
+                t.platform,
+              )}`}
+            >
+              {t.platform}
+            </span>
+          </div>
+          <p className="text-[0.75rem] text-white/35 font-mono">{t.dateLabel}</p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-1 text-[#22d3ee] mb-4">
+        <Quote className="w-4 h-4 shrink-0" />
+        <span className="text-[0.75rem] font-mono uppercase tracking-wider text-[#22d3ee]/60">
+          Review
+        </span>
+      </div>
+
+      <blockquote className="text-[0.9375rem] text-white/80 leading-relaxed flex-1">
+        {t.review}
+      </blockquote>
+
+      <a
+        href={t.sourceUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-5 inline-flex items-center gap-1.5 text-[0.6875rem] font-mono uppercase tracking-wider text-[#666666] hover:text-white transition-colors duration-150"
+      >
+        View source
+        <ExternalLink className="w-3 h-3" />
+      </a>
+    </figure>
+  );
+}
+
 export default function Testimonials() {
   return (
     <section className="section-spacing" aria-labelledby="testimonials-heading">
-      <div className="section-container">
+      <div className="section-container cvh-wide">
         <div className="text-center mb-10">
           <span className="section-label mb-6">Testimonials</span>
           <h2
@@ -39,65 +94,12 @@ export default function Testimonials() {
         </div>
 
         {testimonials.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 max-w-6xl mx-auto">
-            {testimonials.map((t, index) => (
-              <figure
-                key={t.id}
-                className="card p-6 md:p-7 flex flex-col animate-testimonial-rise opacity-0"
-                style={{ animationDelay: `${index * 90}ms` }}
-              >
-                <div className="flex items-start gap-4 mb-5">
-                  <Image
-                    src={t.avatarSource}
-                    alt={`${t.username} profile picture`}
-                    width={52}
-                    height={52}
-                    unoptimized
-                    className="w-[52px] h-[52px] rounded-full border border-[#1a1a1a] bg-[#0a0a0a] shrink-0"
-                    title={t.avatarNote}
-                  />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <figcaption className="text-sm font-semibold text-white leading-none">
-                        {t.username}
-                      </figcaption>
-                      <span
-                        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[0.625rem] font-mono tracking-wider uppercase ${platformStyles(
-                          t.platform,
-                        )}`}
-                      >
-                        {t.platform}
-                      </span>
-                    </div>
-                    <p className="text-[0.75rem] text-white/35 font-mono">
-                      {t.dateLabel}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 text-[#22d3ee] mb-4">
-                  <Quote className="w-4 h-4 shrink-0" />
-                  <span className="text-[0.75rem] font-mono uppercase tracking-wider text-[#22d3ee]/60">
-                    Review
-                  </span>
-                </div>
-
-                <blockquote className="text-[0.9375rem] text-white/80 leading-relaxed flex-1">
-                  {t.review}
-                </blockquote>
-
-                <a
-                  href={t.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-1.5 text-[0.6875rem] font-mono uppercase tracking-wider text-[#666666] hover:text-white transition-colors duration-150"
-                >
-                  View source
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </figure>
-            ))}
-          </div>
+          <InfiniteCarousel
+            items={testimonials}
+            keyOf={(t) => t.id}
+            ariaLabel="Community testimonials"
+            renderItem={(t) => <TestimonialCard t={t} />}
+          />
         ) : (
           /* Honest placeholder your words could be here. */
           <div className="max-w-2xl mx-auto border border-dashed border-[#1a1a1a] p-10 md:p-14 text-center">

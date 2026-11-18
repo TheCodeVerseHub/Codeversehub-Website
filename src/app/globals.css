@@ -1868,6 +1868,80 @@
     background: rgba(34, 211, 238, 0.06);
 }
 
+/* ---------- INFINITE AUTO CAROUSEL (TESTIMONIALS) ---------- */
+.cvh-inf-carousel {
+    width: 100%;
+    margin-inline: auto;
+}
+
+.cvh-inf-viewport {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 10px;
+    /* Fade the edges so cards enter/exit smoothly. */
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 28px,
+        #000 calc(100% - 28px),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 28px,
+        #000 calc(100% - 28px),
+        transparent 100%
+    );
+}
+
+.cvh-inf-track {
+    display: flex;
+    gap: 16px;
+    /* Keep the percentage flex-basis of the items resolving against the
+       viewport width; the row itself overflows and is clipped by the parent. */
+    width: 100%;
+    will-change: transform;
+}
+
+.cvh-inf-item {
+    display: flex;
+    flex: 0 0 calc((100% - 48px) / 4);
+    min-width: 0;
+}
+
+.cvh-inf-item > * {
+    width: 100%;
+}
+
+.cvh-inf-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+.cvh-inf-controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #1a1a1a;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    color: #afafaf;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.cvh-inf-controls button:hover {
+    border-color: #22d3ee;
+    color: #22d3ee;
+    background: rgba(34, 211, 238, 0.06);
+}
+
 /* ---------- FLOWCHART JOURNEY ---------- */
 .cvh-flow {
     display: flex;
@@ -1955,6 +2029,7 @@
 @media (max-width: 1100px) {
     .cvh-nav { gap: 16px; }
     .cvh-nav-links { gap: 14px; font-size: 13px; }
+    .cvh-inf-item { flex-basis: calc((100% - 32px) / 3); }
 }
 
 @media (max-width: 900px) {
@@ -2004,6 +2079,7 @@
     .cvh-carousel--four .cvh-carousel-item {
         flex-basis: calc((100% - 16px) / 2);
     }
+    .cvh-inf-item { flex-basis: calc((100% - 16px) / 2); }
 
     .cvh-flow-row { grid-template-columns: 1fr; }
     .cvh-flow-row--reverse { display: flex; flex-direction: column-reverse; }
@@ -2039,5 +2115,10 @@
     .cvh-carousel-item,
     .cvh-carousel--four .cvh-carousel-item {
         flex-basis: 86%;
+    }
+    .cvh-inf-item { flex-basis: 100%; }
+    .cvh-inf-viewport {
+        -webkit-mask-image: none;
+        mask-image: none;
     }
 }
