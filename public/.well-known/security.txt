@@ -1,0 +1,9 @@
+Contact: mailto:contact@thecodeversehub.tech
+Expires: 2027-11-20T00:00:00.000Z
+Preferred-Languages: en
+Policy:
+  - Please do NOT report security issues via public GitHub issues or pull requests.
+  - Instead, email contact@thecodeversehub.tech or DM a server Admin/Owner in the CodeVerse Hub Discord.
+  - Include affected project, page, or endpoint; steps to reproduce; and a minimal, non-destructive proof of concept.
+  - We aim to acknowledge valid reports within 48 hours.
+Canonical: https://github.com/TheCodeVerseHub/Codeversehub-Website/blob/main/SECURITY.md
